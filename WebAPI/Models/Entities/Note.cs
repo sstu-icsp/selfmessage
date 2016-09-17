@@ -14,9 +14,11 @@ namespace WebAPI.Models.Entities
         
         public ICollection<Tag> Tags { get; set; }
 
+        public ICollection<Task> Tasks { get; set; }
         public Note()
         {
             Tags = new List<Tag>();
+            Tasks = new List<Task>();
         }         
     }
 }

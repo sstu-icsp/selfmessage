@@ -14,5 +14,7 @@ namespace WebAPI.Models
 
         public DbSet<Note> Notes { get; set; }
         public DbSet<Tag> Tags { get; set; }
+        public DbSet<Task> Tasks { get; set; }
+        public DbSet<Schedule> Schedules { get; set; }
     }
 }
