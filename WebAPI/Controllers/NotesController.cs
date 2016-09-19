@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using WebAPI.Models;
+using WebAPI.Models.DTO;
 using WebAPI.Models.Entities;
 
 namespace WebAPI.Controllers
@@ -17,12 +18,37 @@ namespace WebAPI.Controllers
     {
         private DatabaseContext db = new DatabaseContext();
 
+
+
         // GET: api/Notes
-        public IQueryable<Note> GetNotes()
+        public IEnumerable<NoteDTO> GetNotes()
         {
-            return db.Notes;
+
+            //Используются DTO объекты data transfer object
+            //Если передовать обычные объекты, которые соеденены через include выдает ошибку сериализации
+            //DTO объекты в данном случае своебразные представления
+
+            List<NoteDTO> notes = new List<NoteDTO>();
+            
+            foreach(Note note in db.Notes.Include(p=>p.Tags))
+            {
+                NoteDTO noteDTO = new NoteDTO();
+
+                noteDTO.Id = note.Id;
+                noteDTO.Name = note.Name;
+                noteDTO.Text = note.Text;
+
+                foreach(Tag tag in note.Tags)
+                {
+                    noteDTO.Tags.Add(new TagDTO() { Id = tag.Id, Name = tag.Name });
+                }
+                notes.Add(noteDTO);
+            }
+
+            return notes;
         }
 
+        /*
         // GET: api/Notes/5
         [ResponseType(typeof(Note))]
         public IHttpActionResult GetNote(int id)
@@ -100,7 +126,7 @@ namespace WebAPI.Controllers
             db.SaveChanges();
 
             return Ok(note);
-        }
+        }*/
 
         protected override void Dispose(bool disposing)
         {
@@ -111,9 +137,9 @@ namespace WebAPI.Controllers
             base.Dispose(disposing);
         }
 
-        private bool NoteExists(int id)
+        /*private bool NoteExists(int id)
         {
             return db.Notes.Count(e => e.Id == id) > 0;
-        }
+        }*/
     }
 }

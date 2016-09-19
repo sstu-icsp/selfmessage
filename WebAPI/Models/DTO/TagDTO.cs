@@ -2,20 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using WebAPI.Models.Entities;
 
 namespace WebAPI.Models.DTO
 {
-    public class NoteDTO
+    public class TagDTO
     {
-        public NoteDTO()
+        public TagDTO()
         {
-            Tags = new List<TagDTO>();
+
         }
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Text { get; set; }
 
-        public List<TagDTO> Tags { get; set; }
     }
 }
