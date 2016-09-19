@@ -38,12 +38,14 @@
         $(function () {
 
             $.ajax({
-                url: "/api/test",
+                url: "http://localhost:10001/api/notes",
                 type: "GET",
                 success: function (data) {
+                    alert(data);
                     alert(data.Id);
-                    alert(data.Name);
-                    alert(data.Text);
+                },
+                fail: function (data) {
+                    alert("fail")
                 }
 
             });
