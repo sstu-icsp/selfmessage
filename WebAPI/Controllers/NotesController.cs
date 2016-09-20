@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using WebAPI.Models;
 using WebAPI.Models.DTO;
@@ -14,6 +15,7 @@ using WebAPI.Models.Entities;
 
 namespace WebAPI.Controllers
 {
+    [EnableCors(origins: "http://localhost:10002", headers: "*", methods: "*")]
     public class NotesController : ApiController
     {
         private DatabaseContext db = new DatabaseContext();
