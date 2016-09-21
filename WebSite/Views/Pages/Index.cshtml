@@ -25,8 +25,8 @@
             <div class="col-sm-2 left_menu">
                 Left menu
             </div>
-            <div class="col-sm-10 content">
-                content тест
+            <div class="col-sm-10 content" id="content">
+                
             </div>
             <div class="col-sm-12 footer">
                 footer выаф
@@ -41,13 +41,33 @@
                 url: "http://localhost:10001/api/notes",
                 type: "GET",
                 success: function (data) {
-                    alert(data);
-                    alert(data.Id);
+                    for (var i in data) {
+                        var row = data[i];
+
+                        $('#content').append(
+                            '<div class="note">' +
+                                '<h3>' + row.Id + ':  ' + row.Name + '</h3>' +
+                                '<p>' + row.Text + '</p>');
+                        $('#content').append('<p>' +
+                                '<div class="tags">' +
+                                    '<p>Tags:  ')
+                        for (var j in row.Tags)
+                        {
+                            var tag = row.Tags[j];
+
+                            $('#content').append(
+                                    tag.Name + ', ');
+                        }
+                        $('#content').append(
+                                    '</p>' +
+                                '</div>' +
+                            '</div>')
+
+                    }
                 },
                 fail: function (data) {
                     alert("fail")
                 }
-
             });
 
         })
