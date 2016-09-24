@@ -23,7 +23,7 @@
                 Header
             </div>
             <div class="col-sm-2 left_menu">
-                Left menu
+                <input id="submit" type="submit" value="Регистрация" />
             </div>
             <div class="col-sm-10 content" id="content">
                 
@@ -36,6 +36,27 @@
 
     <script>
         $(function () {
+
+            $('#submit').click(function (e) {
+                e.preventDefault();
+                var data = {
+                    Email: "rdima.96@yandex.ru",
+                    Password: "1234_Dd",
+                    ConfirmPassword: "1234_Dd"
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://localhost:10001/api/Account/Register',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(data)
+                }).success(function (data) {
+                    alert("Регистрация пройдена");
+                }).fail(function (data) {
+                    alert("В процесе регистрации возникла ошибка");
+                });
+            });
+
 
             $.ajax({
                 url: "http://localhost:10001/api/notes",

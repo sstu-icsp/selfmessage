@@ -21,7 +21,7 @@ namespace WebAPI.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("SelfMessage", throwIfV1Schema: false)
         {
         }
         
