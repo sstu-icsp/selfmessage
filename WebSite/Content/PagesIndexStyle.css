@@ -1,0 +1,20 @@
+﻿body {
+}
+
+.header {
+    height: 100px;
+    background: #ff6a00;
+}
+
+.left_menu {
+    height: 100px;
+    background: #ff6a00;
+}
+
+.content {
+}
+
+.footer {
+    height: 100px;
+    background: #808080;
+}

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="15538c1038aa463094b93282fd40b949" Name="Diagram1">
+        <EntityTypeShape EntityType="Database.AspNetRoles" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database.AspNetUsers" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database.Notes" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database.Schedules" Width="1.5" PointX="3.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database.Tags" Width="1.5" PointX="3" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database.Tasks" Width="1.5" PointX="6" PointY="4.625" IsExpanded="true" />
+        <AssociationConnector Association="Database.FK_dbo_Tasks_dbo_Schedules_ScheduleId" ManuallyRouted="false" />
+        <AssociationConnector Association="Database.AspNetUserRoles" ManuallyRouted="false" />
+        <AssociationConnector Association="Database.TagNotes" ManuallyRouted="false" />
+        <AssociationConnector Association="Database.TaskNotes" ManuallyRouted="false" />
+        <AssociationConnector Association="Database.UsersNotes" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
