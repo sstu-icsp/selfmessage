@@ -20,7 +20,6 @@ using System.Web.Http.Cors;
 
 namespace WebAPI.Controllers
 {
-    [EnableCors(origins: "http://localhost:10002", headers: "*", methods: "*")]
     [Authorize]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController

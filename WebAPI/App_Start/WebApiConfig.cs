@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
+using System.Web.Http.Cors;
 
 namespace WebAPI
 {
@@ -13,11 +14,20 @@ namespace WebAPI
         public static void Register(HttpConfiguration config)
         {
 
-            config.EnableCors();
+            
+            
+
+
             // Конфигурация и службы Web API
             // Настройка Web API для использования только проверки подлинности посредством маркера-носителя.
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
+
+
+            //Enable cross origin request
+            var cors = new EnableCorsAttribute("http://localhost:10002", "*", "*");
+            config.EnableCors(cors);
+
 
             // Маршруты Web API
             config.MapHttpAttributeRoutes();

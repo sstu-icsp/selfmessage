@@ -24,6 +24,9 @@
             </div>
             <div class="col-sm-2 left_menu">
                 <input id="submit" type="submit" value="Регистрация" />
+                <input id="submitLogin" type="submit" value="Вход" />
+                <input id="submitOut" type="submit" value="Выход" />
+                <input id="test" type="submit" value="test" />
             </div>
             <div class="col-sm-10 content" id="content">
                 
@@ -40,7 +43,7 @@
             $('#submit').click(function (e) {
                 e.preventDefault();
                 var data = {
-                    Email: "rdima.96@yandex.ru",
+                    Email: "rdima.196@yandex.ru",
                     Password: "1234_Dd",
                     ConfirmPassword: "1234_Dd"
                 };
@@ -55,6 +58,34 @@
                 }).fail(function (data) {
                     alert("В процесе регистрации возникла ошибка");
                 });
+            });
+
+
+            var tokenKey = "tokenInfo";
+            $('#submitLogin').click(function (e) {
+                e.preventDefault();
+                var loginData = {
+                    grant_type: 'password',
+                    username: "rdima.196@yandex.ru",
+                    password: "1234_Dd"
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://localhost:10001/Token',
+                    data: loginData
+                }).success(function (data) {
+                    // сохраняем в хранилище sessionStorage токен доступа
+                    sessionStorage.setItem(tokenKey, data.access_token);
+                    console.log(data.access_token);
+                }).fail(function (data) {
+                    alert('При логине возникла ошибка');
+                });
+            });
+
+            $('#logOut').click(function (e) {
+                e.preventDefault();
+                sessionStorage.removeItem(tokenKey);
             });
 
 
@@ -91,6 +122,24 @@
                 }
             });
 
+            $("#test").click(function (e) {
+                e.preventDefault();
+
+                $.ajax({
+                    url: "http://localhost:10001/test",
+                    type: "GET",
+                    beforeSend: function (xhr) {
+                        var token = sessionStorage.getItem(tokenKey);
+                        xhr.setRequestHeader("Authorization", "Bearer " + token);
+                    },
+                    success: function (data) {
+                        alert(data);
+                    },
+                    fail: function (data) {
+                        alert("fail")
+                    }
+                });
+            });
         })
     </script>
 </body>

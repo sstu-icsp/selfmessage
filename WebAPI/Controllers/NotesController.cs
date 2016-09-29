@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -11,11 +12,10 @@ using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using WebAPI.Models;
 using WebAPI.Models.DTO;
-using WebAPI.Models.Entities;
 
 namespace WebAPI.Controllers
 {
-    [EnableCors(origins: "http://localhost:10002", headers: "*", methods: "*")]
+    //[EnableCors(origins: "http://localhost:10002", headers: "*", methods: "*")]
     public class NotesController : ApiController
     {
         private DatabaseContext db = new DatabaseContext();
@@ -32,7 +32,7 @@ namespace WebAPI.Controllers
 
             List<NoteDTO> notes = new List<NoteDTO>();
             
-            foreach(Note note in db.Notes.Include(p=>p.Tags))
+            foreach(Notes note in db.Notes.Include(p=>p.Tags))
             {
                 NoteDTO noteDTO = new NoteDTO();
 
@@ -40,7 +40,7 @@ namespace WebAPI.Controllers
                 noteDTO.Name = note.Name;
                 noteDTO.Text = note.Text;
 
-                foreach(Tag tag in note.Tags)
+                foreach(Tags tag in note.Tags)
                 {
                     noteDTO.Tags.Add(new TagDTO() { Id = tag.Id, Name = tag.Name });
                 }
@@ -48,6 +48,14 @@ namespace WebAPI.Controllers
             }
 
             return notes;
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("Test")]
+        public string Test()
+        {
+            return User.Identity.Name;
         }
 
         /*
