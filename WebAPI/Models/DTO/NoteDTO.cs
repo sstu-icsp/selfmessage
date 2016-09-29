@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using WebAPI.Models.Entities;
 
 namespace WebAPI.Models.DTO
 {
