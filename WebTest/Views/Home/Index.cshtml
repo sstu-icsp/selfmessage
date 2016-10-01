@@ -91,6 +91,11 @@
             $.ajax({
                 url: "http://localhost:10001/api/notes",
                 type: "GET",
+                beforeSend: function (xhr) {
+
+                    var token = sessionStorage.getItem(tokenKey);
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                },
                 success: function (data) {
                     for (var i in data) {
                         var row = data[i];

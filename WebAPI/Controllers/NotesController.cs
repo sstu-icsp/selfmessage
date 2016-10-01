@@ -17,6 +17,7 @@ using WebAPI.Models.Test;
 
 namespace WebAPI.Controllers
 {
+    [Authorize]
     public class NotesController : ApiController
     {
         private Model db = new Model();

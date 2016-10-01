@@ -16,6 +16,7 @@ namespace WebAPI.Models.Test
             AspNetRoles = new HashSet<AspNetRoles>();
 
             Notes = new List<Note>();
+            Tags = new List<Tag>();
         }
 
         public string Id { get; set; }
@@ -42,6 +43,7 @@ namespace WebAPI.Models.Test
         public int AccessFailedCount { get; set; }
 
         public ICollection<Note> Notes { get; set; }
+        public ICollection<Tag> Tags { get; set; }
 
         [Required]
         [StringLength(256)]

@@ -235,6 +235,7 @@
     <Compile Include="Models\Test\AspNetUsers.cs" />
     <Compile Include="Models\Test\Model.cs" />
     <Compile Include="Models\Test\Note.cs" />
+    <Compile Include="Models\Test\Tag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
