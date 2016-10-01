@@ -12,7 +12,6 @@ using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using WebAPI.Models;
 using WebAPI.Models.DTO;
-using WebAPI.Models.Entities;
 using WebAPI.Models.Test;
 
 namespace WebAPI.Controllers
@@ -24,26 +23,35 @@ namespace WebAPI.Controllers
         
 
         // GET: api/Notes
-        public IEnumerable<User> GetNotes()
+        public IEnumerable<NoteDTO> GetNotes()
         {
 
             //Используются DTO объекты data transfer object
             //Если передовать обычные объекты, которые соеденены через include выдает ошибку сериализации
             //DTO объекты в данном случае своебразные представления
 
-            List<User> users = new List<User>();
+            List<NoteDTO> notes = new List<NoteDTO>();
 
-            foreach (AspNetUsers user in db.AspNetUsers)
+            foreach (Note note in db.Notes.Include(p=>p.User).Include(p=>p.Tags)
+                .Where(p=>p.User.UserName == User.Identity.Name))
             {
-                User userTemp = new User();
-                userTemp.Id = user.Id;
-                userTemp.Email = user.Email;
+                NoteDTO tempNote = new NoteDTO();
+                tempNote.Id = note.Id;
+                tempNote.Name = note.Name;
+                tempNote.Text = note.Text;
+                tempNote.DateAdded = note.DataAdded;
 
-                
-                 users.Add(userTemp);
+                foreach(Tag tag in note.Tags)
+                {
+                    TagDTO tempTag = new TagDTO();
+                    tempTag.Id = tag.Id;
+                    tempTag.Name = tag.Name;
+                    tempNote.Tags.Add(tempTag);
+                }
+                notes.Add(tempNote);
             }
 
-            return users;
+            return notes;
         }
 
         [Authorize]
