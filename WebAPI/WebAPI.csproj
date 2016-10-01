@@ -225,17 +225,16 @@
     </Compile>
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Entities\User.cs" />
     <Compile Include="Models\DTO\NoteDTO.cs" />
     <Compile Include="Models\DTO\TagDTO.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\Test\AspNetRoles.cs" />
-    <Compile Include="Models\Test\AspNetUserClaims.cs" />
-    <Compile Include="Models\Test\AspNetUserLogins.cs" />
-    <Compile Include="Models\Test\AspNetUsers.cs" />
-    <Compile Include="Models\Test\Model.cs" />
-    <Compile Include="Models\Test\Note.cs" />
-    <Compile Include="Models\Test\Tag.cs" />
+    <Compile Include="Models\Entities\AspNetRoles.cs" />
+    <Compile Include="Models\Entities\AspNetUserClaims.cs" />
+    <Compile Include="Models\Entities\AspNetUserLogins.cs" />
+    <Compile Include="Models\Entities\AspNetUsers.cs" />
+    <Compile Include="Models\Model.cs" />
+    <Compile Include="Models\Entities\Note.cs" />
+    <Compile Include="Models\Entities\Tag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
