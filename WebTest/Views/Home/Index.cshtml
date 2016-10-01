@@ -97,23 +97,7 @@
 
                         $('#content').append(
                             '<div class="note">' +
-                                '<h3>' + row.Id + ':  ' + row.Name + '</h3>' +
-                                '<p>' + row.Text + '</p>');
-                        $('#content').append('<p>' +
-                                '<div class="tags">' +
-                                    '<p>Tags:  ')
-                        for (var j in row.Tags)
-                        {
-                            var tag = row.Tags[j];
-
-                            $('#content').append(
-                                    tag.Name + ', ');
-                        }
-                        $('#content').append(
-                                    '</p>' +
-                                '</div>' +
-                            '</div>')
-
+                                '<h3>' + row.Id + ':  ' + row.Email + '</h3>');
                     }
                 },
                 fail: function (data) {

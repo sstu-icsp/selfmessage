@@ -13,41 +13,36 @@ using System.Web.Http.Description;
 using WebAPI.Models;
 using WebAPI.Models.DTO;
 using WebAPI.Models.Entities;
+using WebAPI.Models.Test;
 
 namespace WebAPI.Controllers
 {
     public class NotesController : ApiController
     {
-        private SelfmessageContext db = new SelfmessageContext();
-
-
+        private Model db = new Model();
+        
 
         // GET: api/Notes
-        public IEnumerable<NoteDTO> GetNotes()
+        public IEnumerable<User> GetNotes()
         {
 
             //Используются DTO объекты data transfer object
             //Если передовать обычные объекты, которые соеденены через include выдает ошибку сериализации
             //DTO объекты в данном случае своебразные представления
 
-            List<NoteDTO> notes = new List<NoteDTO>();
-            
-            //foreach(Notes note in db.Notes.Include(p=>p.Tags))
-            //{
-            //    NoteDTO noteDTO = new NoteDTO();
+            List<User> users = new List<User>();
 
-            //    noteDTO.Id = note.Id;
-            //    noteDTO.Name = note.Name;
-            //    noteDTO.Text = note.Text;
+            foreach (AspNetUsers user in db.AspNetUsers)
+            {
+                User userTemp = new User();
+                userTemp.Id = user.Id;
+                userTemp.Email = user.Email;
 
-            //    foreach(Tags tag in note.Tags)
-            //    {
-            //        noteDTO.Tags.Add(new TagDTO() { Id = tag.Id, Name = tag.Name });
-            //    }
-            //    notes.Add(noteDTO);
-            //}
+                
+                 users.Add(userTemp);
+            }
 
-            return notes;
+            return users;
         }
 
         [Authorize]

@@ -225,16 +225,16 @@
     </Compile>
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\SelfmessageContext.cs" />
+    <Compile Include="Models\Entities\User.cs" />
     <Compile Include="Models\DTO\NoteDTO.cs" />
     <Compile Include="Models\DTO\TagDTO.cs" />
-    <Compile Include="Models\Entities\AspNetRoles.cs" />
-    <Compile Include="Models\Entities\AspNetUsers.cs" />
-    <Compile Include="Models\Entities\Notes.cs" />
-    <Compile Include="Models\Entities\Schedules.cs" />
-    <Compile Include="Models\Entities\Tags.cs" />
-    <Compile Include="Models\Entities\Tasks.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Test\AspNetRoles.cs" />
+    <Compile Include="Models\Test\AspNetUserClaims.cs" />
+    <Compile Include="Models\Test\AspNetUserLogins.cs" />
+    <Compile Include="Models\Test\AspNetUsers.cs" />
+    <Compile Include="Models\Test\Model.cs" />
+    <Compile Include="Models\Test\Note.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
@@ -256,9 +256,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
