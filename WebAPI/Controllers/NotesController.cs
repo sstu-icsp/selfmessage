@@ -32,20 +32,20 @@ namespace WebAPI.Controllers
 
             List<NoteDTO> notes = new List<NoteDTO>();
             
-            foreach(Notes note in db.Notes.Include(p=>p.Tags))
-            {
-                NoteDTO noteDTO = new NoteDTO();
+            //foreach(Notes note in db.Notes.Include(p=>p.Tags))
+            //{
+            //    NoteDTO noteDTO = new NoteDTO();
 
-                noteDTO.Id = note.Id;
-                noteDTO.Name = note.Name;
-                noteDTO.Text = note.Text;
+            //    noteDTO.Id = note.Id;
+            //    noteDTO.Name = note.Name;
+            //    noteDTO.Text = note.Text;
 
-                foreach(Tags tag in note.Tags)
-                {
-                    noteDTO.Tags.Add(new TagDTO() { Id = tag.Id, Name = tag.Name });
-                }
-                notes.Add(noteDTO);
-            }
+            //    foreach(Tags tag in note.Tags)
+            //    {
+            //        noteDTO.Tags.Add(new TagDTO() { Id = tag.Id, Name = tag.Name });
+            //    }
+            //    notes.Add(noteDTO);
+            //}
 
             return notes;
         }
