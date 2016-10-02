@@ -1,4 +1,4 @@
-namespace WebAPI.Models.Test
+namespace WebAPI.Models.Entities
 {
     using System;
     using System.Collections.Generic;

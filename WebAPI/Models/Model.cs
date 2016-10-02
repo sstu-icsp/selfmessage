@@ -1,9 +1,10 @@
-namespace WebAPI.Models.Test
+namespace WebAPI.Models
 {
     using System;
     using System.Data.Entity;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
+    using Entities;
 
     public partial class Model : DbContext
     {

@@ -12,7 +12,7 @@ using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using WebAPI.Models;
 using WebAPI.Models.DTO;
-using WebAPI.Models.Test;
+using WebAPI.Models.Entities;
 
 namespace WebAPI.Controllers
 {

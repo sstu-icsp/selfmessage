@@ -19,12 +19,13 @@
 
         <div class="container">
             <div class="col-sm-12 header">
-                Header
+                Перед первым использованием надо нажать init чтобы проинициализировать бд.
+                Когда выйдет сообщение об успешном завершение можно нажимать регистрацию, тест и вход, а также заполнять бд
             </div>
             <div class="col-sm-2 left_menu">
                 <input id="submit" type="submit" value="Регистрация" />
                 <input id="submitLogin" type="submit" value="Вход" />
-                <input id="submitOut" type="submit" value="Выход" />
+                <input id="init" type="submit" value="Инициализировать бд" />
                 <input id="test" type="submit" value="test" />
             </div>
             <div class="col-sm-10 content" id="content">
@@ -82,33 +83,20 @@
                 });
             });
 
-            $('#logOut').click(function (e) {
+            $('#init').click(function (e) {
                 e.preventDefault();
-                sessionStorage.removeItem(tokenKey);
-            });
-
-
-            $.ajax({
-                url: "http://localhost:10001/api/notes",
-                type: "GET",
-                beforeSend: function (xhr) {
-
-                    var token = sessionStorage.getItem(tokenKey);
-                    xhr.setRequestHeader("Authorization", "Bearer " + token);
-                },
-                success: function (data) {
-                    for (var i in data) {
-                        var row = data[i];
-
-                        $('#content').append(
-                            '<div class="note">' +
-                                '<h3>' + row.Id + ':  ' + row.Email + '</h3>');
+                $.ajax({
+                    url: "http://localhost:10001/api/init",
+                    type: "GET",
+                    success: function (data) {
+                        alert("Инизиализация бд выполнена")
+                    },
+                    fail: function (data) {
+                        alert("fail")
                     }
-                },
-                fail: function (data) {
-                    alert("fail")
-                }
+                });
             });
+            
 
             $("#test").click(function (e) {
                 e.preventDefault();
@@ -122,6 +110,29 @@
                     },
                     success: function (data) {
                         alert(data);
+                    },
+                    fail: function (data) {
+                        alert("fail")
+                    }
+                });
+
+                $.ajax({
+                    url: "http://localhost:10001/api/notes",
+                    type: "GET",
+                    beforeSend: function (xhr) {
+
+                        var token = sessionStorage.getItem(tokenKey);
+                        xhr.setRequestHeader("Authorization", "Bearer " + token);
+                    },
+                    success: function (data) {
+                        for (var i in data) {
+                            var row = data[i];
+
+                            $('#content').append(
+                                '<div class="note">' +
+                                    '<h3>' + row.Id + ':  ' + row.Name + '</h3> <p>' + row.Text + '</p>'
+                                    + '<p>' + row.DateAdded + '</p>');
+                        }
                     },
                     fail: function (data) {
                         alert("fail")
