@@ -1,0 +1,145 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Selfmessage</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div>
+
+        <div class="container">
+            <div class="col-sm-12 header">
+                Перед первым использованием надо нажать init чтобы проинициализировать бд.
+                Когда выйдет сообщение об успешном завершение можно нажимать регистрацию, тест и вход, а также заполнять бд
+            </div>
+            <div class="col-sm-2 left_menu">
+                <input id="submit" type="submit" value="Регистрация" />
+                <input id="submitLogin" type="submit" value="Вход" />
+                <input id="init" type="submit" value="Инициализировать бд" />
+                <input id="test" type="submit" value="test" />
+            </div>
+            <div class="col-sm-10 content" id="content">
+
+            </div>
+            <div class="col-sm-12 footer">
+                footer выаф
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(function () {
+
+            $('#submit').click(function (e) {
+                e.preventDefault();
+                var data = {
+                    Email: "rdima.196@yandex.ru",
+                    Password: "1234_Dd",
+                    ConfirmPassword: "1234_Dd"
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://localhost:10001/api/Account/Register',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(data)
+                }).success(function (data) {
+                    alert("Регистрация пройдена");
+                }).fail(function (data) {
+                    alert("В процесе регистрации возникла ошибка");
+                });
+            });
+
+
+            var tokenKey = "tokenInfo";
+            $('#submitLogin').click(function (e) {
+                e.preventDefault();
+                var loginData = {
+                    grant_type: 'password',
+                    username: "rdima.196@yandex.ru",
+                    password: "1234_Dd"
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://localhost:10001/Token',
+                    data: loginData
+                }).success(function (data) {
+                    // сохраняем в хранилище sessionStorage токен доступа
+                    sessionStorage.setItem(tokenKey, data.access_token);
+                    console.log(data.access_token);
+                }).fail(function (data) {
+                    alert('При логине возникла ошибка');
+                });
+            });
+
+            $('#init').click(function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url: "http://localhost:10001/api/init",
+                    type: "GET",
+                    success: function (data) {
+                        alert("Инизиализация бд выполнена")
+                    },
+                    fail: function (data) {
+                        alert("fail")
+                    }
+                });
+            });
+            
+
+            $("#test").click(function (e) {
+                e.preventDefault();
+
+                $.ajax({
+                    url: "http://localhost:10001/test",
+                    type: "GET",
+                    beforeSend: function (xhr) {
+                        var token = sessionStorage.getItem(tokenKey);
+                        xhr.setRequestHeader("Authorization", "Bearer " + token);
+                    },
+                    success: function (data) {
+                        alert(data);
+                    },
+                    fail: function (data) {
+                        alert("fail")
+                    }
+                });
+
+                $.ajax({
+                    url: "http://localhost:10001/api/notes",
+                    type: "GET",
+                    beforeSend: function (xhr) {
+
+                        var token = sessionStorage.getItem(tokenKey);
+                        xhr.setRequestHeader("Authorization", "Bearer " + token);
+                    },
+                    success: function (data) {
+                        for (var i in data) {
+                            var row = data[i];
+
+                            $('#content').append(
+                                '<div class="note">' +
+                                    '<h3>' + row.Id + ':  ' + row.Name + '</h3> <p>' + row.Text + '</p>'
+                                    + '<p>' + row.DateAdded + '</p>');
+                        }
+                    },
+                    fail: function (data) {
+                        alert("fail")
+                    }
+                });
+            });
+        })
+    </script>
+</body>
+</html>
