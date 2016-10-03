@@ -109,38 +109,50 @@ namespace WebAPI.Controllers
             }
 
             return StatusCode(HttpStatusCode.NoContent);
-        }
+        }*/
 
         // POST: api/Notes
-        [ResponseType(typeof(Note))]
-        public IHttpActionResult PostNote(Note note)
+        [Authorize]
+        [HttpPost]
+        [Route("api/notes/add")]
+        public IHttpActionResult Add(AddNoteDTO note)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Notes.Add(note);
+            db.Notes.Add(new Note { Text = note.Text, Name = note.Name, DataAdded = DateTime.Today, User = Find() });
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = note.Id }, note);
+            return Ok();
         }
 
-        // DELETE: api/Notes/5
-        [ResponseType(typeof(Note))]
-        public IHttpActionResult DeleteNote(int id)
+        private AspNetUsers Find()
         {
-            Note note = db.Notes.Find(id);
-            if (note == null)
+            for (int i = 0; i < db.AspNetUsers.ToList().Count; i++)
             {
-                return NotFound();
+                if (db.AspNetUsers.ToList()[i].UserName.Equals(User.Identity.Name))
+                    return db.AspNetUsers.ToList()[i];
             }
+            return new AspNetUsers();
+        }
 
-            db.Notes.Remove(note);
-            db.SaveChanges();
+        /* // DELETE: api/Notes/5
+         [ResponseType(typeof(Note))]
+         public IHttpActionResult DeleteNote(int id)
+         {
+             Note note = db.Notes.Find(id);
+             if (note == null)
+             {
+                 return NotFound();
+             }
 
-            return Ok(note);
-        }*/
+             db.Notes.Remove(note);
+             db.SaveChanges();
+
+             return Ok(note);
+         }*/
 
         protected override void Dispose(bool disposing)
         {

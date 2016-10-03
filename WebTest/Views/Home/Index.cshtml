@@ -27,6 +27,9 @@
                 <input id="submitLogin" type="submit" value="Вход" />
                 <input id="init" type="submit" value="Инициализировать бд" />
                 <input id="test" type="submit" value="test" />
+                <input id="add_note" type="submit" value="Добавить запись"/>
+                <textarea cols="40" id='Name'></textarea>
+                <textarea cols="40" rows="3" id='Text'></textarea>
             </div>
             <div class="col-sm-10 content" id="content">
 
@@ -57,6 +60,29 @@
                     alert("Регистрация пройдена");
                 }).fail(function (data) {
                     alert("В процесе регистрации возникла ошибка");
+                });
+            });
+
+            $('#add_note').click(function (e) {
+                e.preventDefault();
+                var data = {
+                    Text: $("#Text").val(),
+                    Name: $("#Name").val()
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://localhost:10001/api/notes/add',
+                    beforeSend: function (xhr) {
+                        var token = sessionStorage.getItem(tokenKey);
+                        xhr.setRequestHeader("Authorization", "Bearer " + token);
+                    },
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(data)
+                }).success(function (data) {
+                    alert("пройдена");
+                }).fail(function (data) {
+                    alert("В процесе возникла ошибка");
                 });
             });
 
