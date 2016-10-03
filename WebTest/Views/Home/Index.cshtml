@@ -27,6 +27,8 @@
                 <input id="submitLogin" type="submit" value="Вход" />
                 <input id="init" type="submit" value="Инициализировать бд" />
                 <input id="test" type="submit" value="test" />
+
+                <input id="gettags" type="submit" value="get all tags" />
             </div>
             <div class="col-sm-10 content" id="content">
 
@@ -39,11 +41,30 @@
 
     <script>
         $(function () {
+            $("#gettags").click(function (e) {
+                e.preventDefault();
+
+                $.ajax({
+                    url: "http://localhost:10001/api/tags",
+                    type: "GET",
+                    beforeSend: function (xhr) {
+                        var token = sessionStorage.getItem(tokenKey);
+                        xhr.setRequestHeader("Authorization", "Bearer " + token);
+                    },
+                    success: function (data) {
+
+                    },
+                    fail: function (data) {
+                        alert("fail")
+                    }
+                })
+            })
+
 
             $('#submit').click(function (e) {
                 e.preventDefault();
                 var data = {
-                    Email: "rdima.196@yandex.ru",
+                    Email: "rdima.1196@yandex.ru",
                     Password: "1234_Dd",
                     ConfirmPassword: "1234_Dd"
                 };
@@ -66,7 +87,7 @@
                 e.preventDefault();
                 var loginData = {
                     grant_type: 'password',
-                    username: "rdima.196@yandex.ru",
+                    username: "rdima.1196@yandex.ru",
                     password: "1234_Dd"
                 };
 
