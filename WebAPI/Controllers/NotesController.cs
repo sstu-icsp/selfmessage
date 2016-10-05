@@ -122,13 +122,20 @@ namespace WebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Notes.Add(new Note { Text = note.Text, Name = note.Name, DataAdded = DateTime.Today, User = Find() });
+            string[] tags =note.Tags.Split(' ');
+            List<Tag> tagList = new List<Tag>();
+            foreach(string tag in tags)
+            {
+                tagList.Add(TagFind(tag));
+            }
+
+            db.Notes.Add(new Note { Text = note.Text, Name = note.Name, DataAdded = DateTime.Today, User = UserFind(), Tags=tagList});
             db.SaveChanges();
 
             return Ok();
         }
 
-        private AspNetUsers Find()
+        private AspNetUsers UserFind()
         {
             for (int i = 0; i < db.AspNetUsers.ToList().Count; i++)
             {
@@ -136,6 +143,17 @@ namespace WebAPI.Controllers
                     return db.AspNetUsers.ToList()[i];
             }
             return new AspNetUsers();
+        }
+
+        private Tag TagFind(string name)
+        {
+            foreach(Tag tag in db.Tags)
+            {
+                if (tag.Name == name)
+                    return tag;
+            }
+
+            return new Tag { Name = name, User = UserFind() };
         }
 
         /* // DELETE: api/Notes/5

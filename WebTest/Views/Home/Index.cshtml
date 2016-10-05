@@ -28,9 +28,10 @@
                 <input id="init" type="submit" value="Инициализировать бд" />
                 <input id="test" type="submit" value="test" />
                 <input id="add_note" type="submit" value="Добавить запись"/>
-                <textarea cols="40" id='Name'></textarea>
-                <textarea cols="40" rows="3" id='Text'></textarea>
-            </div>
+                <p>Название:<textarea cols="40" id='Name'></textarea></p>
+                <p>Текст:<textarea cols="40" rows="3" id='Text'></textarea></p>
+                <p>Тэги:<textarea cols="40" rows="3" id='Tags'></textarea></p>
+</div>
             <div class="col-sm-10 content" id="content">
 
             </div>
@@ -67,7 +68,8 @@
                 e.preventDefault();
                 var data = {
                     Text: $("#Text").val(),
-                    Name: $("#Name").val()
+                    Name: $("#Name").val(),
+                    Tags: $("#Tags").val()
                 };
 
                 $.ajax({
@@ -157,7 +159,10 @@
                             $('#content').append(
                                 '<div class="note">' +
                                     '<h3>' + row.Id + ':  ' + row.Name + '</h3> <p>' + row.Text + '</p>'
-                                    + '<p>' + row.DateAdded + '</p>');
+                                    + '<p>' + row.DateAdded + '</p></div>');
+                            for(i=0;i<row.Tags.length;i++){
+                                $('#content').append(row.Tags[i].Name+' ');
+                            }
                         }
                     },
                     fail: function (data) {
