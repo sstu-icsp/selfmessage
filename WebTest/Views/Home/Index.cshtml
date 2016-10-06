@@ -10,9 +10,7 @@
     <title>Selfmessage</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
     <div>
@@ -31,6 +29,7 @@
                 <p>Название:<textarea cols="40" id='Name'></textarea></p>
                 <p>Текст:<textarea cols="40" rows="3" id='Text'></textarea></p>
                 <p>Тэги:<textarea cols="40" rows="3" id='Tags'></textarea></p>
+                <input id="get_tags" type="submit" value="Вывести тэги"/>
 </div>
             <div class="col-sm-10 content" id="content">
 
@@ -124,7 +123,30 @@
                     }
                 });
             });
-            
+
+
+            $('#get_tags').click(function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url: "http://localhost:10001/api/tags",
+                    type: "GET",
+                    beforeSend: function (xhr) {
+
+                        var token = sessionStorage.getItem(tokenKey);
+                        xhr.setRequestHeader("Authorization", "Bearer " + token);
+                    },
+                    success: function (data) {
+                        for (var i in data) {
+                            var row = data[i];
+                            $('#content').append(
+                                '<div class="note">' + '<h3>' + row.Id + ':  ' + row.Name + '</h3> </div>');
+                        }
+                    },
+                    fail: function (data) {
+                        alert("fail")
+                    }
+                });
+            });
 
             $("#test").click(function (e) {
                 e.preventDefault();

@@ -19,6 +19,7 @@ namespace WebAPI.Controllers
     [Authorize]
     public class NotesController : ApiController
     {
+        //Модель базы данных
         private Model db = new Model();
         
 
@@ -54,6 +55,8 @@ namespace WebAPI.Controllers
             return notes;
         }
 
+
+        //Тестовый метод, для проверки того, какой пользователь сейчас находится в систему
         [Authorize]
         [HttpGet]
         [Route("Test")]
@@ -111,7 +114,7 @@ namespace WebAPI.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }*/
 
-        // POST: api/Notes
+        //Метод добавления записи
         [Authorize]
         [HttpPost]
         [Route("api/notes/add")]
@@ -121,20 +124,27 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            string[] tags =note.Tags.Split(' ');
-            List<Tag> tagList = new List<Tag>();
-            foreach(string tag in tags)
-            {
-                tagList.Add(TagFind(tag));
-            }
-
-            db.Notes.Add(new Note { Text = note.Text, Name = note.Name, DataAdded = DateTime.Today, User = UserFind(), Tags=tagList});
+            db.Notes.Add(new Note { Text = note.Text, Name = note.Name, DataAdded = DateTime.Today, User = UserFind(), Tags=TagSplit(note.Tags)});
             db.SaveChanges();
 
             return Ok();
         }
 
+        //Метод преобразования строки тегов в полноценные объекты
+        //FIXME Надо дописать сплиты и сделать проверку на повторение тега
+        private List<Tag> TagSplit(string tagString)
+        {
+            string[] tags = tagString.Split(' ');
+            tags=tags.Distinct().ToArray();
+            List<Tag> tagList = new List<Tag>();
+            foreach (string tag in tags)
+            {
+                tagList.Add(TagFind(tag));
+            }
+            return tagList;
+        }
+
+        //Метод для поиска пользователя, авторизированного в системе
         private AspNetUsers UserFind()
         {
             for (int i = 0; i < db.AspNetUsers.ToList().Count; i++)
@@ -145,6 +155,7 @@ namespace WebAPI.Controllers
             return new AspNetUsers();
         }
 
+        //Метод поиска тэга по имени, если тег не найден создается новый
         private Tag TagFind(string name)
         {
             foreach(Tag tag in db.Tags)
@@ -153,7 +164,7 @@ namespace WebAPI.Controllers
                     return tag;
             }
 
-            return new Tag { Name = name, User = UserFind() };
+            return new Tag { Name = name};
         }
 
         /* // DELETE: api/Notes/5
