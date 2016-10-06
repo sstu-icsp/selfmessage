@@ -18,6 +18,7 @@ namespace WebAPI.Models
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<Note> Notes { get; set; }
+        public virtual DbSet<Tag> Tags { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AspNetRoles>()

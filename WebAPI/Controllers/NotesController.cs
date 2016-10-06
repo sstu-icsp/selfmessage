@@ -19,10 +19,11 @@ namespace WebAPI.Controllers
     [Authorize]
     public class NotesController : ApiController
     {
+        //Модель базы данных
         private Model db = new Model();
         
 
-        // GET: api/Notes
+        //Вывод всех записей
         public IEnumerable<NoteDTO> GetNotes()
         {
 
@@ -54,6 +55,40 @@ namespace WebAPI.Controllers
             return notes;
         }
 
+
+        //Метод отбора записей по тегу
+        //ВАЖНО! работает через GetNotes, меняешь его, меняется и это
+        [Route("getNotesForTag")]
+        [HttpPost]
+        [Authorize]
+        public IEnumerable<NoteDTO> GetNotesForTag(GetNotesForTagDTO tagDTO)
+        {
+
+            //Используются DTO объекты data transfer object
+            //Если передовать обычные объекты, которые соеденены через include выдает ошибку сериализации
+            //DTO объекты в данном случае своебразные представления
+
+            List<NoteDTO> allNotes=GetNotes().ToList();
+            List<NoteDTO> endNotes = new List<NoteDTO>();
+
+            foreach(NoteDTO note in allNotes)
+            {
+                foreach(TagDTO tag in note.Tags)
+                {
+                    if(tag.Name==tagDTO.Name)
+                    {
+                        endNotes.Add(note);
+                        break;
+                    }
+                }
+            }
+           
+
+            return endNotes;
+        }
+
+
+        //Тестовый метод, для проверки того, какой пользователь сейчас находится в системе
         [Authorize]
         [HttpGet]
         [Route("Test")]
@@ -109,38 +144,76 @@ namespace WebAPI.Controllers
             }
 
             return StatusCode(HttpStatusCode.NoContent);
-        }
+        }*/
 
-        // POST: api/Notes
-        [ResponseType(typeof(Note))]
-        public IHttpActionResult PostNote(Note note)
+        //Метод добавления записи
+        [Authorize]
+        [HttpPost]
+        [Route("api/notes/add")]
+        public IHttpActionResult Add(AddNoteDTO note)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            db.Notes.Add(note);
+            db.Notes.Add(new Note { Text = note.Text, Name = note.Name, DataAdded = DateTime.Today, User = UserFind(), Tags=TagSplit(note.Tags)});
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = note.Id }, note);
+            return Ok();
         }
 
-        // DELETE: api/Notes/5
-        [ResponseType(typeof(Note))]
-        public IHttpActionResult DeleteNote(int id)
+        //Метод преобразования строки тегов в полноценные объекты
+        //FIXME Надо дописать сплиты
+        private List<Tag> TagSplit(string tagString)
         {
-            Note note = db.Notes.Find(id);
-            if (note == null)
+            string[] tags = tagString.Split(' ');
+            tags=tags.Distinct().ToArray();
+            List<Tag> tagList = new List<Tag>();
+            foreach (string tag in tags)
             {
-                return NotFound();
+                tagList.Add(TagFind(tag));
+            }
+            return tagList;
+        }
+
+        //Метод для поиска пользователя, авторизированного в системе
+        private AspNetUsers UserFind()
+        {
+            for (int i = 0; i < db.AspNetUsers.ToList().Count; i++)
+            {
+                if (db.AspNetUsers.ToList()[i].UserName.Equals(User.Identity.Name))
+                    return db.AspNetUsers.ToList()[i];
+            }
+            return new AspNetUsers();
+        }
+
+        //Метод поиска тэга по имени, если тег не найден создается новый
+        private Tag TagFind(string name)
+        {
+            foreach(Tag tag in db.Tags)
+            {
+                if (tag.Name == name)
+                    return tag;
             }
 
-            db.Notes.Remove(note);
-            db.SaveChanges();
+            return new Tag { Name = name};
+        }
 
-            return Ok(note);
-        }*/
+        /* // DELETE: api/Notes/5
+         [ResponseType(typeof(Note))]
+         public IHttpActionResult DeleteNote(int id)
+         {
+             Note note = db.Notes.Find(id);
+             if (note == null)
+             {
+                 return NotFound();
+             }
+
+             db.Notes.Remove(note);
+             db.SaveChanges();
+
+             return Ok(note);
+         }*/
 
         protected override void Dispose(bool disposing)
         {

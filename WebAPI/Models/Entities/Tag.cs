@@ -9,8 +9,6 @@ namespace WebAPI.Models.Entities
     {
         public int Id { get; set; }
         public String Name { get; set; }
-
-        public AspNetUsers User { get; set; }
         public ICollection<Note> Notes { get; set; }
 
         public Tag()
