@@ -23,7 +23,7 @@ namespace WebAPI.Controllers
         private Model db = new Model();
         
 
-        // GET: api/Notes
+        //Вывод всех записей
         public IEnumerable<NoteDTO> GetNotes()
         {
 
@@ -56,7 +56,39 @@ namespace WebAPI.Controllers
         }
 
 
-        //Тестовый метод, для проверки того, какой пользователь сейчас находится в систему
+        //Метод отбора записей по тегу
+        //ВАЖНО! работает через GetNotes, меняешь его, меняется и это
+        [Route("getNotesForTag")]
+        [HttpPost]
+        [Authorize]
+        public IEnumerable<NoteDTO> GetNotesForTag(GetNotesForTagDTO tagDTO)
+        {
+
+            //Используются DTO объекты data transfer object
+            //Если передовать обычные объекты, которые соеденены через include выдает ошибку сериализации
+            //DTO объекты в данном случае своебразные представления
+
+            List<NoteDTO> allNotes=GetNotes().ToList();
+            List<NoteDTO> endNotes = new List<NoteDTO>();
+
+            foreach(NoteDTO note in allNotes)
+            {
+                foreach(TagDTO tag in note.Tags)
+                {
+                    if(tag.Name==tagDTO.Name)
+                    {
+                        endNotes.Add(note);
+                        break;
+                    }
+                }
+            }
+           
+
+            return endNotes;
+        }
+
+
+        //Тестовый метод, для проверки того, какой пользователь сейчас находится в системе
         [Authorize]
         [HttpGet]
         [Route("Test")]
@@ -131,7 +163,7 @@ namespace WebAPI.Controllers
         }
 
         //Метод преобразования строки тегов в полноценные объекты
-        //FIXME Надо дописать сплиты и сделать проверку на повторение тега
+        //FIXME Надо дописать сплиты
         private List<Tag> TagSplit(string tagString)
         {
             string[] tags = tagString.Split(' ');

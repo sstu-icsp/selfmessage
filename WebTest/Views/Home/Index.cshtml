@@ -26,10 +26,12 @@
                 <input id="init" type="submit" value="Инициализировать бд" />
                 <input id="test" type="submit" value="test" />
                 <input id="add_note" type="submit" value="Добавить запись"/>
+                <input id="get_notes_for_tag" type="submit" value="Вывести записи по тегу (123)" />
                 <p>Название:<textarea cols="40" id='Name'></textarea></p>
                 <p>Текст:<textarea cols="40" rows="3" id='Text'></textarea></p>
                 <p>Тэги:<textarea cols="40" rows="3" id='Tags'></textarea></p>
                 <input id="get_tags" type="submit" value="Вывести тэги"/>
+                
 </div>
             <div class="col-sm-10 content" id="content">
 
@@ -140,6 +142,39 @@
                             var row = data[i];
                             $('#content').append(
                                 '<div class="note">' + '<h3>' + row.Id + ':  ' + row.Name + '</h3> </div>');
+                        }
+                    },
+                    fail: function (data) {
+                        alert("fail")
+                    }
+                });
+            });
+
+            $("#get_notes_for_tag").click(function (e) {
+
+                var notesData = {
+                    Name: '123',
+                };
+                $.ajax({
+                    url: "http://localhost:10001/getNotesForTag",
+                    type: "POST",
+                    data:notesData,
+                    beforeSend: function (xhr) {
+
+                        var token = sessionStorage.getItem(tokenKey);
+                        xhr.setRequestHeader("Authorization", "Bearer " + token);
+                    },
+                    success: function (data) {
+                        for (var i in data) {
+                            var row = data[i];
+
+                            $('#content').append(
+                                '<div class="note">' +
+                                    '<h3>' + row.Id + ':  ' + row.Name + '</h3> <p>' + row.Text + '</p>'
+                                    + '<p>' + row.DateAdded + '</p></div>');
+                            for (i = 0; i < row.Tags.length; i++) {
+                                $('#content').append(row.Tags[i].Name + ' ');
+                            }
                         }
                     },
                     fail: function (data) {

@@ -5,6 +5,7 @@ using System.Web;
 using WebAPI.Models;
 using WebAPI.Models.Entities;
 
+//Пока не рабочий класс, в будущем планируется как набор инструметов
 namespace WebAPI.Util
 { 
     public class Tools
