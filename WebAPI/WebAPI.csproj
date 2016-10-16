@@ -244,6 +244,9 @@
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Util\Tools.cs" />
+    <Compile Include="Workers\NoteWorker.cs" />
+    <Compile Include="Workers\TagWorker.cs" />
+    <Compile Include="Workers\UserWorker.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
