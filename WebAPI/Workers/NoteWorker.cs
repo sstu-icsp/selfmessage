@@ -27,6 +27,11 @@ namespace WebAPI.Workers
             return ConvertFromNoteInNoteDto(AllNotes);
         }
 
+        public IEnumerable<NoteDTO> GetAllNoteDtoOfUserByTag(string tagName)
+        {
+            return ConvertFromNoteInNoteDto(GetAllNotesByTag(tagName));
+        }
+
         public void AddNote(AddNoteDTO addNoteDto)
         {
             _db.Notes.Add(new Note
@@ -80,9 +85,11 @@ namespace WebAPI.Workers
             }
         }
 
-        /*private IQueryable<Note> GetAllNotesByTag(string tagName)
+        private IEnumerable<Note> GetAllNotesByTag(string tagName)
         {
-
-        }*/
+            return AllNotes.Where(note => note.Tags
+            .Any(tag => tag.Name.Equals(tagName)))
+            .ToList();
+        }
     }
 }

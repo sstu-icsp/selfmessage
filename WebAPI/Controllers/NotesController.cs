@@ -1,18 +1,8 @@
-﻿using Microsoft.AspNet.Identity;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-using System.Web.Http.Cors;
-using System.Web.Http.Description;
 using WebAPI.Models;
 using WebAPI.Models.DTO;
-using WebAPI.Models.Entities;
 using WebAPI.Workers;
 
 namespace WebAPI.Controllers
@@ -33,6 +23,13 @@ namespace WebAPI.Controllers
             return new NoteWorker(_db, User).GetAllNoteDtoOfUser();
         }
 
+        [Route("bytag")]
+        [HttpGet]
+        public IEnumerable<NoteDTO> GetNotesForTag(string tagName)
+        {
+            return new NoteWorker(_db, User).GetAllNoteDtoOfUserByTag(tagName);
+        }
+
         [Route("add")]
         [HttpPost]
         public IHttpActionResult Add(AddNoteDTO note)
@@ -46,34 +43,6 @@ namespace WebAPI.Controllers
 
             return Ok();
         }
-
-        [Route("bytag")]
-        [HttpGet]
-        public IEnumerable<NoteDTO> GetNotesForTag(GetNotesForTagDTO tagDTO)
-        {
-
-            //Используются DTO объекты data transfer object
-            //Если передовать обычные объекты, которые соеденены через include выдает ошибку сериализации
-            //DTO объекты в данном случае своебразные представления
-
-            List<NoteDTO> allNotes=GetNotes().ToList();
-            List<NoteDTO> endNotes = new List<NoteDTO>();
-
-            foreach(NoteDTO note in allNotes)
-            {
-                foreach(TagDTO tag in note.Tags)
-                {
-                    if(tag.Name==tagDTO.Name)
-                    {
-                        endNotes.Add(note);
-                        break;
-                    }
-                }
-            }
-           
-
-            return endNotes;
-        }*/
 
 
         protected override void Dispose(bool disposing)
