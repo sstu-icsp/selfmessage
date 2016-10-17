@@ -2,4 +2,22 @@
     <h1>Registration Page</h1>
 
     <p>{{ message }}</p>
+
+    <div class="form-group" ng-controller="RegistrationController">
+        <h3>Registration</h3>
+
+        <label for="">Email: </label>
+        <input type="text" class="form-control" ng-model="Email" />
+
+        <label for="">Password: </label>
+        <input type="password" class="form-control" ng-model="Password" />
+
+        <label for="confirmPasswordLogup">Confirm password: </label>
+        <input type="password" class="form-control" ng-model="ConfirmPassword" />
+
+        <br />
+
+        <input type="submit" class="form-control" ng-click="submitRegistrarion()" />
+
+    </div>
 </div>

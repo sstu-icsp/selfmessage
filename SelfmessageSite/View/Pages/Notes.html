@@ -2,4 +2,35 @@
     <h1>Notes Page</h1>
 
     <p>{{ message }}</p>
+
+    <!--Формы для вывода записей-->
+    <div ng-app="app" ng-controller="NotesController">
+        <button ng-click="GetAllData()">Все записи</button> |
+        <input type="text" name="keyword" ng-model="keyword" required />
+        <button ng-click="SearchData()">Поиск по тегу</button>
+        <hr />
+        <div>
+            <div ng-repeat="d in Details">
+                {{ d.Name + ' ' + d.Text + ' '}}
+                <div>
+                    <div ng-repeat="t in d.Tags">
+                        {{ t.Name + ' '}}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p ng-bind="ResponseDetails"></p>
+    </div>
+
+    <!--Формы для ввода новой записи-->
+    <div ng-app="app" ng-controller="NotesController">
+        <p>Name: <input type="text" name="Name" ng-model="Name" required /></p>
+        <p>Text: <input type="text" name="Text" ng-model="Text" required /></p>
+        <p>Tags: <input type="text" name="Tags" ng-model="Tags" required /></p>
+        <button ng-click="SendData()">Submit</button>
+        <hr />
+
+    </div>
+
 </div>

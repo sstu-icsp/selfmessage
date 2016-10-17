@@ -2,4 +2,18 @@
     <h1>LogIn Page</h1>
 
     <p>{{ message }}</p>
+
+    <!--Форма логирования-->
+    <div class="form-group" ng-controller="LogInController">
+        <h3>Login</h3>
+
+        <label for="emailLogin">Email: </label>
+        <input type="text" class="form-control" ng-model="Email">
+
+        <label for="passwordLogin">Password: </label>
+        <input type="password" class="form-control" ng-model="Password" />
+
+        <br />
+        <input type="submit" class="form-control" ng-click="submitLogin()" />
+    </div>
 </div>
