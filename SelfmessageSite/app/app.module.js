@@ -41,17 +41,10 @@ app.controller('NotesController', function ($scope, $http, $log) {
     //Вывод записи по конкретному тегу
     $scope.SearchData = function () {
 
-        var parameters = {
-            keyword: $scope.keyword
-        };
 
-        var notesData = {
-            Name: '123',
-        };
+        var address = 'http://localhost:10001/api/notes/bytag?tagName=' + $scope.keyword;
 
-        var address = 'http://localhost:10001/getNotesForTag?tagName=' + $scope.keyword;
-
-        $http.post(address)
+        $http.get(address)
         .success(function (data, status, headers) {
             $scope.Details = data;
         })
@@ -63,6 +56,25 @@ app.controller('NotesController', function ($scope, $http, $log) {
             $log.error(data);
 
         });
+    };
+    //Добавление новой записи
+    $scope.SendData = function () {
+
+        //Передает элементы Name, Text, Tags
+        $http.post('http://localhost:10001/api/notes/add', {
+            Name: $scope.Name,
+            Text: $scope.Text,
+            Tags: $scope.Tags,
+        }).success(function (data, status, headers) {
+            $scope.PostDataResponse = data;
+        })
+    .error(function (data, status, header) {
+        $scope.ResponseDetails = "Data: " + data +
+            "<hr />status: " + status +
+            "<hr />headers: " + header;
+    });
+
+
     };
 });
 
