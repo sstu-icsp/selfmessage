@@ -25,7 +25,7 @@ namespace WebAPI.Controllers
 
         [Route("bytag")]
         [HttpGet]
-        public IEnumerable<NoteDTO> GetNotesForTag(string tagName)
+        public IEnumerable<NoteDTO> GetNotesByTag(string tagName)
         {
             return new NoteWorker(_db, User).GetAllNoteDtoOfUserByTag(tagName);
         }
