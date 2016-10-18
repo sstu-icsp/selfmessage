@@ -1,23 +1,23 @@
-﻿<div class="jumbotron text-center">
+﻿<div>
+
     <h1>Registration Page</h1>
 
-    <p>{{ message }}</p>
 
-    <div class="form-group" ng-controller="RegistrationController">
+    <div>
         <h3>Registration</h3>
 
         <label for="">Email: </label>
-        <input type="text" class="form-control" ng-model="Email" />
+        <input type="text" ng-model="Email" />
 
         <label for="">Password: </label>
-        <input type="password" class="form-control" ng-model="Password" />
+        <input type="password" ng-model="Password" />
 
         <label for="confirmPasswordLogup">Confirm password: </label>
-        <input type="password" class="form-control" ng-model="ConfirmPassword" />
+        <input type="password" ng-model="ConfirmPassword" />
 
         <br />
 
-        <input type="submit" class="form-control" ng-click="submitRegistrarion()" />
+        <input type="submit" ng-click="submitRegistrarion()" />
 
     </div>
 </div>

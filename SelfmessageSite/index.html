@@ -5,8 +5,8 @@
     <title></title>
     <meta charset="utf-8" />
 
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
+    <!--<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />-->
+    <!--<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />-->
 
     <!-- SPELLS -->
     <!-- load angular via CDN -->
@@ -18,29 +18,27 @@
     <script type="text/javascript" src="app/RegistrationController.js"></script>
 </head>
 
-<body ng-controller="NotesController">
+<body>
     <!-- HEADER AND NAVBAR -->
     <header>
-        <nav class="navbar navbar-default">
-            <div class="container">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="/">Angular Routing Example</a>
+        <nav>
+            <div>
+                <div>
+                    <a href="/">Angular Routing Example</a>
                 </div>
 
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#Notes"><i class="fa fa-home"></i> Notes</a></li>
-                    <li><a href="#LogIn"><i class="fa fa-shield"></i> LogIn</a></li>
-                    <li><a href="#Registration"><i class="fa fa-comment"></i> Registration</a></li>
+                <ul>
+                    <li><a href="#Notes"><i></i> Notes</a></li>
+                    <li><a href="#LogIn"><i></i> LogIn</a></li>
+                    <li><a href="#Registration"><i></i> Registration</a></li>
                 </ul>
             </div>
         </nav>
     </header>
 
-    <!-- MAIN CONTENT AND INJECTED VIEWS -->
-    <div id="main">
-        {{ message }}
-        <!-- angular templating -->
-        <!-- this is where content will be injected -->
+    <!-- Главный блок с информацией -->
+    <div>
+
         <div ng-view></div>
     </div>
 

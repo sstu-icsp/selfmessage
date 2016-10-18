@@ -1,13 +1,11 @@
-﻿<div class="jumbotron text-center">
+﻿<div>
     <h1>Notes Page</h1>
 
-    <p>{{ message }}</p>
-
     <!--Формы для вывода записей-->
-    <div ng-app="app" ng-controller="NotesController">
+    <div ng-app="app">
         <button ng-click="GetAllData()">Все записи</button> |
         <input type="text" name="keyword" ng-model="keyword" required />
-        <button ng-click="SearchData()">Поиск по тегу</button>
+        <button ng-click="SearchData()">Поиск по тегу лалала</button>
         <hr />
         <div>
             <div ng-repeat="d in Details">

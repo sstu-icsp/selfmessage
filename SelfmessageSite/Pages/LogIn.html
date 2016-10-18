@@ -1,19 +1,18 @@
-﻿<div class="jumbotron text-center">
+﻿<div>
     <h1>LogIn Page</h1>
 
-    <p>{{ message }}</p>
 
     <!--Форма логирования-->
-    <div class="form-group" ng-controller="LogInController">
+    <div>
         <h3>Login</h3>
 
         <label for="emailLogin">Email: </label>
-        <input type="text" class="form-control" ng-model="Email">
+        <input type="text" ng-model="Email">
 
         <label for="passwordLogin">Password: </label>
-        <input type="password" class="form-control" ng-model="Password" />
+        <input type="password" ng-model="Password" />
 
         <br />
-        <input type="submit" class="form-control" ng-click="submitLogin()" />
+        <input type="submit" ng-click="submitLogin()" />
     </div>
 </div>
