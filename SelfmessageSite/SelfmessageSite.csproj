@@ -94,6 +94,9 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\LogInController.js" />
+    <Content Include="app\NotesController.js" />
+    <Content Include="app\RegistrationController.js" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -914,9 +917,9 @@
     <None Include="scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="scripts\jquery-1.9.1.js" />
     <Content Include="scripts\jquery-1.9.1.min.js" />
-    <Content Include="View\Pages\LogIn.html" />
-    <Content Include="View\Pages\Notes.html" />
-    <Content Include="View\Pages\Registration.html" />
+    <Content Include="Pages\LogIn.html" />
+    <Content Include="Pages\Notes.html" />
+    <Content Include="Pages\Registration.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
