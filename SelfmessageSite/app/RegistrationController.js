@@ -1,4 +1,5 @@
-﻿app.controller('RegistrationController', function ($scope, $log, $http) {
+﻿
+app.controller('RegistrationController', function ($scope, $log, $http) {
     $scope.message = 'Contact us! JK. This is just a demo.';
     $scope.submitRegistrarion = function () {
         var data = {
@@ -14,3 +15,11 @@
         });
     };
 });
+// ConfirmPassword
+function confirm() {
+    if (frm.confirmPassword.value != frm.password.value) {
+        alert("Пароли не совпадают");
+        return false
+    }
+    return true;
+}
