@@ -1,27 +1,42 @@
-﻿var app = angular.module('app', ['ngRoute',
-    "ngCookies", ]);
+﻿var app = angular.module('app',
+[
+    'ngRoute',
+    "ngCookies",
+]);
 
-app.config(function ($routeProvider) {
+app.config(function($routeProvider) {
     $routeProvider
-    .when('/', {
-        templateUrl: '../Pages/Notes.html',
-        controller: 'NotesController'
-    })
-    .when('/Notes', {
-        templateUrl: '../Pages/Notes.html',
-        controller: 'NotesController'
-    })
-    .when('/LogIn', {
-        templateUrl: '../Pages/LogIn.html',
-        controller: 'LogInController'
-    })
-    .when('/Registration', {
-        templateUrl: '../Pages/Registration.html',
-        controller: 'RegistrationController'
-    })
+        .when('/',
+        {
+            templateUrl: '../Pages/Notes.html',
+            controller: 'NotesController'
+        })
+        .when('/Notes',
+        {
+            templateUrl: '../Pages/Notes.html',
+            controller: 'NotesController'
+        })
+        .when('/LogIn',
+        {
+            templateUrl: '../Pages/LogIn.html',
+            controller: 'LogInController'
+        })
+        .when('/Registration',
+        {
+            templateUrl: '../Pages/Registration.html',
+            controller: 'RegistrationController'
+        });
 });
 
-{
+app.run(function ($http, $cookieStore, $log) {
+
+    //Повтрно авторизирует запросы, если страница была обновлена, а вход уже выполнен
+
+    $log.info("app.run");
+    $http.defaults.headers.common.Authorization = $cookieStore.get("token");
+});
+
+//{
 //app.controller('NotesController', function ($scope, $http, $log) {
 //    // create a message to display in our view
 //    $scope.message = 'Everyone come and see how good I look!';
@@ -79,9 +94,7 @@ app.config(function ($routeProvider) {
 
 //    };
 //});
-}
 
-{
     //app.controller('LogInController', function ($scope, $log, $http, $httpParamSerializerJQLike, $window) {
     //    $scope.message = 'Look! I am an about page.';
     //    $scope.submitLogin = function () {
@@ -106,9 +119,7 @@ app.config(function ($routeProvider) {
     //        });
     //    };
     //});
-}
 
-{
     //app.controller('RegistrationController', function ($scope, $log, $http) {
     //    $scope.message = 'Contact us! JK. This is just a demo.';
     //    $scope.submitRegistrarion = function () {
@@ -125,4 +136,3 @@ app.config(function ($routeProvider) {
     //        });
     //    };
     //});
-}

@@ -1,6 +1,6 @@
 ﻿<div>
 
-<div>
+    <div>
         <h3>Registration</h3>
 
         <form name="frm">
@@ -9,26 +9,25 @@
                     <div>
                         <h3>Registration</h3>
                         <label for="">Email: </label>
-                        <input type="email" name="email" class="form-control" ng-model="user.email" required />
+                        <input type="email" name="email" class="form-control" ng-model="Email" required/>
                         <span ng-show="frm.email.$dirty&& frm.email.$error.required"> Необходимо заполнить !</span>
                         <span ng-show="frm.email.$dirty&& frm.email.$error.email"> Неверный email !</span>
                     </div>
                     <div>
                         <label for="">Password: </label>
-                        <input type="password" name="password" class="form-control" ng-model="user.password" required ng-minlength="6" ng-maxlength="18" />
+                        <input type="password" name="password" class="form-control" ng-model="Password" required ng-minlength="6" ng-maxlength="18"/>
                         <span ng-show="frm.password.$dirty&& frm.password.$error.required">Необходимо заполнить !</span>
                         <span ng-show="frm.password.$dirty&& frm.password.$error.minlength">Длина пароля должна составлять минимум 6 символов !</span>
                         <span ng-show="frm.password.$dirty&& frm.password.$error.maxlength">Длина пароля не должна превышать 18 символов !</span>
                     </div>
                     <div>
                         <label for="confirmPasswordLogup">Confirm password: </label>
-                        <input type="password" name="confirmPassword" class="form-control" ng-model="registration.user.confirmPassword" required />
+                        <input type="password" name="confirmPassword" class="form-control" ng-model="ConfirmPassword" required/>
                         <span ng-show="frm.password.$dirty&& frm.password.$error.confirmPassword">Длина пароля не должна превышать 18 символов !</span>
 
                     </div>
-                    <br />
-                    <input type="submit" class="form-control" ng-click="submitRegistrarion() " onclick="return confirm()" />
-
+                    <br/>
+                    <input type="submit" class="form-control" ng-click="submitRegistrarion() " onclick="return confirm()"/>
                 </div>
             </div>
         </form>

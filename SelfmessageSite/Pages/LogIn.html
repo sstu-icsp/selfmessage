@@ -1,17 +1,25 @@
-﻿<div>
-    <h1>LogIn Page</h1>
+﻿<div class="col-sm-6 col-sm-offset-3">
 
     <!--Форма логирования-->
-    <div>
-        <h3>Login</h3>
+    <hr/>
+    <form class="form-group" name="login_form">
+        <h2 class="text-center">Login</h2>
 
         <label for="emailLogin">Email: </label>
-        <input type="text" ng-model="Email" id="emailLogin">
+        <input type="email" ng-model="Email" id="emailLogin" required class="form-control" name="email">
+        <p ></p>
 
         <label for="passwordLogin">Password: </label>
-        <input type="password" ng-model="Password" id="passwordLogin"/>
+        <input type="password" ng-model="Password" id="passwordLogin" required class="form-control" name="password"/>
 
-        <br />
-        <input type="submit" ng-click="submitLogin()" />
-    </div>
+        <br/>
+        <input type="submit" ng-click="submitLogin()" class="form-control"/>
+        
+        <br/>
+
+        <div ng-show="showMessage" class="alert alert-warning">
+            <p>{{message}}</p>
+        </div>
+    </form>
+    <hr/>
 </div>

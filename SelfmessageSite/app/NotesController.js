@@ -9,11 +9,12 @@
             $scope.Details = data;
         })
         .error(function (data, status, header) {
-            $scope.ResponseDetails = "Data: " + data +
+            //Закоментировал вызывает ошибку
+            /*$scope.ResponseDetails = "Data: " + data +
                 "<br />status: " + status +
                 "<br />headers: " + jsonFilter(header);
 
-            $log.error(data);
+            $log.error(data);*/
         });
     };
     //Вывод записи по конкретному тегу
