@@ -7,6 +7,7 @@ using System.Web;
 using WebAPI.Models;
 using WebAPI.Models.DTO;
 using WebAPI.Models.Entities;
+using WebAPI.Workers.TagSpliters;
 
 namespace WebAPI.Workers
 {
@@ -14,6 +15,7 @@ namespace WebAPI.Workers
     {
         private readonly Model _db;
         private readonly IPrincipal _user;
+
 
         public NoteWorker(Model db, IPrincipal user)
         {

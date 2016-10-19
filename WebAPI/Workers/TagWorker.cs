@@ -5,6 +5,7 @@ using System.Security.Principal;
 using WebAPI.Models;
 using WebAPI.Models.DTO;
 using WebAPI.Models.Entities;
+using WebAPI.Workers.TagSpliters;
 
 namespace WebAPI.Workers
 {
@@ -13,10 +14,28 @@ namespace WebAPI.Workers
         private readonly Model _db;
         private readonly IPrincipal _user;
 
+        private static ITagSplit _tagSplit = new TagSplitBySharpAndSpace();
+
         public TagWorker(Model db, IPrincipal user)
         {
             _db = db;
             _user = user;
+
+        }
+
+        public static void SetSplitTagStringBySharp()
+        {
+            _tagSplit = new TagSplitBySharp();
+        }
+
+        public static void SetSplitTagStringBySpace()
+        {
+            _tagSplit = new TagSplitBySpace();
+        }
+
+        public static void SetSplitTagStringBySharpAndSpace()
+        {
+            _tagSplit = new TagSplitBySharpAndSpace();
         }
 
 
@@ -40,17 +59,14 @@ namespace WebAPI.Workers
 
         public static ICollection<Tag> GetTagsFromString(string tagString, Model db)
         {
-            ICollection<Tag> tags = TagStringSplit(tagString)
+            ICollection<Tag> tags = _tagSplit.TagStringSplit(tagString)
                 .Select(tagName => FindOrCreateTagByName(tagName, db)).ToList();
 
             return tags;
         }
 
 
-        private static IEnumerable<string> TagStringSplit(string tagString)
-        {
-            return tagString.Split(" #".ToCharArray()).Distinct().ToList();
-        }
+        
 
         private static Tag FindOrCreateTagByName(string tagName, Model db)
         {
