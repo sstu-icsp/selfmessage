@@ -25,5 +25,7 @@ function confirm() {
         alert("Пароли не совпадают");
         return false
     }
+    alert("Регистрация прошла успешно");
     return true;
+    
 }

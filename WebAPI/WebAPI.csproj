@@ -242,7 +242,6 @@
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="Util\Tools.cs" />
     <Compile Include="Workers\TagSpliters\ITagSplit.cs" />
     <Compile Include="Workers\NoteWorker.cs" />
     <Compile Include="Workers\TagSpliters\TagSplitBySharp.cs" />
