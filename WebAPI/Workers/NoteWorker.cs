@@ -29,6 +29,13 @@ namespace WebAPI.Workers
             return ConvertFromNoteInNoteDto(AllNotes);
         }
 
+        public IEnumerable<NoteDTO> GetNoteByName(string noteName)
+        {
+            var notes = _db.Notes.Include(p=>p.Tags)
+                    .Where(p => p.Name.Contains(noteName));
+            return ConvertFromNoteInNoteDto(notes);
+        }
+
         public IEnumerable<NoteDTO> GetAllNoteDtoOfUserByTag(string tagName)
         {
             return ConvertFromNoteInNoteDto(GetAllNotesByTag(tagName));

@@ -46,6 +46,13 @@ namespace WebAPI.Controllers
             return Ok();
         }
 
+        [Route("byname")]
+        [HttpGet]
+        public IEnumerable<NoteDTO> GetNoteByName(string noteName)
+        {
+            return new NoteWorker(_db,User).GetNoteByName(noteName);
+        }
+
 
         protected override void Dispose(bool disposing)
         {

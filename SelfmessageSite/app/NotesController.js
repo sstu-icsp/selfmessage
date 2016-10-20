@@ -17,6 +17,26 @@
             $log.error(data);*/
         });
     };
+
+    $scope.SearchNoteByName = function () {
+
+
+        var address = 'http://localhost:10001/api/notes/byname?noteName=' + $scope.keyword;
+
+        $http.get(address)
+        .success(function (data, status, headers) {
+            $scope.Details = data;
+        })
+        .error(function (data, status, header) {
+            $scope.ResponseDetails = "Data: " + data +
+                "<hr />status: " + status +
+                "<hr />headers: " + header;
+
+            $log.error(data);
+
+        });
+    };
+
     //Вывод записи по конкретному тегу
     $scope.SearchData = function () {
 
