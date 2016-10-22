@@ -17,6 +17,7 @@ using WebAPI.Models;
 using WebAPI.Providers;
 using WebAPI.Results;
 using System.Web.Http.Cors;
+using WebAPI.Models.DTO;
 
 namespace WebAPI.Controllers
 {
@@ -52,6 +53,16 @@ namespace WebAPI.Controllers
 
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
+        /*[Route("userinfo")]
+        public UserInfoDto GetUserInfo()
+        {
+            return new UserInfoDto
+            {
+                Name = User.Identity.Name
+            };
+        }*/
+
+        
         // GET api/Account/UserInfo
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("UserInfo")]

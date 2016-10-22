@@ -1,7 +1,14 @@
-﻿app.controller('NotesController', function ($scope, $http, $log) {
+﻿app.controller('NotesController', function ($scope, $http, $log, $rootScope) {
     // create a message to display in our view
     $scope.message = 'Everyone come and see how good I look!';
     $scope.keyword = '';
+
+    //Небольшая настройка роутинга перенаправляет на страницу входа если пользователь не авторизирован
+    if (!$rootScope.isAuth) {
+        window.location = "#/LogIn"
+    }
+
+
     //Вывод ВСЕХ записей
     $scope.GetAllData = function () {
         $http.get('http://localhost:10001/api/notes')

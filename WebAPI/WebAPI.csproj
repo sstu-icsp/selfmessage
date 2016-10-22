@@ -230,6 +230,7 @@
     <Compile Include="Models\DTO\GetNotesForTagDTO.cs" />
     <Compile Include="Models\DTO\NoteDTO.cs" />
     <Compile Include="Models\DTO\TagDTO.cs" />
+    <Compile Include="Models\DTO\UserInfoDto.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Entities\AspNetRoles.cs" />
     <Compile Include="Models\Entities\AspNetUserClaims.cs" />

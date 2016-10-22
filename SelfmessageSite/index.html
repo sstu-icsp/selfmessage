@@ -4,15 +4,15 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Selfmessage</title>
     <meta charset="utf-8"/>
-    
-    
+
+
     <!--Подключение бутсрапа-->
-    <link rel="stylesheet" href="Content/bootstrap.css" />
+    <link rel="stylesheet" href="Content/bootstrap.css"/>
 
     <!--Подключение англуара-->
     <script src="scripts/angular.min.js"></script>
     <script src="scripts/angular-route.min.js"></script>
-    
+
     <!--Подключил библиотеку ангулара для использования куки-->
     <script src="scripts/angular-cookies.js"></script>
 
@@ -20,6 +20,7 @@
     <script type="text/javascript" src="app/NotesController.js"></script>
     <script type="text/javascript" src="app/LogInController.js"></script>
     <script type="text/javascript" src="app/RegistrationController.js"></script>
+    <script type="text/javascript" src="app/AuthBlock.js"></script>
 </head>
 
 <body>
@@ -28,7 +29,7 @@
     <!-- HEADER AND NAVBAR -->
     <!--Header-->
     <header class="col-sm-12 page-header">
-        <nav>
+        <!--<nav>
             <div>
                 <div>
                     <a href="/">Angular Routing Example</a>
@@ -46,16 +47,38 @@
                     </li>
                 </ul>
             </div>
-        </nav>
+        </nav>-->
+
+        <div class="col-sm-10">
+            <h1>Selfmessage</h1>
+        </div>
+        
+        <!--Блок авторизации показывает разные данные в зависимости
+            от того где находиться пользователь и авторизрован он или нет-->
+        <div ng-controller="AuthBlock" class="col-sm-2">
+            <div ng-show="isAuth" class="col-sm-12">
+                <p>{{username}}</p>
+                <a ng-click="logout()">Выход</a>
+            </div>
+            <div ng-show="!isAuth" class="col-sm-12">
+                <p  ng-show="isRegistrationPage()">
+                    <a href="/#LogIn">Login</a>
+                </p>
+                <p  ng-show="isLoginPage()">
+                    <a href="/#Registration">Signup</a>
+                </p>
+            </div>
+        </div>
+
     </header>
 
     <!-- Главный блок с информацией -->
     <div class="col-sm-12">
         <div ng-view></div>
     </div>
-    
+
     <footer class="col-sm-12">
-        <hr />
+        <hr/>
 
         <p class="text-right">by Deadline</p>
     </footer>

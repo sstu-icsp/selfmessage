@@ -94,6 +94,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\AuthBlock.js" />
     <Content Include="app\LogInController.js" />
     <Content Include="app\NotesController.js" />
     <Content Include="app\RegistrationController.js" />
@@ -942,7 +943,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>52427</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:52427/</IISUrl>
+          <IISUrl>http://localhost:5000/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:5000/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
