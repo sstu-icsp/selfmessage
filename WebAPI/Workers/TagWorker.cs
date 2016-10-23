@@ -23,6 +23,7 @@ namespace WebAPI.Workers
 
         }
 
+        //Слеудующие три метода просто меняют стратегию разбиения тэгов
         public static void SetSplitTagStringBySharp()
         {
             _tagSplit = new TagSplitBySharp();
@@ -38,7 +39,7 @@ namespace WebAPI.Workers
             _tagSplit = new TagSplitBySharpAndSpace();
         }
 
-
+        //Метод для получения всех dto объектов тэгов пользователя
         public IEnumerable<TagDTO> GetAllTagDtoOfUser()
         {
             var notes = _db.Notes.Include(p => p.Tags)
@@ -57,6 +58,8 @@ namespace WebAPI.Workers
         }
 
 
+        //Метод возращающий все тэги из строки 
+        //выделяет тэги из строки и находит их в базе данных или создает новый
         public static ICollection<Tag> GetTagsFromString(string tagString, Model db)
         {
             ICollection<Tag> tags = _tagSplit.TagStringSplit(tagString)
@@ -66,8 +69,9 @@ namespace WebAPI.Workers
         }
 
 
-        
 
+        //Метод вызывающий поиск тэгов по названию и если он возврщает null 
+        //создает новый тэг в противном случает отправляет найденный
         private static Tag FindOrCreateTagByName(string tagName, Model db)
         {
             var tag = FindTagByName(tagName, db);
@@ -84,12 +88,13 @@ namespace WebAPI.Workers
             return tag;
         }
 
+        //Метод для нахождения тэгов по имени возврщает null, если тэг не найден
         private static Tag FindTagByName(string tagName, Model db)
         {
             return db.Tags.FirstOrDefault(tag => tag.Name.Equals(tagName));
         }
 
-
+        //Метод для конфертирования объектов из tag в tagdto
         private static IEnumerable<TagDTO> ConvertFromTagInTagDto(IEnumerable<Tag> tags)
         {
             return tags.Select(tag => new TagDTO

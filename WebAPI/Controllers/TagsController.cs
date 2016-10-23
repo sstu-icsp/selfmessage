@@ -12,6 +12,9 @@ namespace WebAPI.Controllers
     {
         private readonly Model _db = new Model();
 
+        //Получение всех тэгов пользователя
+        //api/tags
+        //get
 
         [Route("")]
         [HttpGet]

@@ -62,7 +62,7 @@ namespace WebAPI.Controllers
             };
         }*/
 
-        
+        //Получение информации о пользоавтеле
         // GET api/Account/UserInfo
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("UserInfo")]
