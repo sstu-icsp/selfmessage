@@ -5,13 +5,13 @@ using System.Web;
 
 namespace WebAPI.Models.Entities
 {
-    public class Tag
+    public class Image
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string Link { get; set; }
         public ICollection<Note> Notes { get; set; }
 
-        public Tag()
+        public Image()
         {
             Notes = new List<Note>();
         }

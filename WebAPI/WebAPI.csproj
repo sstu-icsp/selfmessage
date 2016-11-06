@@ -221,6 +221,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\NotesController.cs" />
     <Compile Include="Controllers\TagsController.cs" />
+    <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -231,6 +232,10 @@
     <Compile Include="Models\DTO\NoteDTO.cs" />
     <Compile Include="Models\DTO\TagDTO.cs" />
     <Compile Include="Models\DTO\UserInfoDto.cs" />
+    <Compile Include="Models\Entities\Image.cs" />
+    <Compile Include="Models\Entities\Importance.cs" />
+    <Compile Include="Models\Entities\Task.cs" />
+    <Compile Include="Models\Entities\TaskTheme.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Entities\AspNetRoles.cs" />
     <Compile Include="Models\Entities\AspNetUserClaims.cs" />
