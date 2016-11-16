@@ -36,5 +36,7 @@ namespace WebAPI.Models
                 .WithRequired(e => e.AspNetUsers)
                 .HasForeignKey(e => e.UserId);
         }
+
+        public System.Data.Entity.DbSet<WebAPI.Models.Entities.Task> Tasks { get; set; }
     }
 }

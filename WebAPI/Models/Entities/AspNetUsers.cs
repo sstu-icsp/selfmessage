@@ -16,7 +16,7 @@ namespace WebAPI.Models.Entities
             AspNetRoles = new HashSet<AspNetRoles>();
 
             Notes = new List<Note>();
-            Tags = new List<Tag>();
+            Tasks = new List<Task>();
         }
 
         public string Id { get; set; }
@@ -43,7 +43,7 @@ namespace WebAPI.Models.Entities
         public int AccessFailedCount { get; set; }
 
         public ICollection<Note> Notes { get; set; }
-        public ICollection<Tag> Tags { get; set; }
+        public ICollection<Task> Tasks { get; set; }
 
         [Required]
         [StringLength(256)]

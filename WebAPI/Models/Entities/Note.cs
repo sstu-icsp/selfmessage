@@ -13,10 +13,14 @@ namespace WebAPI.Models.Entities
         public DateTime DataAdded { get; set; }
         public AspNetUsers User { get; set; }
         public ICollection<Tag> Tags { get; set; }
+        public ICollection<Task> Tasks { get; set; }
+        public ICollection<Image> Files { get; set; }
 
         public Note ()
         {
             Tags = new List<Tag>();
+            Tasks = new List<Task>();
+            Files = new List<Image>();
         }
     }
 }

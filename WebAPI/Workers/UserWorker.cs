@@ -16,7 +16,7 @@ namespace WebAPI.Workers
             _user = user;
         }
 
-
+        //Метод возвращающий пользователя по его имени
         public static AspNetUsers GetUserByName(string name, Model db)
         {
             return db.AspNetUsers.First(user => user.UserName.Equals(name));

@@ -23,24 +23,27 @@ namespace WebAPI.Workers
             _user = user;
         }
 
-
+        //Метод для получения всех записей пользователя
         public IEnumerable<NoteDTO> GetAllNoteDtoOfUser()
         {
             return ConvertFromNoteInNoteDto(AllNotes);
         }
 
-        public IEnumerable<NoteDTO> GetNoteByName(string noteName)
+        //Метод для получения всех записей пользователя в которых содержиться строка noteName в имени записи
+        public IEnumerable<NoteDTO> GetNoteDtoByName(string noteName)
         {
             var notes = _db.Notes.Include(p=>p.Tags)
                     .Where(p => p.Name.Contains(noteName));
             return ConvertFromNoteInNoteDto(notes);
         }
 
+        //Метод для получения всех dto тэгов пользователя
         public IEnumerable<NoteDTO> GetAllNoteDtoOfUserByTag(string tagName)
         {
             return ConvertFromNoteInNoteDto(GetAllNotesByTag(tagName));
         }
 
+        //Метод для добавления записи в базу данных
         public void AddNote(AddNoteDTO addNoteDto)
         {
             _db.Notes.Add(new Note
@@ -54,7 +57,7 @@ namespace WebAPI.Workers
             _db.SaveChanges();
         }
 
-
+        //Метод переводящий список объектов note в notedto
         private static IEnumerable<NoteDTO> ConvertFromNoteInNoteDto(IEnumerable<Note> notes)
         {
             ICollection<NoteDTO> dtoNotes = new List<NoteDTO>();
@@ -85,6 +88,7 @@ namespace WebAPI.Workers
             return dtoNotes;
         }
 
+        //Метод для получения всех записей пользователя 
         private IEnumerable<Note> AllNotes
         {
             get
@@ -93,7 +97,7 @@ namespace WebAPI.Workers
                        .Where(p => p.User.UserName == _user.Identity.Name);
             }
         }
-
+        //Метод для получения всех записей пользователя по названию тэга
         private IEnumerable<Note> GetAllNotesByTag(string tagName)
         {
             return AllNotes.Where(note => note.Tags
