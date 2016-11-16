@@ -1,35 +1,42 @@
 ﻿<div>
     <h1>Notes Page</h1>
+    <!--Пока что кнопки.. для вывода всех записей и для добавления новой записи-->
+    <div ng-app="app" class="col-lg-4">
+        <button onclick="document.getElementById('addNoteButton').style.display = 'none', document.getElementById('showNote').style.display = 'inline' " ng-click="GetAllData()">Все записи</button> <br />
+        <button onclick="document.getElementById('addNoteButton').style.display = 'inline', document.getElementById('showNote').style.display = 'none' "> Добавить запись</button>
+         <hr />
+    </div>
+    <!--Поиск по тэгу/имении-->
+    <div ng-app="app" ng-controller="NotesController" class="col-lg-8">
+        <p>
+            Поиск<input type="text" name="keyword" ng-model="keyword" required />
+            <button onclick="document.getElementById('addNoteButton').style.display = 'none',  document.getElementById('showNote').style.display = 'inline' " ng-click="SearchData()">Поиск по тегу лалала</button>
+            <button onclick="document.getElementById('addNoteButton').style.display = 'none', document.getElementById('showNote').style.display = 'inline' " ng-click="SearchNoteByName()">Поиск по названию записи</button>
 
-    <!--Формы для вывода записей-->
-    <div ng-app="app">
-        <button ng-click="GetAllData()">Все записи</button> |
-        <input type="text" name="keyword" ng-model="keyword" required />
-        <button ng-click="SearchData()">Поиск по тегу лалала</button>
-        <button ng-click="SearchNoteByName()">Поиск по названию записи</button>
+        </p>
         <hr />
+        <!--div для добавления записи-->
         <div>
-            <div ng-repeat="d in Details">
-                {{ d.Name + ' ' + d.Text + ' '}}
-                <div>
-                    <div ng-repeat="t in d.Tags">
-                        {{ t.Name + ' '}}
+            <div id="addNoteButton" style="display:none">
+                <p>Name: <input type="text" name="Name" ng-model="Name" required /></p>
+                <p>Text: <input type="text" name="Text" ng-model="Text" required /></p>
+                <p>Tags: <input type="text" name="Tags" ng-model="Tags" required /></p>
+                <button ng-click="SendData()">Добавить</button>
+            </div>
 
+            <!-- div для Вывода на экран-->
+            <div id="showNote" style="display:none">
+                <div ng-repeat="d in Details">
+                    {{ d.Name + ' ' + d.Text + ' '}}
+                    <div>
+                        <div ng-repeat="t in d.Tags">
+                            {{ t.Name + ' '}}
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <hr />
         </div>
-        <p ng-bind="ResponseDetails"></p>
     </div>
-
-    <!--Формы для ввода новой записи-->
-    <div ng-app="app" ng-controller="NotesController">
-        <p>Name: <input type="text" name="Name" ng-model="Name" required /></p>
-        <p>Text: <input type="text" name="Text" ng-model="Text" required /></p>
-        <p>Tags: <input type="text" name="Tags" ng-model="Tags" required /></p>
-        <button ng-click="SendData()">Submit</button>
-        <hr />
-
-    </div>
-
 </div>
