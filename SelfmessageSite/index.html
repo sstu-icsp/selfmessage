@@ -54,17 +54,18 @@
         </div>
         
         <!--Блок авторизации показывает разные данные в зависимости
-            от того где находиться пользователь и авторизрован он или нет-->
+        от того где находиться пользователь и авторизрован он или нет-->
+
         <div ng-controller="AuthBlock" class="col-sm-2">
             <div ng-show="isAuth" class="col-sm-12">
                 <p>{{username}}</p>
                 <a ng-click="logout()">Выход</a>
             </div>
-            <div ng-show="!isAuth" class="col-sm-12">
-                <p  ng-show="isRegistrationPage()">
+            <div  ng-show="!isAuth" class="col-sm-12">
+                <p>
                     <a href="/#LogIn">Login</a>
                 </p>
-                <p  ng-show="isLoginPage()">
+                <p>
                     <a href="/#Registration">Signup</a>
                 </p>
             </div>
