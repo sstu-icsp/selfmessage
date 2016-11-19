@@ -222,6 +222,9 @@
     <Compile Include="Controllers\NotesController.cs" />
     <Compile Include="Controllers\TagsController.cs" />
     <Compile Include="Controllers\TasksController.cs" />
+    <Compile Include="Controllers\TaskThemesController.cs" />
+    <Compile Include="Exceptions\AlreadyExistsException.cs" />
+    <Compile Include="Exceptions\TaskThemeNotExistsException.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -231,6 +234,8 @@
     <Compile Include="Models\DTO\GetNotesForTagDTO.cs" />
     <Compile Include="Models\DTO\NoteDTO.cs" />
     <Compile Include="Models\DTO\TagDTO.cs" />
+    <Compile Include="Models\DTO\TaskTheme\TaskThemeBindingModels.cs" />
+    <Compile Include="Models\DTO\TaskTheme\TaskThemeViewModel.cs" />
     <Compile Include="Models\DTO\UserInfoDto.cs" />
     <Compile Include="Models\Entities\Image.cs" />
     <Compile Include="Models\Entities\Importance.cs" />
@@ -241,12 +246,14 @@
     <Compile Include="Models\Entities\AspNetUserClaims.cs" />
     <Compile Include="Models\Entities\AspNetUserLogins.cs" />
     <Compile Include="Models\Entities\AspNetUsers.cs" />
-    <Compile Include="Models\Model.cs" />
+    <Compile Include="Models\ModelDB.cs" />
     <Compile Include="Models\Entities\Note.cs" />
     <Compile Include="Models\Entities\Tag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
+    <Compile Include="Services\TaskService.cs" />
+    <Compile Include="Services\TaskThemeService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Workers\TagSpliters\ITagSplit.cs" />
     <Compile Include="Workers\NoteWorker.cs" />

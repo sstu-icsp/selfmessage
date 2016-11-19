@@ -6,9 +6,9 @@ namespace WebAPI.Models
     using System.Linq;
     using Entities;
 
-    public partial class Model : DbContext
+    public partial class ModelDB : DbContext
     {
-        public Model()
+        public ModelDB()
             : base("SelfMessage")
         {
         }
@@ -19,6 +19,8 @@ namespace WebAPI.Models
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<Note> Notes { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
+        public virtual DbSet<TaskTheme> TaskThemes { get; set; }
+        
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AspNetRoles>()

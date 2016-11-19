@@ -10,7 +10,7 @@ namespace WebAPI.Controllers
     [Authorize]
     public class TagsController : ApiController
     {
-        private readonly Model _db = new Model();
+        private readonly ModelDB _db = new ModelDB();
 
         //Получение всех тэгов пользователя
         //api/tags
