@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Web.Http;
 using WebAPI.Models;
 using WebAPI.Models.DTO;
@@ -56,6 +58,25 @@ namespace WebAPI.Controllers
             new NoteWorker(_db, User).AddNote(note);
 
             return Ok();
+        }
+
+        //Уделанеи записи по id
+        //api/notes/{id}
+        [Route("{id}")]
+        [HttpDelete]
+        public HttpResponseMessage Delete(int id)
+        {
+            if (new NoteWorker(_db, User).getNoteById(id) == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound, "Запись не найдена");
+
+            if (!ModelState.IsValid)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Невозможно удалить запись");
+            }
+
+            new NoteWorker(_db, User).DeleteNote(id);
+
+            return Request.CreateResponse(HttpStatusCode.OK, "Запись удалена");
         }
 
 

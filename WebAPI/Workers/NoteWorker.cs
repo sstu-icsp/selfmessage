@@ -57,35 +57,54 @@ namespace WebAPI.Workers
             _db.SaveChanges();
         }
 
+        //Метод переводящий объект note в notedto
+        public static NoteDTO ConvertFromNoteInNoteDto(Note note)
+        {
+            var dtoNote = new NoteDTO
+            {
+                Id = note.Id,
+                Name = note.Name,
+                Text = note.Text,
+                DateAdded = note.DataAdded
+            };
+
+            foreach (var tag in note.Tags)
+            {
+                var tempTag = new TagDTO
+                {
+                    Id = tag.Id,
+                    Name = tag.Name
+                };
+                dtoNote.Tags.Add(tempTag);
+            }
+            return dtoNote;
+
+        }
+
         //Метод переводящий список объектов note в notedto
-        private static IEnumerable<NoteDTO> ConvertFromNoteInNoteDto(IEnumerable<Note> notes)
+        public static IEnumerable<NoteDTO> ConvertFromNoteInNoteDto(IEnumerable<Note> notes)
         {
             ICollection<NoteDTO> dtoNotes = new List<NoteDTO>();
 
             foreach (var note in notes)
             {
-                var dtoNote = new NoteDTO
-                {
-                    Id = note.Id,
-                    Name = note.Name,
-                    Text = note.Text,
-                    DateAdded = note.DataAdded
-                };
-
-                foreach (var tag in note.Tags)
-                {
-                    var tempTag = new TagDTO
-                    {
-                        Id = tag.Id,
-                        Name = tag.Name
-                    };
-                    dtoNote.Tags.Add(tempTag);
-                }
-
-                dtoNotes.Add(dtoNote);
+                //НЕ РЕКУРСИЯ вызывается ConvertFromNoteInNoteDto(note) для конвертации одной сущности
+                dtoNotes.Add(ConvertFromNoteInNoteDto(note));
             }
 
             return dtoNotes;
+        }
+
+        //Метод удаления пользователя
+        public void DeleteNote(int id)
+        {
+            _db.Notes.Remove(_db.Notes.Find(id));
+            _db.SaveChanges();
+        }
+
+        public Note getNoteById(int id)
+        {
+            return _db.Notes.FirstOrDefault(p => p.Id == id);
         }
 
         //Метод для получения всех записей пользователя 

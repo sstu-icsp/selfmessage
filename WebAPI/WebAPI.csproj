@@ -219,11 +219,13 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ImportanceController.cs" />
     <Compile Include="Controllers\NotesController.cs" />
     <Compile Include="Controllers\TagsController.cs" />
     <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="Controllers\TaskThemesController.cs" />
     <Compile Include="Exceptions\AlreadyExistsException.cs" />
+    <Compile Include="Exceptions\ImportanceNotExistsException.cs" />
     <Compile Include="Exceptions\TaskThemeNotExistsException.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -232,6 +234,8 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\DTO\AddNoteDTO.cs" />
     <Compile Include="Models\DTO\GetNotesForTagDTO.cs" />
+    <Compile Include="Models\DTO\Importance\ImportanceBindingModel.cs" />
+    <Compile Include="Models\DTO\Importance\ImportanceViewModel.cs" />
     <Compile Include="Models\DTO\NoteDTO.cs" />
     <Compile Include="Models\DTO\TagDTO.cs" />
     <Compile Include="Models\DTO\TaskTheme\TaskThemeBindingModels.cs" />
@@ -252,6 +256,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
+    <Compile Include="Services\ImportanceService.cs" />
     <Compile Include="Services\TaskService.cs" />
     <Compile Include="Services\TaskThemeService.cs" />
     <Compile Include="Startup.cs" />

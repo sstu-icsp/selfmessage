@@ -17,10 +17,15 @@ namespace WebAPI.Models
         public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
+        public virtual DbSet<Image> Images { get; set; }
+        public virtual DbSet<Importance> Importances { get; set; }
         public virtual DbSet<Note> Notes { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
+        public virtual DbSet<Task> Tasks { get; set; }
         public virtual DbSet<TaskTheme> TaskThemes { get; set; }
         
+        
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AspNetRoles>()
@@ -38,7 +43,5 @@ namespace WebAPI.Models
                 .WithRequired(e => e.AspNetUsers)
                 .HasForeignKey(e => e.UserId);
         }
-
-        public System.Data.Entity.DbSet<WebAPI.Models.Entities.Task> Tasks { get; set; }
     }
 }
