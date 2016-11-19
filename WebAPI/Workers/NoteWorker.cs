@@ -13,11 +13,11 @@ namespace WebAPI.Workers
 {
     public class NoteWorker
     {
-        private readonly Model _db;
+        private readonly ModelDB _db;
         private readonly IPrincipal _user;
 
 
-        public NoteWorker(Model db, IPrincipal user)
+        public NoteWorker(ModelDB db, IPrincipal user)
         {
             _db = db;
             _user = user;

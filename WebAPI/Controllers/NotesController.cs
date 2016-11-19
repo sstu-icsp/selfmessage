@@ -12,7 +12,7 @@ namespace WebAPI.Controllers
     public class NotesController : ApiController
     {
         //Модель базы данных
-        private readonly Model _db = new Model();
+        private readonly ModelDB _db = new ModelDB();
 
 
         //Вывод всех записей пользователя

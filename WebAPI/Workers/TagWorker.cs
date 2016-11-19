@@ -11,12 +11,12 @@ namespace WebAPI.Workers
 {
     public class TagWorker
     {
-        private readonly Model _db;
+        private readonly ModelDB _db;
         private readonly IPrincipal _user;
 
         private static ITagSplit _tagSplit = new TagSplitBySharpAndSpace();
 
-        public TagWorker(Model db, IPrincipal user)
+        public TagWorker(ModelDB db, IPrincipal user)
         {
             _db = db;
             _user = user;
@@ -60,7 +60,7 @@ namespace WebAPI.Workers
 
         //Метод возращающий все тэги из строки 
         //выделяет тэги из строки и находит их в базе данных или создает новый
-        public static ICollection<Tag> GetTagsFromString(string tagString, Model db)
+        public static ICollection<Tag> GetTagsFromString(string tagString, ModelDB db)
         {
             ICollection<Tag> tags = _tagSplit.TagStringSplit(tagString)
                 .Select(tagName => FindOrCreateTagByName(tagName, db)).ToList();
@@ -72,7 +72,7 @@ namespace WebAPI.Workers
 
         //Метод вызывающий поиск тэгов по названию и если он возврщает null 
         //создает новый тэг в противном случает отправляет найденный
-        private static Tag FindOrCreateTagByName(string tagName, Model db)
+        private static Tag FindOrCreateTagByName(string tagName, ModelDB db)
         {
             var tag = FindTagByName(tagName, db);
 
@@ -89,7 +89,7 @@ namespace WebAPI.Workers
         }
 
         //Метод для нахождения тэгов по имени возврщает null, если тэг не найден
-        private static Tag FindTagByName(string tagName, Model db)
+        private static Tag FindTagByName(string tagName, ModelDB db)
         {
             return db.Tags.FirstOrDefault(tag => tag.Name.Equals(tagName));
         }
