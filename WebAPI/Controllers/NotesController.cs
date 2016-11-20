@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using WebAPI.Exceptions;
 using WebAPI.Models;
 using WebAPI.Models.DTO;
 using WebAPI.Workers;
@@ -40,13 +41,13 @@ namespace WebAPI.Controllers
 
 
         //Добавления записи пользователю
-        //api/notes/add
+        //url api/notes/
         //post
         //data -----
         //Name - строка с именем
         //Text - строка с текстом записи
         //Tags - строка с тэгам. Тэги разделяются или пробелом или #
-        [Route("add")]
+        [Route("")]
         [HttpPost]
         public IHttpActionResult Add(AddNoteDTO note)
         {
@@ -58,6 +59,33 @@ namespace WebAPI.Controllers
             new NoteWorker(_db, User).AddNote(note);
 
             return Ok();
+        }
+
+        //url api/notes/{id}
+        //тело: Name
+        [HttpPut]
+        [Route("{id}")]
+        public HttpResponseMessage UpdateNote(int id, AddNoteDTO note)
+        {
+            try
+            {
+                if (note == null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, "Пустое тело запроса");
+                }
+
+                new NoteWorker(_db,User).UpdateNote(id, note);
+
+                return Request.CreateResponse(HttpStatusCode.OK, "Запись изменена.");
+            }
+            catch (AlreadyExistsException e)
+            {
+                return Request.CreateResponse(HttpStatusCode.Conflict, e.Message);
+            }
+            catch (NoteNotExistsException e)
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound, e.Message);
+            }
         }
 
         //Уделанеи записи по id

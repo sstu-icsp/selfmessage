@@ -17,8 +17,8 @@ namespace WebAPI
         {
             using (var db = new ModelDB())
             {
-                //Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ModelDB>());
-                Database.SetInitializer(new DropCreateDatabaseAlways<ModelDB>());
+                Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ModelDB>());
+                //Database.SetInitializer(new DropCreateDatabaseAlways<ModelDB>());
                 db.Database.Initialize(false);
             }
 

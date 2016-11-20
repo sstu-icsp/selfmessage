@@ -226,6 +226,7 @@
     <Compile Include="Controllers\TaskThemesController.cs" />
     <Compile Include="Exceptions\AlreadyExistsException.cs" />
     <Compile Include="Exceptions\ImportanceNotExistsException.cs" />
+    <Compile Include="Exceptions\NoteNotExistsException.cs" />
     <Compile Include="Exceptions\TaskThemeNotExistsException.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

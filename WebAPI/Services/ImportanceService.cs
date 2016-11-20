@@ -43,7 +43,7 @@ namespace WebAPI.Services
                 //Проверяем получили ли мы сущность
                 if (importance == null)
                 {
-                    throw new ImportanceNotExistsException("Тема задачи с таким ид не существует");
+                    throw new ImportanceNotExistsException("Важности с таким ид не существует");
                 }
 
                 //Преобразуем сущность в модель
@@ -74,7 +74,7 @@ namespace WebAPI.Services
                 //Проверяем существует ли такая тема задачи
                 if (db.Importances.Any(p => p.Name.Equals(name)))
                 {
-                    throw new AlreadyExistsException("Важность с таким именем уже существует");
+                    throw new AlreadyExistsException("Важности с таким именем уже существует");
                 }
 
                 //Добавляем важность
@@ -103,12 +103,12 @@ namespace WebAPI.Services
 
                 if (importance == null)
                 {
-                    throw new ImportanceNotExistsException("Тема задачи с таким ИД не существует");
+                    throw new ImportanceNotExistsException("Важности с таким ИД не существует");
                 }
 
                 if (db.Importances.Any(p => p.Name == importanceBinding.Name))
                 {
-                    throw new AlreadyExistsException("Тема задачи с таким названием уже существует");
+                    throw new AlreadyExistsException("Важность с таким названием уже существует");
                 }
 
                 importance.Name = importanceBinding.Name;

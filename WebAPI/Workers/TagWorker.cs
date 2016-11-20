@@ -69,6 +69,31 @@ namespace WebAPI.Workers
         }
 
 
+        //Метод удаляющий связи между записями и записью
+        public static void DeleteTagsLinkNoteId(int id, ModelDB db)
+        {
+            var notes = db.Notes.Include(p => p.Tags)
+                .Where(p => p.Id==id);
+
+            foreach(var note in notes)
+            {
+                note.Tags = null;
+            }
+        }
+
+        //Метод удаляющий тэги без связей с записями
+        public static void DeleteTagsNoLinks(ModelDB db)
+        {
+            db.SaveChanges();
+            foreach (var tag in db.Tags.Include(p =>p.Notes))
+            {
+                if (tag.Notes.Count == 0)
+                    db.Tags.Remove(tag);
+            }
+
+            db.SaveChanges();
+
+        }
 
         //Метод вызывающий поиск тэгов по названию и если он возврщает null 
         //создает новый тэг в противном случает отправляет найденный

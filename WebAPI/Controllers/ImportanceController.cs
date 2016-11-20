@@ -15,7 +15,7 @@ namespace WebAPI.Controllers
     {
         private ImportanceService _importanceService = new ImportanceService();
 
-        //uri api/taskthem/
+        //uri api/importance/
         [HttpGet]
         [Route("")]
         public HttpResponseMessage GetAllImportances()
@@ -32,7 +32,7 @@ namespace WebAPI.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
-        //uri api/taskthem/{id}
+        //uri api/importance/{id}
         [HttpGet]
         [Route("{id}")]
         public HttpResponseMessage GetImportance(int id)
@@ -52,7 +52,7 @@ namespace WebAPI.Controllers
         }
 
 
-        //uri api/taskthem/
+        //uri api/importance/
         //тело: Name
         [HttpPost]
         [Route("")]
@@ -74,17 +74,17 @@ namespace WebAPI.Controllers
             try
             {
                 _importanceService.CreateImportance(importance.Name);
-                return Request.CreateResponse(HttpStatusCode.OK, "Тема задачи успешно добавлена");
+                return Request.CreateResponse(HttpStatusCode.OK, "Важность успешно добавлена");
             }
             catch (AlreadyExistsException e)
             {
                 //Если в базе данных уже существует тема задачи с таким именем
-                return Request.CreateResponse(HttpStatusCode.Conflict, "Тема задачи с таким именем уже существует");
+                return Request.CreateResponse(HttpStatusCode.Conflict, "Важность с таким именем уже существует");
             }
         }
 
 
-        //uri api/taskthem/
+        //uri api/importance/{id}
         //тело: Name
         [HttpPut]
         [Route("{id}")]
@@ -111,7 +111,7 @@ namespace WebAPI.Controllers
             }
         }
 
-        //uri api/taskthem/{id}
+        //uri api/importance/{id}
         [HttpDelete]
         [Route("{id}")]
         public HttpResponseMessage DeleteImportance(int id)
@@ -126,7 +126,7 @@ namespace WebAPI.Controllers
             {
                 //Если пользователя не существует в базе данных
                 return Request.CreateResponse(HttpStatusCode.NotFound,
-                    "Тема задачи с таким ид не существует в базе данных");
+                    "Важности с таким ид не существует в базе данных");
             }
         }
     }

@@ -57,6 +57,21 @@ namespace WebAPI.Workers
             _db.SaveChanges();
         }
 
+        //Метод для обновления записи
+        public void UpdateNote(int id, AddNoteDTO addNoteDto)
+        {
+            var note = getNoteById(id);
+            TagWorker.DeleteTagsLinkNoteId(id, _db);
+            TagWorker.DeleteTagsNoLinks(_db);
+            note.Name = addNoteDto.Name;
+            note.Text = addNoteDto.Text;
+            note.Tags = TagWorker.GetTagsFromString(addNoteDto.Tags, _db);
+            note.User = UserWorker.GetUserByName(_user.Identity.Name, _db);
+            note.DataAdded = DateTime.Now;
+
+            _db.SaveChanges();
+        }
+
         //Метод переводящий объект note в notedto
         public static NoteDTO ConvertFromNoteInNoteDto(Note note)
         {
@@ -99,7 +114,9 @@ namespace WebAPI.Workers
         public void DeleteNote(int id)
         {
             _db.Notes.Remove(_db.Notes.Find(id));
+            TagWorker.DeleteTagsNoLinks(_db);
             _db.SaveChanges();
+
         }
 
         public Note getNoteById(int id)
