@@ -1,4 +1,4 @@
-﻿app.controller("LogInController",
+﻿app.controller("LoginConroller",
     function ($scope, $log, $http, $httpParamSerializerJQLike, $cookieStore, $rootScope) {
         $scope.showMessage = false;
 
