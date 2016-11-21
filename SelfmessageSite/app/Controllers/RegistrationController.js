@@ -1,30 +1,36 @@
 ﻿app.controller("RegistrationController",
-    function($scope, $log, $http) {
-        $scope.message = "Contact us! JK. This is just a demo.";
-        $scope.submitRegistrarion = function() {
-            var data = {
-                Email: $scope.Email,
-                Password: $scope.Password,
-                ConfirmPassword: $scope.ConfirmPassword
-            };
+    function($scope, $log, $http, UserService) {
+       
+        if ($rootScope.isAuthorize === true) {
+            window.location = "#/Notes";
+        }
 
-            $http.post('http://localhost:10001/api/Account/Register', data)
-                .success(function(data) {
-                    $log.info("Registration success");
-                })
-                .error(function(data) {
-                    $log.error("Registration error");
-                });
+        $scope.registrationData = {
+            Email: "",
+            Password: "",
+            ConfirmPassword: ""
+        }
+
+        $scope.submitRegistration = function () {
+            if (window.registration_form.checkValidity()) {
+                if ($scope.registrationData.Password === $scope.registrationData.ConfirmPassword) {
+
+                    UserService.registration($scope.registrationData)
+                        .then(
+                            function(data) {
+                                $log.info(data);
+                                $scope.isRegistrationError = false;
+                                $scope.isRegistrationSuccess = true;
+                                $scope.successMessage = "Вы успешно зарегистрировались в системе."
+                            },
+                            function(errorData) {
+                                $scope.isRegistrationError = true;
+                                $scope.errorMessage = "Имя пользователя " + $scope.registrationData.Email + " уже используется";
+                            });
+                } else {
+                    $scope.isRegistrationError = true;
+                    $scope.errorMessage = "Пароль и его подтверждение не совпадают."
+                }
+            }
         };
     });
-
-// ConfirmPassword
-function confirm() {
-    if (frm.confirmPassword.value != frm.password.value) {
-        alert("Пароли не совпадают");
-        return false
-    }
-    alert("Регистрация прошла успешно");
-    return true;
-    
-}

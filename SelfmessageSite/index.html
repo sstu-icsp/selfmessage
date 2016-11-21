@@ -13,9 +13,12 @@
     <script type="text/javascript" src="App/app.module.js"></script>
 
     <script type="text/javascript" src="App/Controllers/LoginController.js"></script>
+    <script type="text/javascript" src="App/Controllers/RegistrationController.js"></script>
+    <script type="text/javascript" src="App/Controllers/NotesController.js"></script>
 
     <script type="text/javascript" src="App/Services/UserService.js"></script>
     <script type="text/javascript" src="App/Services/NoteService.js"></script>
+
 </head>
 <body>
     <div class="containet">
@@ -24,7 +27,17 @@
                 <h1>Selfmessage</h1>
             </div>
             <div class="col-sm-3">
-
+                <div ng-show="isAuthorize" class="col-sm-12">
+                    <p>{{Email}}</p>
+                </div>
+                    <div ng-show="!isAuthorize" class="col-sm-12">
+                        <p >
+                            <a href="/#/">Login</a>
+                        </p>
+                        <p>
+                            <a href="/#/Registration">Signup</a>
+                        </p>
+                    </div>
             </div>
         </div>
         <div class="col-sm-12">
@@ -32,71 +45,9 @@
         </div>
         <div class="col-sm-12">
             <hr/>
+            <p class="text-right">by Deadline</p>
         </div>
     </div>
 </body>
 </html>
 
-<!--<html ng-app="app">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Selfmessage</title>
-    <meta charset="utf-8"/>
-
-
-
-<body>
-<div class="container">
-    <header class="col-sm-12 page-header">
-        <!--<nav>
-            <div>
-                <div>
-                    <a href="/">Angular Routing Example</a>
-                </div>
-
-                <ul>
-                    <li>
-                        <a href="/#Notes"><i></i> Notes</a>
-                    </li>
-                    <li>
-                        <a href="/#LogIn"><i></i> LogIn</a>
-                    </li>
-                    <li>
-                        <a href="/#Registration"><i></i> Registration</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-
-        <div class="col-sm-10">
-            <h1>Selfmessage</h1>
-        </div>
-        
-        <div ng-controller="AuthBlock" class="col-sm-2">
-            <div ng-show="isAuth" class="col-sm-12">
-                <p>{{username}}</p>
-                <a ng-click="logout()">Выход</a>
-            </div>
-            <div ng-show="!isAuth" class="col-sm-12">
-                <p  ng-show="isRegistrationPage()">
-                    <a href="/#LogIn">Login</a>
-                </p>
-                <p  ng-show="isLoginPage()">
-                    <a href="/#Registration">Signup</a>
-                </p>
-            </div>
-        </div>
-
-    </header>
-    <div class="col-sm-12">
-        <div ng-view></div>
-    </div>
-
-    <footer class="col-sm-12">
-        <hr/>
-
-        <p class="text-right">by Deadline</p>
-    </footer>
-</div>
-</body>
-</html>-->

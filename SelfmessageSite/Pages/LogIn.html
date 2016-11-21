@@ -6,19 +6,18 @@
         <h2 class="text-center">Login</h2>
 
         <label for="emailLogin">Email: </label>
-        <input type="email" ng-model="Email" id="emailLogin" required class="form-control" name="email">
-        <p ></p>
+        <input type="email" ng-model="loginData.Username" id="emailLogin" required class="form-control" name="email">
 
         <label for="passwordLogin">Password: </label>
-        <input type="password" ng-model="Password" id="passwordLogin" required class="form-control" name="password"/>
+        <input type="password" ng-model="loginData.Password" id="passwordLogin" required class="form-control" name="password"/>
 
         <br/>
         <input type="submit" ng-click="submitLogin()" class="form-control"/>
         
         <br/>
 
-        <div ng-show="showMessage" class="alert alert-warning">
-            <p>{{message}}</p>
+        <div ng-show="isLoginError" class="alert alert-warning">
+            <p>{{errorMessage}}</p>
         </div>
     </form>
     <hr/>

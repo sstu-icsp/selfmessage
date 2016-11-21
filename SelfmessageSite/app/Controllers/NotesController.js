@@ -1,11 +1,7 @@
 ﻿app.controller('NotesController', function ($scope, $http, $log, $rootScope) {
-    // create a message to display in our view
-    $scope.message = 'Everyone come and see how good I look!';
-    $scope.keyword = '';
-
-    //Небольшая настройка роутинга перенаправляет на страницу входа если пользователь не авторизирован
-    if (!$rootScope.isAuth) {
-        window.location = "#/LogIn"
+    
+    if ($rootScope.isAuthorize !== true) {
+        window.location = "#/";
     }
 
 

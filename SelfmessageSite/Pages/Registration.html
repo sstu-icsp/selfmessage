@@ -1,35 +1,30 @@
-﻿<div>
+﻿<div class="col-sm-6 col-sm-offset-3">
 
-    <div>
-        <h3>Registration</h3>
+    <!--Форма логирования-->
+    <hr />
+    <form class="form-group" name="registration_form">
+        <h2 class="text-center">Login</h2>
 
-        <form name="frm">
-            <div class="col-sm-5">
-                <div class="form-group" ng-controller="RegistrationController">
-                    <div>
-                        <h3>Registration</h3>
-                        <label for="">Email: </label>
-                        <input type="email" name="email" class="form-control" ng-model="Email" required/>
-                        <span ng-show="frm.email.$dirty&& frm.email.$error.required"> Необходимо заполнить !</span>
-                        <span ng-show="frm.email.$dirty&& frm.email.$error.email"> Неверный email !</span>
-                    </div>
-                    <div>
-                        <label for="">Password: </label>
-                        <input type="password" name="password" class="form-control" ng-model="Password" required ng-minlength="6" ng-maxlength="18"/>
-                        <span ng-show="frm.password.$dirty&& frm.password.$error.required">Необходимо заполнить !</span>
-                        <span ng-show="frm.password.$dirty&& frm.password.$error.minlength">Длина пароля должна составлять минимум 6 символов !</span>
-                        <span ng-show="frm.password.$dirty&& frm.password.$error.maxlength">Длина пароля не должна превышать 18 символов !</span>
-                    </div>
-                    <div>
-                        <label for="confirmPasswordLogup">Confirm password: </label>
-                        <input type="password" name="confirmPassword" class="form-control" ng-model="ConfirmPassword" required/>
-                        <span ng-show="frm.password.$dirty&& frm.password.$error.confirmPassword">Длина пароля не должна превышать 18 символов !</span>
+        <label for="emailRegistration">Email: </label>
+        <input type="email" ng-model="registrationData.Email" id="emailRegistration" required class="form-control" name="email">
 
-                    </div>
-                    <br/>
-                    <input type="submit" class="form-control" ng-click="submitRegistrarion() " onclick="return confirm()"/>
-                </div>
-            </div>
-        </form>
-    </div>
+        <label for="passwordRegistration">Password: </label>
+        <input type="password" ng-model="registrationData.Password" id="passwordRegistration" required class="form-control" name="password" />
+
+        <label for="passwordRegistration">Password: </label>
+        <input type="password" ng-model="registrationData.ConfirmPassword" id="ConfirmPasswordRegistration" required class="form-control" name="password" />
+
+        <br />
+        <input type="submit" ng-click="submitRegistration()" class="form-control" />
+
+        <br />
+
+        <div ng-show="isRegistrationError" class="alert alert-warning">
+            <p>{{errorMessage}}</p>
+        </div>
+        <div ng-show="isRegistrationSuccess" class="alert alert-success">
+            <p>{{successMessage}}</p>
+        </div>
+    </form>
+    <hr />
 </div>
