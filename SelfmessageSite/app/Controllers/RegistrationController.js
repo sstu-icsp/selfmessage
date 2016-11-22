@@ -1,9 +1,13 @@
 ﻿app.controller("RegistrationController",
-    function($scope, $log, $http, UserService) {
+    function($scope, $log, $http, UserService, $rootScope) {
        
         if ($rootScope.isAuthorize === true) {
             window.location = "#/Notes";
         }
+
+
+        $scope.isRegistrationError = false;
+        $scope.isRegistrationSuccess = false;
 
         $scope.registrationData = {
             Email: "",
