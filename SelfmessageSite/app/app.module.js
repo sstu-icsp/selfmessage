@@ -42,8 +42,23 @@ app.run(function ($http, $cookieStore, $log, UserService, $rootScope) {
             },
             function () {
                 $rootScope.isAuthorize = false;
-                window.location = "#/";
+                if (window.location != "#/Registration") {
+                    window.location = "#/";
+                }
     });
+
+
+
+    $rootScope.logout = function () {
+        $log.debug("logout has been click");
+        $rootScope.isAuthorize = false;
+        $rootScope.Email = "";
+
+
+        $cookieStore.put("token", "");
+
+        window.location = "#/";
+    }
 
     $log.debug("App.run end");
 });

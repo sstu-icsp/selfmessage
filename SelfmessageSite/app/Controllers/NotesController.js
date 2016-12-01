@@ -1,81 +1,65 @@
-﻿app.controller('NotesController', function ($scope, $http, $log, $rootScope) {
+﻿app.controller('NotesController',
+    function ($scope, $http, $log, $rootScope, NoteService) {
     
     if ($rootScope.isAuthorize !== true) {
         window.location = "#/";
     }
 
-
-    //Вывод ВСЕХ записей
-    $scope.GetAllData = function () {
-        $http.get('http://localhost:10001/api/notes')
-        .success(function (data, status, headers) {
-            $scope.Details = data;
-        })
-        .error(function (data, status, header) {
-            //Закоментировал вызывает ошибку
-            /*$scope.ResponseDetails = "Data: " + data +
-                "<br />status: " + status +
-                "<br />headers: " + jsonFilter(header);
-
-            $log.error(data);*/
-        });
-    };
-
-    $scope.SearchNoteByName = function () {
+    NoteService.getAllData()
+        .then(
+            function (data) {
+                $log.info(data);
+                $scope.Details = data.reverse();
+            },
+            function (errorData) {
+                $scope.errorMessage = errorData.data.error_description;
+            });
 
 
-        var address = 'http://localhost:10001/api/notes/byname?noteName=' + $scope.keyword;
-
-        $http.get(address)
-        .success(function (data, status, headers) {
-            $scope.Details = data;
-        })
-        .error(function (data, status, header) {
-            $scope.ResponseDetails = "Data: " + data +
-                "<hr />status: " + status +
-                "<hr />headers: " + header;
-
-            $log.error(data);
-
-        });
-    };
-
-    //Вывод записи по конкретному тегу
-    $scope.SearchData = function () {
+    $scope.getAllData = function () {
+        NoteService.getAllData()
+        .then(
+            function (data) {
+                $log.info(data);
+                $scope.Details = data.reverse();
+            },
+            function (errorData) {
+                $scope.errorMessage = errorData.data.error_description;
+            });
+    }
+    
 
 
-        var address = 'http://localhost:10001/api/notes/bytag?tagName=' + $scope.keyword;
 
-        $http.get(address)
-        .success(function (data, status, headers) {
-            $scope.Details = data;
-        })
-        .error(function (data, status, header) {
-            $scope.ResponseDetails = "Data: " + data +
-                "<hr />status: " + status +
-                "<hr />headers: " + header;
+    $scope.noteData = {
+        Name: "",
+        Tags: "",
+        Text: ""
+    }
 
-            $log.error(data);
+    $scope.sendData = function () {
+        NoteService.sendData($scope.noteData)
+        .then(
+            function (data) {
+                $log.info(data);
+                $scope.PostDaraResponse = data;
+                $scope.noteData = {};
 
-        });
-    };
-    //Добавление новой записи
-    $scope.SendData = function () {
+                NoteService.getAllData()
+                    .then(
+                        function (data) {
+                            $log.info(data);
+                            $scope.Details = data.reverse();;
+                        },
+                        function (errorData) {
+                            $scope.errorMessage = errorData.data.error_description;
+                        });
 
-        //Передает элементы Name, Text, Tags
-        $http.post('http://localhost:10001/api/notes/add', {
-            Name: $scope.Name,
-            Text: $scope.Text,
-            Tags: $scope.Tags,
-        }).success(function (data, status, headers) {
-            $scope.PostDataResponse = data;
-        })
-    .error(function (data, status, header) {
-        $scope.ResponseDetails = "Data: " + data +
-            "<hr />status: " + status +
-            "<hr />headers: " + header;
-    });
+            },
+            function (errorData) {
+                $scope.errorMessage = errorData.data.error_description;
+            }
+        );
+    }
 
-
-    };
 });

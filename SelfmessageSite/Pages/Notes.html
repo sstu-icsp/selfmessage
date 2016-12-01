@@ -1,42 +1,100 @@
-﻿<div>
-    <h1>Notes Page</h1>
-    <!--Пока что кнопки.. для вывода всех записей и для добавления новой записи-->
-    <div ng-app="app" class="col-lg-4">
-        <button onclick="document.getElementById('addNoteButton').style.display = 'none', document.getElementById('showNote').style.display = 'inline' " ng-click="GetAllData()">Все записи</button> <br />
-        <button onclick="document.getElementById('addNoteButton').style.display = 'inline', document.getElementById('showNote').style.display = 'none' "> Добавить запись</button>
-         <hr />
-    </div>
-    <!--Поиск по тэгу/имении-->
-    <div ng-app="app" ng-controller="NotesController" class="col-lg-8">
-        <p>
-            Поиск<input type="text" name="keyword" ng-model="keyword" required />
-            <button onclick="document.getElementById('addNoteButton').style.display = 'none',  document.getElementById('showNote').style.display = 'inline' " ng-click="SearchData()">Поиск по тегу лалала</button>
-            <button onclick="document.getElementById('addNoteButton').style.display = 'none', document.getElementById('showNote').style.display = 'inline' " ng-click="SearchNoteByName()">Поиск по названию записи</button>
+﻿<div ng-app="app">
+    <div class="row">
 
-        </p>
-        <hr />
-        <!--div для добавления записи-->
-        <div>
-            <div id="addNoteButton" style="display:none">
-                <p>Name: <input type="text" name="Name" ng-model="Name" required /></p>
-                <p>Text: <input type="text" name="Text" ng-model="Text" required /></p>
-                <p>Tags: <input type="text" name="Tags" ng-model="Tags" required /></p>
-                <button ng-click="SendData()">Добавить</button>
-            </div>
+        <div class="col-sm-2">
 
-            <!-- div для Вывода на экран-->
-            <div id="showNote" style="display:none">
-                <div ng-repeat="d in Details">
-                    {{ d.Name + ' ' + d.Text + ' '}}
-                    <div>
-                        <div ng-repeat="t in d.Tags">
-                            {{ t.Name + ' '}}
-                        </div>
+            <nav class="nav-sidebar">
+                <ul class="nav">
+                    <li class="active"><a href="javascript:;">Your notes</a></li>
+                    <li><a href="javascript:;">Daily</a></li>
+                    <li><a href="javascript:;">About</a></li>
+                    <li><a href="javascript:;">FAQ</a></li>
+                    <li class="nav-divider"></li>
+                </ul>
+            </nav>
+
+
+        </div>
+        <div class="col-sm-10">
+            <div class="row">
+                <br>
+                <div class="col-sm-2">
+                    <h5>Key word</h5>
+                </div>
+                <div class="col-sm-8">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search for...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-success" ng-click="SearchData()">Find Note</button>
+                        </span>
+                        
                     </div>
                 </div>
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-primary" ng-click="setVis = !setVis">Add Note</button>
+                </div>
+            </div>
+            <br>
+
+
+            <div ng-show="setVis">
+                <form class="form-horizontal" name="addNoteForm">
+                    <div class="well well-sm">
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">Название</label>
+                            <div class="col-xs-10">
+                                <input required class="form-control" placeholder="Название" ng-model="noteData.Name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">Текст</label>
+                            <div class="col-xs-10">
+                                <input required class="form-control" placeholder="Текст" ng-model="noteData.Text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">Теги</label>
+                            <div class="col-xs-10">
+                                <input class="form-control" placeholder="Перечислите здесь ваши теги" ng-model="noteData.Tags">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-offset-2 col-sm-10">
+                                <button ng-click="sendData()" class="btn btn-primary">Добавить</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
 
-            <hr />
+            <div id="showNote">
+                <div ng-repeat="d in Details">
+                    <form class="form-horizontal">
+                        <div class="well well-sm">
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">Название</label>
+                                <div class="col-xs-10">
+                                    {{d.Name}}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">Текст</label>
+                                <div class="col-xs-10">
+                                    {{d.Text}}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">Теги</label>
+                                <div class="col-xs-10">
+                                    <div ng-repeat="t in d.Tags">
+                                        {{'  ' + t.Name}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>
