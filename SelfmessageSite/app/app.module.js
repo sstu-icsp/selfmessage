@@ -20,7 +20,12 @@ app.config(function($routeProvider) {
         {
             templateUrl: "../Pages/Notes.html",
             controller: "NotesController"
-        });
+        })
+    .when("/Tasks",
+    {
+        templateUrl: "../Pages/Tasks.html",
+        controller: "TasksController"
+    });
 });
 
 app.run(function ($http, $cookieStore, $log, UserService, $rootScope) {
