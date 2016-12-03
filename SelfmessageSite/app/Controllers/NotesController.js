@@ -28,6 +28,25 @@
             });
     }
     
+    $scope.deleteNote = function (id) {
+        NoteService.deleteNote(id)
+        .then(
+            function (data) {
+                $log.info(data);
+                NoteService.getAllData()
+                    .then(
+                        function (data) {
+                            $log.info(data);
+                            $scope.Details = data.reverse();;
+                        },
+                        function (errorData) {
+                            $scope.errorMessage = errorData.data.error_description;
+                        });
+            },
+            function (errorData) {
+                $scope.errorMessage = errorData.data.error_description;
+            });
+    }
 
 
 
@@ -61,5 +80,8 @@
             }
         );
     }
+
+    
+
 
 });

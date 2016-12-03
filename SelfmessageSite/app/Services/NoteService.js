@@ -6,7 +6,8 @@
 
     var factory = {
         getAllData: getAllData,
-        sendData: sendData
+        sendData: sendData,
+        deleteNote: deleteNote
     };
 
     return factory;
@@ -30,6 +31,25 @@
         return defered.promise;
     };
 
+    
+    //Уделанеи записи по id
+    //api/notes/{id}
+    function deleteNote(id) {
+        var defered = $q.defer();
+        $http.delete(REST_SERVICE_URI + 'api/notes/'+id)
+            .then(
+                function (response) {
+                    $log.debug(response);
+                    defered.resolve(response.data);
+                },
+                function (errorResponse) {
+                    $log.debug(errorResponse);
+                    defered.reject(errorResponse);
+                }
+
+            );
+        return defered.promise;
+    };
    
 
     //Добавление новой записи
@@ -49,6 +69,7 @@
         return defered.promise;
     };
 
+    
 
-        function
+        
 });

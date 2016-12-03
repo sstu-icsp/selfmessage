@@ -62,10 +62,13 @@ namespace WebAPI.Workers
         //выделяет тэги из строки и находит их в базе данных или создает новый
         public static ICollection<Tag> GetTagsFromString(string tagString, ModelDB db)
         {
-            ICollection<Tag> tags = _tagSplit.TagStringSplit(tagString)
+            if (!tagString.Equals(""))
+            {
+                ICollection<Tag> tags = _tagSplit.TagStringSplit(tagString)
                 .Select(tagName => FindOrCreateTagByName(tagName, db)).ToList();
-
-            return tags;
+                return tags;
+            }
+            else return null;
         }
 
 
