@@ -15,6 +15,7 @@
     <script type="text/javascript" src="App/Controllers/LoginController.js"></script>
     <script type="text/javascript" src="App/Controllers/RegistrationController.js"></script>
     <script type="text/javascript" src="App/Controllers/NotesController.js"></script>
+    <script type="text/javascript" src="App/Controllers/TasksController.js"></script>
 
     <script type="text/javascript" src="App/Services/UserService.js"></script>
     <script type="text/javascript" src="App/Services/NoteService.js"></script>
@@ -42,8 +43,20 @@
             </div>
         </div>
         <div class="col-sm-12">
-            <div ng-view></div>
+            <div class="col-sm-2">
+                <nav class="nav-sidebar">
+                    <ul class="nav">
+                        <li><a href="/#/Tasks">Tasks</a></li>
+                        <li><a href="/#/Notes">Notes</a></li>
+                        <li class="nav-divider"></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-sm-10">
+                <div ng-view></div>
+            </div>
         </div>
+        <div class="clearfix"></div>
         <div class="col-sm-12">
             <hr/>
             <p class="text-right">by Deadline</p>

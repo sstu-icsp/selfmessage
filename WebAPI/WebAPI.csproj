@@ -219,6 +219,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ImagesDmitriyController.cs" />
     <Compile Include="Controllers\ImportanceController.cs" />
     <Compile Include="Controllers\NotesController.cs" />
     <Compile Include="Controllers\TagsController.cs" />
@@ -286,6 +287,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="Views\Tags\" />
   </ItemGroup>
   <ItemGroup>
@@ -314,6 +316,8 @@
           <DevelopmentServerPort>50671</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:9343</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:9343/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
