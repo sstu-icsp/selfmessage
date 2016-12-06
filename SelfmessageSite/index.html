@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>NoteApp</title>
+    <link rel="stylesheet" href="Content/bootstrap.css" />
+
+
+    <script type="text/javascript" src="Scripts/angular.js"></script>
+    <script type="text/javascript" src="Scripts/angular-route.js"></script>
+    <script type="text/javascript" src="Scripts/angular-cookies.js"></script>
+
+    <script type="text/javascript" src="App/app.module.js"></script>
+
+    <script type="text/javascript" src="App/Controllers/LoginController.js"></script>
+    <script type="text/javascript" src="App/Controllers/RegistrationController.js"></script>
+    <script type="text/javascript" src="App/Controllers/NotesController.js"></script>
+    <script type="text/javascript" src="App/Controllers/TasksController.js"></script>
+
+    <script type="text/javascript" src="App/Services/UserService.js"></script>
+    <script type="text/javascript" src="App/Services/NoteService.js"></script>
+
+</head>
+<body>
+    <div class="container">
+        <div class="page-header col-sm-12">
+            <div class="col-sm-9">
+                <h1>Selfmessage</h1>
+            </div>
+            <div class="col-sm-3">
+                <div ng-show="isAuthorize" class="col-sm-12">
+                    <p>{{Email}}</p>
+                    <p><a ng-click="logout()">Logout</a></p>
+                </div>
+                    <div ng-show="!isAuthorize" class="col-sm-12">
+                        <p >
+                            <a href="/#/">Login</a>
+                        </p>
+                        <p>
+                            <a href="/#/Registration">Signup</a>
+                        </p>
+                    </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="col-sm-2">
+                <nav class="nav-sidebar">
+                    <ul class="nav">
+                        <li><a href="/#/Tasks">Tasks</a></li>
+                        <li><a href="/#/Notes">Notes</a></li>
+                        <li class="nav-divider"></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-sm-10">
+                <div ng-view></div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-sm-12">
+            <hr/>
+            <p class="text-right">by Deadline</p>
+        </div>
+    </div>
+</body>
+</html>
+

@@ -13,11 +13,6 @@ namespace WebAPI
     {
         public static void Register(HttpConfiguration config)
         {
-
-            
-            
-
-
             // Конфигурация и службы Web API
             // Настройка Web API для использования только проверки подлинности посредством маркера-носителя.
             config.SuppressDefaultHostAuthentication();
@@ -25,9 +20,7 @@ namespace WebAPI
 
 
             //Enable cross origin request
-            var cors = new EnableCorsAttribute("http://localhost:10002", "*", "*");
-            config.EnableCors(cors);
-
+           
 
             // Маршруты Web API
             config.MapHttpAttributeRoutes();

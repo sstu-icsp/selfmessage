@@ -1,0 +1,30 @@
+﻿<div class="col-sm-6 col-sm-offset-3">
+
+    <!--Форма логирования-->
+    <hr />
+    <form class="form-group" name="registration_form">
+        <h2 class="text-center">Registration</h2>
+
+        <label for="emailRegistration">Email: </label>
+        <input type="email" ng-model="registrationData.Email" id="emailRegistration" required class="form-control" name="email">
+
+        <label for="passwordRegistration">Password: </label>
+        <input type="password" ng-model="registrationData.Password" id="passwordRegistration" required class="form-control" name="password" />
+
+        <label for="passwordRegistration">Password: </label>
+        <input type="password" ng-model="registrationData.ConfirmPassword" id="ConfirmPasswordRegistration" required class="form-control" name="password" />
+
+        <br />
+        <input type="submit" ng-click="submitRegistration()" class="form-control" />
+
+        <br />
+
+        <div ng-show="isRegistrationError" class="alert alert-warning">
+            <p>{{errorMessage}}</p>
+        </div>
+        <div ng-show="isRegistrationSuccess" class="alert alert-success">
+            <p>{{successMessage}}</p>
+        </div>
+    </form>
+    <hr />
+</div>

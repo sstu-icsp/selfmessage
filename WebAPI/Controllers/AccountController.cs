@@ -17,12 +17,12 @@ using WebAPI.Models;
 using WebAPI.Providers;
 using WebAPI.Results;
 using System.Web.Http.Cors;
+using WebAPI.Models.DTO;
 
 namespace WebAPI.Controllers
 {
     [Authorize]
     [RoutePrefix("api/Account")]
-    [EnableCors(origins: "http://localhost:10002", headers: "*", methods: "*")]
     public class AccountController : ApiController
     {
         private const string LocalLoginProvider = "Local";
@@ -53,6 +53,16 @@ namespace WebAPI.Controllers
 
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
+        /*[Route("userinfo")]
+        public UserInfoDto GetUserInfo()
+        {
+            return new UserInfoDto
+            {
+                Name = User.Identity.Name
+            };
+        }*/
+
+        //Получение информации о пользоавтеле
         // GET api/Account/UserInfo
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("UserInfo")]

@@ -31,6 +31,7 @@ namespace WebAPI
             app.UseCookieAuthentication(new CookieAuthenticationOptions());
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
+
             // Настройка приложения для потока обработки на основе OAuth
             PublicClientId = "self";
             OAuthOptions = new OAuthAuthorizationServerOptions

@@ -1,155 +1,131 @@
-﻿using Microsoft.AspNet.Identity;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Web.Http.Cors;
-using System.Web.Http.Description;
+using WebAPI.Exceptions;
 using WebAPI.Models;
 using WebAPI.Models.DTO;
+using WebAPI.Workers;
 
 namespace WebAPI.Controllers
 {
-    //[EnableCors(origins: "http://localhost:10002", headers: "*", methods: "*")]
+    [RoutePrefix("api/notes")]
+    [Authorize]
     public class NotesController : ApiController
     {
-        private DatabaseContext db = new DatabaseContext();
+        //Модель базы данных
+        private readonly ModelDB _db = new ModelDB();
 
 
+        //Вывод всех записей пользователя
+        //api/notes
 
-        // GET: api/Notes
+
+        [Route("")]
+        [HttpGet]
         public IEnumerable<NoteDTO> GetNotes()
         {
-
-            //Используются DTO объекты data transfer object
-            //Если передовать обычные объекты, которые соеденены через include выдает ошибку сериализации
-            //DTO объекты в данном случае своебразные представления
-
-            List<NoteDTO> notes = new List<NoteDTO>();
-            
-            foreach(Notes note in db.Notes.Include(p=>p.Tags))
-            {
-                NoteDTO noteDTO = new NoteDTO();
-
-                noteDTO.Id = note.Id;
-                noteDTO.Name = note.Name;
-                noteDTO.Text = note.Text;
-
-                foreach(Tags tag in note.Tags)
-                {
-                    noteDTO.Tags.Add(new TagDTO() { Id = tag.Id, Name = tag.Name });
-                }
-                notes.Add(noteDTO);
-            }
-
-            return notes;
+            return new NoteWorker(_db, User).GetAllNoteDtoOfUser();
         }
 
-        [Authorize]
+        //Вывод всех записей пользователя по тэгу
+        //api/notes/bytag?tagName=name
+        //Вместо name вставляется имя тэга
+        [Route("bytag")]
         [HttpGet]
-        [Route("Test")]
-        public string Test()
+        public IEnumerable<NoteDTO> GetNotesByTag(string tagName)
         {
-            return User.Identity.Name;
+            return new NoteWorker(_db, User).GetAllNoteDtoOfUserByTag(tagName);
         }
 
-        /*
-        // GET: api/Notes/5
-        [ResponseType(typeof(Note))]
-        public IHttpActionResult GetNote(int id)
-        {
-            Note note = db.Notes.Find(id);
-            if (note == null)
-            {
-                return NotFound();
-            }
 
-            return Ok(note);
-        }
-
-        // PUT: api/Notes/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutNote(int id, Note note)
+        //Добавления записи пользователю
+        //url api/notes/
+        //post
+        //data -----
+        //Name - строка с именем
+        //Text - строка с текстом записи
+        //Tags - строка с тэгам. Тэги разделяются или пробелом или #
+        [Route("")]
+        [HttpPost]
+        public IHttpActionResult Add(AddNoteDTO note)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != note.Id)
-            {
-                return BadRequest();
-            }
+            new NoteWorker(_db, User).AddNote(note);
 
-            db.Entry(note).State = EntityState.Modified;
+            return Ok();
+        }
 
+        //url api/notes/{id}
+        //тело: Name
+        [HttpPut]
+        [Route("{id}")]
+        public HttpResponseMessage UpdateNote(int id, AddNoteDTO note)
+        {
             try
             {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!NoteExists(id))
+                if (note == null)
                 {
-                    return NotFound();
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, "Пустое тело запроса");
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return StatusCode(HttpStatusCode.NoContent);
+                new NoteWorker(_db,User).UpdateNote(id, note);
+
+                return Request.CreateResponse(HttpStatusCode.OK, "Запись изменена.");
+            }
+            catch (AlreadyExistsException e)
+            {
+                return Request.CreateResponse(HttpStatusCode.Conflict, e.Message);
+            }
+            catch (NoteNotExistsException e)
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound, e.Message);
+            }
         }
 
-        // POST: api/Notes
-        [ResponseType(typeof(Note))]
-        public IHttpActionResult PostNote(Note note)
+        //Уделанеи записи по id
+        //api/notes/{id}
+        [Route("{id}")]
+        [HttpDelete]
+        public HttpResponseMessage Delete(int id)
         {
+            if (new NoteWorker(_db, User).getNoteById(id) == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound, "Запись не найдена");
+
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Невозможно удалить запись");
             }
 
-            db.Notes.Add(note);
-            db.SaveChanges();
+            new NoteWorker(_db, User).DeleteNote(id);
 
-            return CreatedAtRoute("DefaultApi", new { id = note.Id }, note);
+            return Request.CreateResponse(HttpStatusCode.OK, "Запись удалена");
         }
 
-        // DELETE: api/Notes/5
-        [ResponseType(typeof(Note))]
-        public IHttpActionResult DeleteNote(int id)
+
+        //Получение тэга по имени
+        //api/notes/byname?notename=name
+        //name заменяется на название тэга
+        [Route("byname")]
+        [HttpGet]
+        public IEnumerable<NoteDTO> GetNoteByName(string noteName)
         {
-            Note note = db.Notes.Find(id);
-            if (note == null)
-            {
-                return NotFound();
-            }
+            return new NoteWorker(_db,User).GetNoteDtoByName(noteName);
+        }
 
-            db.Notes.Remove(note);
-            db.SaveChanges();
-
-            return Ok(note);
-        }*/
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }
-
-        /*private bool NoteExists(int id)
-        {
-            return db.Notes.Count(e => e.Id == id) > 0;
-        }*/
     }
 }
