@@ -1,7 +1,7 @@
 ﻿<div ng-app="app">
     <div class="row">
 
-        <div class="col-sm-2">
+        <!--<div class="col-sm-2">
 
             <nav class="nav-sidebar">
                 <ul class="nav">
@@ -14,20 +14,19 @@
             </nav>
 
 
-        </div>
-        <div class="col-sm-10">
+        </div>-->
+        <div class="col-sm-12">
             <div class="row">
                 <br>
-                <div class="col-sm-2">
-                    <h5>Key word</h5>
-                </div>
-                <div class="col-sm-8">
+                
+                <div class="col-sm-10">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for...">
+                        <input type="text" ng-model="findData.Name" class="form-control" placeholder="Search for...">
                         <span class="input-group-btn">
-                            <button class="btn btn-success" ng-click="SearchData()">Find Note</button>
+                            <button class="btn btn-success" ng-click="searchData()">Find Note</button>
+                            <button class="btn btn-warning" ng-click="clearSearch()">Clear</button>
                         </span>
-                        
+
                     </div>
                 </div>
                 <div class="col-sm-2">

@@ -7,7 +7,8 @@
     var factory = {
         getAllData: getAllData,
         sendData: sendData,
-        deleteNote: deleteNote
+        deleteNote: deleteNote,
+        searchData: searchData
     };
 
     return factory;
@@ -37,6 +38,26 @@
     function deleteNote(id) {
         var defered = $q.defer();
         $http.delete(REST_SERVICE_URI + 'api/notes/'+id)
+            .then(
+                function (response) {
+                    $log.debug(response);
+                    defered.resolve(response.data);
+                },
+                function (errorResponse) {
+                    $log.debug(errorResponse);
+                    defered.reject(errorResponse);
+                }
+
+            );
+        return defered.promise;
+    };
+
+    //Поиск записи по тегу
+    //api/notes/byname?notename=name
+    //name заменяется на название тэга
+    function searchData(findData) {
+        var defered = $q.defer();
+        $http.get(REST_SERVICE_URI + 'api/notes/byname?notename=' + findData.Name)
             .then(
                 function (response) {
                     $log.debug(response);

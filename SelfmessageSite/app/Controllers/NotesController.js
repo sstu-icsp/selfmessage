@@ -48,6 +48,40 @@
             });
     }
 
+    $scope.findData = {
+        Name: ""
+    }
+
+    $scope.searchData = function () {
+        NoteService.searchData($scope.findData)
+        .then(
+            function (data) {
+                $log.info(data);
+                $scope.PostDaraResponse = data;
+                //$scope.findData = {};
+                $scope.Details = data.reverse();
+                $scope.Details = data.reverse();
+
+            },
+            function (errorData) {
+                $scope.errorMessage = errorData.data.error_description;
+            }
+        );
+    }
+
+    $scope.clearSearch = function () {
+        NoteService.getAllData()
+        .then(
+            function (data) {
+                $log.info(data);
+                $scope.findData = {};
+                $scope.Details = data.reverse();
+            },
+            function (errorData) {
+                $scope.errorMessage = errorData.data.error_description;
+            });
+    }
+
 
 
     $scope.noteData = {
