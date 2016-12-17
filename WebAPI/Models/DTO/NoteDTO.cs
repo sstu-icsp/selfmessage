@@ -14,6 +14,7 @@ namespace WebAPI.Models.DTO
         public int Id { get; set; }
         public string Name { get; set; }
         public string Text { get; set; }
+        public List<string> Image { get; set; }
         public DateTime DateAdded { get; set; }
 
         public List<TagDTO> Tags { get; set; }

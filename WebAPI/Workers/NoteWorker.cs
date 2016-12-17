@@ -7,6 +7,7 @@ using System.Web;
 using WebAPI.Models;
 using WebAPI.Models.DTO;
 using WebAPI.Models.Entities;
+using WebAPI.Services;
 using WebAPI.Workers.TagSpliters;
 
 namespace WebAPI.Workers
@@ -44,16 +45,26 @@ namespace WebAPI.Workers
         }
 
         //Метод для добавления записи в базу данных
-        public void AddNote(AddNoteDTO addNoteDto)
+        public void AddNote(AddNoteDTO addNoteDto, Image image)
         {
-            _db.Notes.Add(new Note
+            Note note = new Note
             {
                 Name = addNoteDto.Name,
                 Text = addNoteDto.Text,
                 Tags = TagWorker.GetTagsFromString(addNoteDto.Tags, _db),
                 User = UserWorker.GetUserByName(_user.Identity.Name, _db),
                 DataAdded = DateTime.Now
-            });
+            };
+            if (image != null)
+            {
+                if (note.Images == null)
+                {
+                    note.Images = new List<Image>();
+                }
+                note.Images.Add(image);
+            }
+
+            _db.Notes.Add(note);
             _db.SaveChanges();
         }
 
@@ -75,12 +86,15 @@ namespace WebAPI.Workers
         //Метод переводящий объект note в notedto
         public static NoteDTO ConvertFromNoteInNoteDto(Note note)
         {
+            ImageService imageService = new ImageService();
+
             var dtoNote = new NoteDTO
             {
                 Id = note.Id,
                 Name = note.Name,
                 Text = note.Text,
-                DateAdded = note.DataAdded
+                DateAdded = note.DataAdded,
+                Image = imageService.GetImages(note.Images).ToList()
             };
 
             foreach (var tag in note.Tags)
