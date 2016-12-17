@@ -25,7 +25,7 @@
             },
             function (errorData) {
                 $scope.errorMessage = errorData.data.error_description;
-            });
+            }); 
     }
     
     $scope.deleteNote = function (id) {
