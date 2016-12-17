@@ -8,7 +8,8 @@
         getAllData: getAllData,
         sendData: sendData,
         deleteNote: deleteNote,
-        searchData: searchData
+        searchData: searchData,
+        editNote: editNote
     };
 
     return factory;
@@ -38,6 +39,25 @@
     function deleteNote(id) {
         var defered = $q.defer();
         $http.delete(REST_SERVICE_URI + 'api/notes/'+id)
+            .then(
+                function (response) {
+                    $log.debug(response);
+                    defered.resolve(response.data);
+                },
+                function (errorResponse) {
+                    $log.debug(errorResponse);
+                    defered.reject(errorResponse);
+                }
+
+            );
+        return defered.promise;
+    };
+
+    //url api/notes/{id}
+    //тело: Name
+    function editNote(id, sendData) {
+        var defered = $q.defer();
+        $http.put(REST_SERVICE_URI + 'api/notes/' + id, sendData)
             .then(
                 function (response) {
                     $log.debug(response);

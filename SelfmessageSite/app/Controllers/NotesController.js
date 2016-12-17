@@ -37,7 +37,7 @@
                     .then(
                         function (data) {
                             $log.info(data);
-                            $scope.Details = data.reverse();;
+                            $scope.Details = data.reverse();
                         },
                         function (errorData) {
                             $scope.errorMessage = errorData.data.error_description;
@@ -48,19 +48,28 @@
             });
     }
 
+    
+
     $scope.findData = {
         Name: ""
     }
+
+    $scope.noContent = false;
 
     $scope.searchData = function () {
         NoteService.searchData($scope.findData)
         .then(
             function (data) {
-                $log.info(data);
-                $scope.PostDaraResponse = data;
-                //$scope.findData = {};
-                $scope.Details = data.reverse();
-                $scope.Details = data.reverse();
+                
+                    if (data.length == 0) {
+                        $scope.noContent = true;
+                    }
+                    else $scope.noContent = false;
+                    $log.info(data);
+                    $scope.PostDaraResponse = data;
+                    $scope.Details = data.reverse();
+                    $scope.Details = data.reverse();
+                
 
             },
             function (errorData) {
@@ -68,6 +77,7 @@
             }
         );
     }
+   
 
     $scope.clearSearch = function () {
         NoteService.getAllData()
@@ -102,7 +112,7 @@
                     .then(
                         function (data) {
                             $log.info(data);
-                            $scope.Details = data.reverse();;
+                            $scope.Details = data.reverse();
                         },
                         function (errorData) {
                             $scope.errorMessage = errorData.data.error_description;
@@ -113,6 +123,33 @@
                 $scope.errorMessage = errorData.data.error_description;
             }
         );
+    }
+
+    $scope.editData = {
+        Name: "",
+        Tags: "",
+        Text: ""
+    }
+
+    $scope.editNote = function (id) {
+        NoteService.editNote(id, $scope.editData)
+        .then(
+            function (data) {
+                $log.info(data);
+                $scope.editData = {};
+                NoteService.getAllData()
+                    .then(
+                        function (data) {
+                            $log.info(data);
+                            $scope.Details = data.reverse();
+                        },
+                        function (errorData) {
+                            $scope.errorMessage = errorData.data.error_description;
+                        });
+            },
+            function (errorData) {
+                $scope.errorMessage = errorData.data.error_description;
+            });
     }
 
     
