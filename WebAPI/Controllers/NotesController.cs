@@ -2,11 +2,14 @@
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using WebAPI.Exceptions;
 using WebAPI.Models;
 using WebAPI.Models.DTO;
 using WebAPI.Workers;
+using WebAPI.Models.Entities;
+using WebAPI.Services;
 
 namespace WebAPI.Controllers
 {
@@ -16,6 +19,7 @@ namespace WebAPI.Controllers
     {
         //Модель базы данных
         private readonly ModelDB _db = new ModelDB();
+        ImageService _imageService = new ImageService();
 
 
         //Вывод всех записей пользователя
@@ -56,7 +60,15 @@ namespace WebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            new NoteWorker(_db, User).AddNote(note);
+            Image image = null;
+
+            if (HttpContext.Current.Request.Files.Count > 1)
+            {
+                var file = HttpContext.Current.Request.Files[0];
+                image = _imageService.PostImage(file.InputStream, file.ContentLength);
+            }
+
+            new NoteWorker(_db, User).AddNote(note, image);
 
             return Ok();
         }
