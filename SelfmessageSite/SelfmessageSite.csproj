@@ -99,6 +99,7 @@
     <Content Include="App\Controllers\RegistrationController.js" />
     <Content Include="App\Controllers\TasksController.js" />
     <Content Include="App\Services\NoteService.js" />
+    <Content Include="App\Services\TaskService.js" />
     <Content Include="App\Services\UserService.js" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
