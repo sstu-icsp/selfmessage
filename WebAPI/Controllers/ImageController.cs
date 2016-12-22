@@ -35,6 +35,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
+        [Route("")]
         public HttpResponseMessage Post()
         {
             if (!ModelState.IsValid)

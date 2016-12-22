@@ -97,6 +97,8 @@ namespace WebAPI.Workers
                 Image = imageService.GetImages(note.Images).ToList()
             };
 
+            List<string> test = imageService.GetImages(note.Images).ToList();
+
             foreach (var tag in note.Tags)
             {
                 var tempTag = new TagDTO
@@ -143,7 +145,7 @@ namespace WebAPI.Workers
         {
             get
             {
-                return _db.Notes.Include(p => p.User).Include(p => p.Tags)
+                return _db.Notes.Include(p => p.User).Include(p => p.Tags).Include(p=>p.Images)
                        .Where(p => p.User.UserName == _user.Identity.Name);
             }
         }
