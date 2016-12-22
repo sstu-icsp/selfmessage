@@ -53,13 +53,8 @@ namespace WebAPI.Controllers
         //Tags - строка с тэгам. Тэги разделяются или пробелом или #
         [Route("")]
         [HttpPost]
-        public IHttpActionResult Add()
+        public IHttpActionResult Add(AddNoteDTO note)
         {
-            string name = HttpContext.Current.Request.Form.GetValues("Name").First();
-            string text = HttpContext.Current.Request.Form.GetValues("Text").First();
-            string tags = HttpContext.Current.Request.Form.GetValues("Tags").First();
-            AddNoteDTO note = new AddNoteDTO { Name = name, Text = text, Tags = tags };
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -67,7 +62,7 @@ namespace WebAPI.Controllers
 
             Image image = null;
 
-            if (HttpContext.Current.Request.Files.Count >= 1)
+            if (HttpContext.Current.Request.Files.Count > 1)
             {
                 var file = HttpContext.Current.Request.Files[0];
                 image = _imageService.PostImage(file.InputStream, file.ContentLength);
@@ -91,7 +86,7 @@ namespace WebAPI.Controllers
                     return Request.CreateResponse(HttpStatusCode.BadRequest, "Пустое тело запроса");
                 }
 
-                new NoteWorker(_db,User).UpdateNote(id, note);
+                new NoteWorker(_db, User).UpdateNote(id, note);
 
                 return Request.CreateResponse(HttpStatusCode.OK, "Запись изменена.");
             }
@@ -132,7 +127,7 @@ namespace WebAPI.Controllers
         [HttpGet]
         public IEnumerable<NoteDTO> GetNoteByName(string noteName)
         {
-            return new NoteWorker(_db,User).GetNoteDtoByName(noteName);
+            return new NoteWorker(_db, User).GetNoteDtoByName(noteName);
         }
 
 
