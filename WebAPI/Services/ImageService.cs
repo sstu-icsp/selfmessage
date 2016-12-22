@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
+using WebAPI.Exceptions;
 using WebAPI.Models;
 using WebAPI.Models.Entities;
 
@@ -11,7 +12,7 @@ namespace WebAPI.Services
 {
     public class ImageService
     {
-
+        //Получение записей по URI
         public IEnumerable<String> GetImages(string requestURI)
         {
             using (ModelDB db = new ModelDB())
@@ -27,15 +28,18 @@ namespace WebAPI.Services
             }
         }
 
-        public IEnumerable<String> GetImages(IEnumerable<Image> images)
+        //Получение записей по Id записи
+        public IEnumerable<String> GetImages(int noteId)
         {
             using (ModelDB db = new ModelDB())
             {
                 List<String> strings = new List<String>();
 
+                List<Image> images = db.Notes.Include("Images").FirstOrDefault(p=>p.Id==noteId).Images.ToList();
+
                 foreach (Image image in images)
                 {
-                    strings.Add("http://localhost:9343/api/image/" + image.Id);
+                    strings.Add("http://localhost:9343/api/images/" + image.Id);
                 }
 
                 return strings;
@@ -50,16 +54,40 @@ namespace WebAPI.Services
             }
         }
 
-        public Image PostImage(Stream stream, int contentLength)
+        public Image PostImage(int noteId,Stream stream, int contentLength)
         {
             using (ModelDB db = new ModelDB())
             {
-                Image image = new Image { Stream = CreateStream(stream, contentLength) };
-
+                var notes = db.Notes.Where(p => p.Id == noteId).ToList();
+                Image image = new Image { Stream = CreateStream(stream, contentLength),Notes=notes };
                 db.Images.Add(image);
                 db.SaveChanges();
 
                 return image;
+            }
+        }
+
+        public void DeleteImage(int id)
+        {
+            //Открываем соеденение с базой данных
+            var db = new ModelDB();
+
+            try
+            {
+                var imageForRemove = db.Images.Find(id);
+
+                if (imageForRemove == null)
+                {
+                    throw new ImageNotExistException("Картинка с таким ид не существует");
+                }
+
+                db.Images.Remove(imageForRemove);
+
+                db.SaveChanges();
+            }
+            finally
+            {
+                db.Dispose();
             }
         }
 

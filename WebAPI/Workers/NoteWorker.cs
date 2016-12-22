@@ -45,7 +45,7 @@ namespace WebAPI.Workers
         }
 
         //Метод для добавления записи в базу данных
-        public void AddNote(AddNoteDTO addNoteDto, Image image)
+        public void AddNote(AddNoteDTO addNoteDto)
         {
             Note note = new Note
             {
@@ -55,14 +55,6 @@ namespace WebAPI.Workers
                 User = UserWorker.GetUserByName(_user.Identity.Name, _db),
                 DataAdded = DateTime.Now
             };
-            if (image != null)
-            {
-                if (note.Images == null)
-                {
-                    note.Images = new List<Image>();
-                }
-                note.Images.Add(image);
-            }
 
             _db.Notes.Add(note);
             _db.SaveChanges();
@@ -94,10 +86,7 @@ namespace WebAPI.Workers
                 Name = note.Name,
                 Text = note.Text,
                 DateAdded = note.DataAdded,
-                Image = imageService.GetImages(note.Images).ToList()
             };
-
-            List<string> test = imageService.GetImages(note.Images).ToList();
 
             foreach (var tag in note.Tags)
             {
