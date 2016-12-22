@@ -15,6 +15,9 @@ namespace WebAPI.Controllers
     {
         ImageService _imageService = new ImageService();
 
+
+        //Получение картинки по ид картинки
+        //Протестированно postman
         // GET: api/image/{id}
         [HttpGet]
         [Route("{id}")]
@@ -26,7 +29,11 @@ namespace WebAPI.Controllers
             return result;
         }
 
-        //GET: api/image/
+
+        //Получение ссылок на все картинки
+        //Сделать получение картинок записи 
+        //Добавить в роут 
+        //GET: api/notes/{noteId}/images
         [HttpGet]
         [Route("")]
         public HttpResponseMessage GetImages()
@@ -34,6 +41,11 @@ namespace WebAPI.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _imageService.GetImages(Request.RequestUri.AbsoluteUri));
         }
 
+
+        //Добавление картинки
+        //Сделать понятное название
+        //Например addimage
+        //Сделать роут в котором учитывается запись, чтобы картинка привязывалась к записи
         [HttpPost]
         [Route("")]
         public HttpResponseMessage Post()
@@ -49,6 +61,9 @@ namespace WebAPI.Controllers
             return Request.CreateResponse(HttpStatusCode.Created);
         }
 
+
+        //удаление картинок
+        //
         [HttpDelete]
         [Route("{id}")]
         public HttpResponseMessage Delete(int id)
@@ -57,6 +72,8 @@ namespace WebAPI.Controllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
+
+
 
             _imageService.DeleteImage(id);
             return Request.CreateResponse(HttpStatusCode.OK, "Картинка удалена");
