@@ -12,7 +12,7 @@ namespace WebAPI.Services
 {
     public class ImageService
     {
-
+        //Получение записей по URI
         public IEnumerable<String> GetImages(string requestURI)
         {
             using (ModelDB db = new ModelDB())
@@ -28,11 +28,14 @@ namespace WebAPI.Services
             }
         }
 
-        public IEnumerable<String> GetImages(IEnumerable<Image> images)
+        //Получение записей по Id записи
+        public IEnumerable<String> GetImages(int noteId)
         {
             using (ModelDB db = new ModelDB())
             {
                 List<String> strings = new List<String>();
+
+                List<Image> images = db.Notes.Include("Images").FirstOrDefault(p=>p.Id==noteId).Images.ToList();
 
                 foreach (Image image in images)
                 {

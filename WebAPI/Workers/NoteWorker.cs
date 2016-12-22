@@ -94,10 +94,7 @@ namespace WebAPI.Workers
                 Name = note.Name,
                 Text = note.Text,
                 DateAdded = note.DataAdded,
-                Image = imageService.GetImages(note.Images).ToList()
             };
-
-            List<string> test = imageService.GetImages(note.Images).ToList();
 
             foreach (var tag in note.Tags)
             {

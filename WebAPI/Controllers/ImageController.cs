@@ -10,7 +10,6 @@ using WebAPI.Services;
 
 namespace WebAPI.Controllers
 {
-    [RoutePrefix("api/image")]
     public class ImagesController : ApiController
     {
         ImageService _imageService = new ImageService();
@@ -20,7 +19,7 @@ namespace WebAPI.Controllers
         //Протестированно postman
         // GET: api/image/{id}
         [HttpGet]
-        [Route("{id}")]
+        [Route("api/images/{id}")]
         public HttpResponseMessage GetImage(int id)
         {
             var result = new HttpResponseMessage(HttpStatusCode.OK);
@@ -35,20 +34,26 @@ namespace WebAPI.Controllers
         //Добавить в роут 
         //GET: api/notes/{noteId}/images
         [HttpGet]
-        [Route("")]
+        [Route("api/images")]
         public HttpResponseMessage GetImages()
         {
             return Request.CreateResponse(HttpStatusCode.OK, _imageService.GetImages(Request.RequestUri.AbsoluteUri));
         }
 
+        [HttpGet]
+        [Route("api/notes/{noteId}/images")]
+        public HttpResponseMessage GetImages(int noteId)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _imageService.GetImages(noteId));
+        }
 
         //Добавление картинки
         //Сделать понятное название
         //Например addimage
         //Сделать роут в котором учитывается запись, чтобы картинка привязывалась к записи
         [HttpPost]
-        [Route("")]
-        public HttpResponseMessage Post()
+        [Route("api/images")]
+        public HttpResponseMessage AddImage()
         {
             if (!ModelState.IsValid)
             {
@@ -65,7 +70,7 @@ namespace WebAPI.Controllers
         //удаление картинок
         //
         [HttpDelete]
-        [Route("{id}")]
+        [Route("api/images/{id}")]
         public HttpResponseMessage Delete(int id)
         {
             if (!ModelState.IsValid)
