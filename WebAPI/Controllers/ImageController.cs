@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Http;
+using WebAPI.Exceptions;
 using WebAPI.Services;
 
 namespace WebAPI.Controllers
@@ -52,8 +53,8 @@ namespace WebAPI.Controllers
         //Например addimage
         //Сделать роут в котором учитывается запись, чтобы картинка привязывалась к записи
         [HttpPost]
-        [Route("api/images")]
-        public HttpResponseMessage AddImage()
+        [Route("api/notes/{noteId}/images")]
+        public HttpResponseMessage AddImage(int noteId)
         {
             if (!ModelState.IsValid)
             {
@@ -61,7 +62,7 @@ namespace WebAPI.Controllers
             }
 
             var file = HttpContext.Current.Request.Files[0];
-            _imageService.PostImage(file.InputStream, file.ContentLength);
+            _imageService.PostImage(noteId,file.InputStream, file.ContentLength);
 
             return Request.CreateResponse(HttpStatusCode.Created);
         }
@@ -73,15 +74,21 @@ namespace WebAPI.Controllers
         [Route("api/images/{id}")]
         public HttpResponseMessage Delete(int id)
         {
+            
             if (!ModelState.IsValid)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
-
-
-            _imageService.DeleteImage(id);
-            return Request.CreateResponse(HttpStatusCode.OK, "Картинка удалена");
+            try
+            {
+                _imageService.DeleteImage(id);
+                return Request.CreateResponse(HttpStatusCode.OK, "Картинка удалена");
+            }
+            catch (ImageNotExistException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound, "Картинка не найдена");
+            }
         }
 
     }

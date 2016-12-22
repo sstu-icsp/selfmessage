@@ -39,7 +39,7 @@ namespace WebAPI.Services
 
                 foreach (Image image in images)
                 {
-                    strings.Add("http://localhost:9343/api/image/" + image.Id);
+                    strings.Add("http://localhost:9343/api/images/" + image.Id);
                 }
 
                 return strings;
@@ -54,12 +54,12 @@ namespace WebAPI.Services
             }
         }
 
-        public Image PostImage(Stream stream, int contentLength)
+        public Image PostImage(int noteId,Stream stream, int contentLength)
         {
             using (ModelDB db = new ModelDB())
             {
-                Image image = new Image { Stream = CreateStream(stream, contentLength) };
-
+                var notes = db.Notes.Where(p => p.Id == noteId).ToList();
+                Image image = new Image { Stream = CreateStream(stream, contentLength),Notes=notes };
                 db.Images.Add(image);
                 db.SaveChanges();
 

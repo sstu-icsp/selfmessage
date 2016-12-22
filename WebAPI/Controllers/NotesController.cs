@@ -60,15 +60,7 @@ namespace WebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            Image image = null;
-
-            if (HttpContext.Current.Request.Files.Count > 1)
-            {
-                var file = HttpContext.Current.Request.Files[0];
-                image = _imageService.PostImage(file.InputStream, file.ContentLength);
-            }
-
-            new NoteWorker(_db, User).AddNote(note, image);
+            new NoteWorker(_db, User).AddNote(note);
 
             return Ok();
         }
