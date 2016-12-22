@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
+using WebAPI.Exceptions;
 using WebAPI.Models;
 using WebAPI.Models.Entities;
 
@@ -60,6 +61,30 @@ namespace WebAPI.Services
                 db.SaveChanges();
 
                 return image;
+            }
+        }
+
+        public void DeleteImage(int id)
+        {
+            //Открываем соеденение с базой данных
+            var db = new ModelDB();
+
+            try
+            {
+                var imageForRemove = db.Images.Find(id);
+
+                if (imageForRemove == null)
+                {
+                    throw new ImageNotExistException("Картинка с таким ид не существует");
+                }
+
+                db.Images.Remove(imageForRemove);
+
+                db.SaveChanges();
+            }
+            finally
+            {
+                db.Dispose();
             }
         }
 

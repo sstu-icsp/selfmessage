@@ -29,7 +29,7 @@ namespace WebAPI.Controllers
         //GET: api/image/
         [HttpGet]
         [Route("")]
-        public HttpResponseMessage getImages()
+        public HttpResponseMessage GetImages()
         {
             return Request.CreateResponse(HttpStatusCode.OK, _imageService.GetImages(Request.RequestUri.AbsoluteUri));
         }
@@ -47,6 +47,19 @@ namespace WebAPI.Controllers
             _imageService.PostImage(file.InputStream, file.ContentLength);
 
             return Request.CreateResponse(HttpStatusCode.Created);
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public HttpResponseMessage Delete(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+
+            _imageService.DeleteImage(id);
+            return Request.CreateResponse(HttpStatusCode.OK, "Картинка удалена");
         }
 
     }
