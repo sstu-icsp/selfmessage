@@ -54,16 +54,17 @@ namespace WebAPI.Services
             }
         }
 
-        public Image PostImage(int noteId,Stream stream, int contentLength)
+        public void PostImage(int noteId, HttpFileCollection files)
         {
             using (ModelDB db = new ModelDB())
             {
                 var notes = db.Notes.Where(p => p.Id == noteId).ToList();
-                Image image = new Image { Stream = CreateStream(stream, contentLength),Notes=notes };
-                db.Images.Add(image);
-                db.SaveChanges();
 
-                return image;
+                for(int i = 0; i < files.Count; i++) {
+                    Image image = new Image { Stream = CreateStream(files[i].InputStream, files[i].ContentLength), Notes = notes };
+                    db.Images.Add(image);
+                    db.SaveChanges();
+                } 
             }
         }
 

@@ -61,8 +61,8 @@ namespace WebAPI.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
-            var file = HttpContext.Current.Request.Files[0];
-            _imageService.PostImage(noteId,file.InputStream, file.ContentLength);
+            var files = HttpContext.Current.Request.Files;
+            _imageService.PostImage(noteId,files);
 
             return Request.CreateResponse(HttpStatusCode.Created);
         }
