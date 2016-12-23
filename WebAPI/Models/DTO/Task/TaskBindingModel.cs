@@ -18,7 +18,7 @@ namespace WebAPI.Models.DTO.Task
         public string About { get; set; }
 
         [Required]
-        public int TaskThemeId { get; set; }
+        public string TaskTheme { get; set; }
 
         [Required]
         public int ImportanceId { get; set; }

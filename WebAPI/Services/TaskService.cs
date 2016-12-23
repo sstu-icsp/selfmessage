@@ -29,7 +29,7 @@ namespace WebAPI.Services
 
 
         //Метод создающий задачу с переданными аргументами
-        public void CreateTask(string taskName, string about, int taskThemeId,
+        public void CreateTask(string taskName, string about, string taskThemeName,
             int importanceId,DateTime? startTime, DateTime? endTime)
         {
             var db = new ModelDB();
@@ -42,7 +42,15 @@ namespace WebAPI.Services
                 }
 
 
-                var taskTheme = db.TaskThemes.FirstOrDefault(p => p.Id == taskThemeId);
+                var taskTheme = db.TaskThemes.FirstOrDefault(p => p.Name== taskThemeName);
+
+                if (taskTheme == null)
+                {
+                    taskTheme = new TaskTheme { Name = taskThemeName };
+                    db.TaskThemes.Add(taskTheme);
+                    db.SaveChanges();  
+                }
+
                 var importance = db.Importances.FirstOrDefault(p => p.Id == importanceId);
                 var user = UserWorker.GetUserByName(_user.Identity.Name, db);
 
@@ -145,6 +153,40 @@ namespace WebAPI.Services
                 //Закрываем соеденение с базой данных
                 db.Dispose();
             }
+        }
+
+        public void TaskThemeEdit(int id,string taskThemeName)
+        {
+            //Открываем соеденение с базой данных
+            var db = new ModelDB();
+            try
+            {
+                var task = db.Tasks.Find(id);
+
+                if (task == null)
+                {
+                    throw new TaskNotExistsException("Задачи с таким ид не существует");
+                }
+
+                var taskTheme = db.TaskThemes.FirstOrDefault(p => p.Name == taskThemeName);
+
+                if (taskTheme == null)
+                {
+                    taskTheme = new TaskTheme { Name = taskThemeName };
+                    db.TaskThemes.Add(taskTheme);
+                    db.SaveChanges();
+                }
+
+                task.TaskTheme = taskTheme;
+                db.SaveChanges();
+
+            }
+            finally
+            {
+                db.Dispose();
+            }
+
+            
         }
 
         //Метод для поулчения модели задач по ИД

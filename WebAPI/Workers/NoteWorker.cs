@@ -126,6 +126,7 @@ namespace WebAPI.Workers
 
         }
 
+        //Получение записи по id
         public Note getNoteById(int id)
         {
             var note= _db.Notes.Include("Tags").FirstOrDefault(p => p.Id == id);

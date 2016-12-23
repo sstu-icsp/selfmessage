@@ -246,6 +246,7 @@
     <Compile Include="Models\DTO\TaskTheme\TaskThemeBindingModels.cs" />
     <Compile Include="Models\DTO\TaskTheme\TaskThemeViewModel.cs" />
     <Compile Include="Models\DTO\Task\TaskBindingModel.cs" />
+    <Compile Include="Models\DTO\Task\TaskThemeEdit.cs" />
     <Compile Include="Models\DTO\Task\TaskViewModel.cs" />
     <Compile Include="Models\DTO\UserInfoDto.cs" />
     <Compile Include="Models\Entities\Image.cs" />
