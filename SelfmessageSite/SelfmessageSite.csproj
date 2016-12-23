@@ -96,6 +96,7 @@
   <ItemGroup>
     <Content Include="App\Controllers\LoginController.js" />
     <Content Include="App\Controllers\NotesController.js" />
+    <Content Include="App\Controllers\OneNoteController.js" />
     <Content Include="App\Controllers\RegistrationController.js" />
     <Content Include="App\Controllers\TasksController.js" />
     <Content Include="App\Services\NoteService.js" />
@@ -105,6 +106,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Pages\AddTask.html" />
+    <Content Include="Pages\OneNote.html" />
     <Content Include="Pages\Tasks.html" />
     <Content Include="Scripts\version.json" />
     <Content Include="Scripts\errors.json" />
