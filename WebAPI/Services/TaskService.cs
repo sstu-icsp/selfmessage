@@ -81,7 +81,7 @@ namespace WebAPI.Services
 
                 if (taskForRemove == null)
                 {
-                    throw new TaskThemeNotExistsException("Тема задачи с таким ид не существует");
+                    throw new TaskNotExistsException("Тема задачи с таким ид не существует");
                 }
 
                 db.Tasks.Remove(taskForRemove);
@@ -108,7 +108,7 @@ namespace WebAPI.Services
                 //Проверяем получили ли мы сущность
                 if (task == null)
                 {
-                    throw new TaskThemeNotExistsException("Задачи с таким ид не существует");
+                    throw new TaskNotExistsException("Задачи с таким ид не существует");
                 }
 
                 return ConvertFromTaskInTaskViewModel(task);
@@ -134,7 +134,7 @@ namespace WebAPI.Services
                 //Проверяем получили ли мы сущность
                 if (task == null)
                 {
-                    throw new TaskThemeNotExistsException("Задачи с таким ид не существует");
+                    throw new TaskNotExistsException("Задачи с таким ид не существует");
                 }
 
                 task.Validation = true;

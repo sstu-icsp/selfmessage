@@ -50,7 +50,7 @@ namespace WebAPI.Controllers
                                         task.StartTime, task.EndTime);
                 return Request.CreateResponse(HttpStatusCode.OK, "Задача успешно добавлена");
             }
-            catch (AlreadyExistsException e)
+            catch (AlreadyExistsException)
             {
                 //Если в базе данных уже существует тема задачи с таким именем
                 return Request.CreateResponse(HttpStatusCode.Conflict, "Тема задачи с таким именем уже существует");
@@ -72,7 +72,7 @@ namespace WebAPI.Controllers
 
                 return Request.CreateResponse(HttpStatusCode.OK, task);
             }
-            catch (TaskThemeNotExistsException e)
+            catch (TaskNotExistsException e)
             {
                 //Если тема задачи не найдена
                 return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
@@ -92,7 +92,7 @@ namespace WebAPI.Controllers
 
                 return Request.CreateResponse(HttpStatusCode.OK, task);
             }
-            catch (TaskThemeNotExistsException e)
+            catch (TaskNotExistsException e)
             {
                 //Если тема задачи не найдена
                 return Request.CreateResponse(HttpStatusCode.NotFound, e.Message);
@@ -112,7 +112,7 @@ namespace WebAPI.Controllers
 
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
-            catch (TaskThemeNotExistsException e)
+            catch (TaskNotExistsException e)
             {
                 //Если тема задачи не найдена
                 return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
@@ -136,7 +136,7 @@ namespace WebAPI.Controllers
                 _taskService.DeleteTask(id);
                 return Request.CreateResponse(HttpStatusCode.OK, "Задача с id = " + id + " удалена из базы данных");
             }
-            catch (TaskThemeNotExistsException)
+            catch (TaskNotExistsException)
             {
                 //Если пользователя не существует в базе данных
                 return Request.CreateResponse(HttpStatusCode.BadRequest,"Задачи с таким ид не существует в базе данных");
