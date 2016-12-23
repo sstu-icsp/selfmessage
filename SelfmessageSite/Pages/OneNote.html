@@ -1,29 +1,28 @@
-﻿<div>
-    <div class="media">
-        <div class="media-body">
-            <div class="col-xs-11">
-                <h4 class="media-heading">{{d.Name}} </h4>
-            </div>
-            <div class="col-xs-1">
-                <p class="text-right">
-                    <a ng-click="deleteNote(d.Id)" href=""><span class="glyphicon glyphicon-remove"></span></a>
-                </p>
-            </div>
-            <div class="col-xs-12">
-                <p>{{d.Text}}</p>
-            </div>
+﻿<div class="media">
+    <div class="media-body">
+        <div class="col-xs-11">
+            <h3 class="media-heading">{{note.Name}}</h3>
         </div>
-        <div class="media-bottom">
-            <small class="col-xs-4"><i>Post date: {{d.DateAdded}}</i></small>
-            <small class="col-xs-6">
-                Tags:
-                <i ng-repeat="tag in d.Tags">{{tag.Name}} </i>
-            </small>
-            <small class="col-xs-2">
-                <p class="text-right">
-                    <a>Extended preview</a>
-                </p>
-            </small>
+        <div class="col-xs-1">
+            <p class="text-right">
+                <a ng-click="deleteNote(note.Id)" href=""><span class="glyphicon glyphicon-remove"></span></a>
+            </p>
+        </div>
+        <div class="col-xs-12">
+            <p>{{note.Text}}</p>
+        </div>
+    </div>
+    <div class="media-bottom">
+        <div class="col-xs-6">
+            <p class="text-left">
+                    Tags:
+                    <i ng-repeat="tag in note.Tags">{{tag}} </i>
+            </p>
+        </div>
+        <div class="col-xs-6">
+            <p class="text-right">
+                Post date: {{note.DateAdded}}
+            </p>
         </div>
     </div>
 </div>

@@ -25,6 +25,11 @@ app.config(function($routeProvider) {
         {
             templateUrl: "../Pages/Tasks.html",
             controller: "TasksController"
+        })
+        .when("/Notes/:noteId",
+        {
+            templateUrl: "../Pages/OneNote.html",
+            controller: "OneNoteController"
         });
 });
 
