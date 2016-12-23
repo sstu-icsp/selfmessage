@@ -75,7 +75,7 @@ namespace WebAPI.Controllers
             catch (TaskThemeNotExistsException e)
             {
                 //Если тема задачи не найдена
-                return Request.CreateResponse(HttpStatusCode.NotFound, e.Message);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
             }
         }
 
@@ -115,7 +115,7 @@ namespace WebAPI.Controllers
             catch (TaskThemeNotExistsException e)
             {
                 //Если тема задачи не найдена
-                return Request.CreateResponse(HttpStatusCode.NotFound, e.Message);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
             }
         }
 
@@ -139,7 +139,7 @@ namespace WebAPI.Controllers
             catch (TaskThemeNotExistsException)
             {
                 //Если пользователя не существует в базе данных
-                return Request.CreateResponse(HttpStatusCode.NotFound,"Задачи с таким ид не существует в базе данных");
+                return Request.CreateResponse(HttpStatusCode.BadRequest,"Задачи с таким ид не существует в базе данных");
             }
         }
 

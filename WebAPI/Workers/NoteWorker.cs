@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Security.Principal;
 using System.Web;
+using WebAPI.Exceptions;
 using WebAPI.Models;
 using WebAPI.Models.DTO;
 using WebAPI.Models.Entities;
@@ -127,7 +128,13 @@ namespace WebAPI.Workers
 
         public Note getNoteById(int id)
         {
-            return _db.Notes.FirstOrDefault(p => p.Id == id);
+            var note= _db.Notes.FirstOrDefault(p => p.Id == id);
+
+            if (note == null)
+            {
+                throw new NoteNotExistsException("Нет записи с таким id");
+            }
+            return note;
         }
 
         //Метод для получения всех записей пользователя 
