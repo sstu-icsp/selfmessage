@@ -21,6 +21,7 @@ namespace WebAPI.Controllers
     public class TasksController : ApiController
     {
         private readonly ModelDB _db = new ModelDB();
+        private TaskService _taskService = new TaskService();
 
 
         [HttpPost]
@@ -55,6 +56,31 @@ namespace WebAPI.Controllers
             }
 
         }
+
+
+        [HttpDelete]
+        [Route("{id}")]
+        [Authorize]
+        public HttpResponseMessage DeleteTask(int id)
+        {
+            //Проверяем правильность пришедшей модели
+            if (!ModelState.IsValid)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+            }
+
+            try
+            {
+                _taskService.DeleteTask(id);
+                return Request.CreateResponse(HttpStatusCode.OK, "Задача с id = " + id + " удалена из базы данных");
+            }
+            catch (TaskThemeNotExistsException e)
+            {
+                //Если пользователя не существует в базе данных
+                return Request.CreateResponse(HttpStatusCode.NotFound,"Задачи с таким ид не существует в базе данных");
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

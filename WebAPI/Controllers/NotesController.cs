@@ -32,6 +32,14 @@ namespace WebAPI.Controllers
             return new NoteWorker(_db, User).GetAllNoteDtoOfUser();
         }
 
+        [Route("{id}")]
+        [HttpGet]
+        public NoteDTO GetNote(int id)
+        {
+            NoteWorker noteWorker = new NoteWorker(_db, User);
+            return NoteWorker.ConvertFromNoteInNoteDto((noteWorker.getNoteById(id)));
+        }
+
         //Вывод всех записей пользователя по тэгу
         //api/notes/bytag?tagName=name
         //Вместо name вставляется имя тэга

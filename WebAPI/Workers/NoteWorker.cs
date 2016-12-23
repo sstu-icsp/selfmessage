@@ -44,6 +44,7 @@ namespace WebAPI.Workers
             return ConvertFromNoteInNoteDto(GetAllNotesByTag(tagName));
         }
 
+
         //Метод для добавления записи в базу данных
         public void AddNote(AddNoteDTO addNoteDto)
         {

@@ -20,6 +20,11 @@ namespace WebAPI.Services
             _user = user;
         }
 
+        public TaskService()
+        {
+            _user = null;
+        }
+
 
         //Метод создающий задачу с переданными аргументами
         public void CreateTask(string taskName, string about, int taskThemeId,
@@ -54,6 +59,30 @@ namespace WebAPI.Services
                 };
 
                 db.Tasks.Add(task);
+                db.SaveChanges();
+            }
+            finally
+            {
+                db.Dispose();
+            }
+        }
+
+        //Метод для удаление тем задач
+        public void DeleteTask(int id)
+        {
+            //Открываем соеденение с базой данных
+            var db = new ModelDB();
+
+            try
+            {
+                var taskForRemove = db.Tasks.Find(id);
+
+                if (taskForRemove == null)
+                {
+                    throw new TaskNotExistsException("Тема задачи с таким ид не существует");
+                }
+
+                db.Tasks.Remove(taskForRemove);
                 db.SaveChanges();
             }
             finally

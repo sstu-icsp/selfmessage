@@ -230,6 +230,7 @@
     <Compile Include="Exceptions\ImageNotExistException.cs" />
     <Compile Include="Exceptions\ImportanceNotExistsException.cs" />
     <Compile Include="Exceptions\NoteNotExistsException.cs" />
+    <Compile Include="Exceptions\TaskNotExistsException.cs" />
     <Compile Include="Exceptions\TaskThemeNotExistsException.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
