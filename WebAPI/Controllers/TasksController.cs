@@ -24,6 +24,7 @@ namespace WebAPI.Controllers
         private TaskService _taskService = new TaskService();
 
 
+        //POST: api/tasks
         [HttpPost]
         [Route("")]
         [Authorize]
@@ -58,6 +59,67 @@ namespace WebAPI.Controllers
         }
 
 
+        //GET: api/tasks/{id}
+        [HttpGet]
+        [Route("{id}")]
+        [Authorize]
+        public HttpResponseMessage GetTask(int id)
+        {
+            try
+            {
+                //Получаем тему задачи
+                var task = _taskService.GetTask(id);
+
+                return Request.CreateResponse(HttpStatusCode.OK, task);
+            }
+            catch (TaskThemeNotExistsException e)
+            {
+                //Если тема задачи не найдена
+                return Request.CreateResponse(HttpStatusCode.NotFound, e.Message);
+            }
+        }
+
+        //GET: api/tasks/{id}
+        [HttpGet]
+        [Route("")]
+        [Authorize]
+        public HttpResponseMessage GetTaskByUser()
+        {
+            try
+            {
+                //Получаем задачи пользователя
+                var task = new TaskService(User).GetTaskByUser();
+
+                return Request.CreateResponse(HttpStatusCode.OK, task);
+            }
+            catch (TaskThemeNotExistsException e)
+            {
+                //Если тема задачи не найдена
+                return Request.CreateResponse(HttpStatusCode.NotFound, e.Message);
+            }
+        }
+
+        //PUT: api/tasks/{id}
+        [HttpPut]
+        [Route("{id}")]
+        [Authorize]
+        public HttpResponseMessage Validate(int id)
+        {
+            try
+            {
+                //Помечаем задачу как выполненную
+                 _taskService.Validate(id);
+
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (TaskThemeNotExistsException e)
+            {
+                //Если тема задачи не найдена
+                return Request.CreateResponse(HttpStatusCode.NotFound, e.Message);
+            }
+        }
+
+        //DELETE: api/tasks/{id}
         [HttpDelete]
         [Route("{id}")]
         [Authorize]
@@ -74,7 +136,7 @@ namespace WebAPI.Controllers
                 _taskService.DeleteTask(id);
                 return Request.CreateResponse(HttpStatusCode.OK, "Задача с id = " + id + " удалена из базы данных");
             }
-            catch (TaskThemeNotExistsException e)
+            catch (TaskThemeNotExistsException)
             {
                 //Если пользователя не существует в базе данных
                 return Request.CreateResponse(HttpStatusCode.NotFound,"Задачи с таким ид не существует в базе данных");

@@ -5,7 +5,7 @@ using System.Web;
 
 namespace WebAPI.Exceptions
 {
-    public class TaskNotExistsException:Exception
+    public class TaskNotExistsException : Exception
     {
         public TaskNotExistsException()
         {
