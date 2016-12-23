@@ -47,8 +47,6 @@ app.run(function ($http, $cookieStore, $log, UserService, $rootScope) {
             function(data) {
                 $rootScope.isAuthorize = true;
                 $rootScope.Email = data.Email;
-
-                window.location = "#/Notes";
             },
             function () {
                 $rootScope.isAuthorize = false;

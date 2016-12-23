@@ -11,6 +11,12 @@
         Tags: []
     }
 
+    $scope.imageUrls = [];
+
+    $scope.currentImageUrl = "";
+
+    $scope.imageForAdd = "";
+
     NoteService.getNote($routeParams.noteId)
         .then(
             function(response) {
@@ -24,11 +30,30 @@
                 alert("Request error" + errorResponse);
             });
 
+    NoteService.getImagesOfNote($routeParams.noteId)
+        .then(
+            function(response) {
+                $log.debug("Response in call getImagesOfNote function of noteServiec in oneNoteController");
+                $log.debug(response);
+
+                $scope.imageUrls = response;
+            });
+
+
+    $scope.addImage = function() {
+        NoteService.addImageToNote($scope.imageForAdd, $routeParams.noteId);
+    }
+
+    $scope.setCurrentUrl = function(imageUrl) {
+        $scope.currentImageUrl = imageUrl;
+        $log.debug("Current url: " + imageUrl);
+    }
+
     $scope.deleteNote = function(noteId) {
         NoteService.deleteNote(noteId)
             .then(
                 function() {
-                    window.location = "#/Notes"
+                    window.location = "#/Notes";
                 });
     };
 })
