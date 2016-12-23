@@ -8,8 +8,6 @@ namespace WebAPI.Models.DTO.Task
 {
     public class TaskBindingModel
     {
-        public DateTime? StartTime { get; set; }
-        public DateTime? EndTime { get; set; }
 
         [Required]
         public string Name { get; set; }

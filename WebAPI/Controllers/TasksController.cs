@@ -36,8 +36,7 @@ namespace WebAPI.Controllers
             {
                 TaskService taskService = new TaskService(User);
 
-                taskService.CreateTask(task.Name, task.About, task.TaskTheme, task.ImportanceId,
-                                        task.StartTime, task.EndTime);
+                taskService.CreateTask(task.Name, task.About, task.TaskTheme, task.ImportanceId);
                 return Request.CreateResponse(HttpStatusCode.OK, "Задача успешно добавлена");
             }
             catch (AlreadyExistsException)

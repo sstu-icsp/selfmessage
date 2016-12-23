@@ -30,7 +30,7 @@ namespace WebAPI.Services
 
         //Метод создающий задачу с переданными аргументами
         public void CreateTask(string taskName, string about, string taskThemeName,
-            int importanceId,DateTime? startTime, DateTime? endTime)
+            int importanceId)
         {
             var db = new ModelDB();
             try
@@ -61,8 +61,6 @@ namespace WebAPI.Services
                     About = about,
                     TaskTheme = taskTheme,
                     Importance = importance,
-                    StartTime = startTime,
-                    EndTime = endTime,
                     DateAdded = DateTime.Now,
                     Validation = false,
                     User = user
