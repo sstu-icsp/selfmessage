@@ -13,6 +13,8 @@ namespace WebAPI.Controllers
 {
     public class ImagesController : ApiController
     {
+
+        //Сервис для работы с картинками
         ImageService _imageService = new ImageService();
 
 
@@ -31,9 +33,7 @@ namespace WebAPI.Controllers
 
 
         //Получение ссылок на все картинки
-        //Сделать получение картинок записи 
-        //Добавить в роут 
-        //GET: api/notes/{noteId}/images
+        //GET: api/images
         [HttpGet]
         [Route("api/images")]
         public HttpResponseMessage GetImages()
@@ -41,6 +41,9 @@ namespace WebAPI.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _imageService.GetImages(Request.RequestUri.AbsoluteUri));
         }
 
+
+        //Получение ссылок на картинки конкретной записи
+        //GET: api/notes/{noteId}/images
         [HttpGet]
         [Route("api/notes/{noteId}/images")]
         public HttpResponseMessage GetImages(int noteId)
@@ -48,10 +51,8 @@ namespace WebAPI.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _imageService.GetImages(noteId));
         }
 
-        //Добавление картинки
-        //Сделать понятное название
-        //Например addimage
-        //Сделать роут в котором учитывается запись, чтобы картинка привязывалась к записи
+        //Добавление картинки к записи
+        //POST: api/notes/{noteId}/images
         [HttpPost]
         [Route("api/notes/{noteId}/images")]
         public HttpResponseMessage AddImage(int noteId)
@@ -69,12 +70,12 @@ namespace WebAPI.Controllers
 
 
         //удаление картинок
-        //
+        //DELETE: api/images/{id}
         [HttpDelete]
         [Route("api/images/{id}")]
         public HttpResponseMessage Delete(int id)
         {
-            
+
             if (!ModelState.IsValid)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);

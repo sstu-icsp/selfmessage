@@ -46,6 +46,7 @@ namespace WebAPI.Services
             }
         }
 
+        //Получение потока данных картинки
         public byte[] StreamById(int id)
         {
             using (ModelDB db = new ModelDB())
@@ -54,12 +55,12 @@ namespace WebAPI.Services
             }
         }
 
+        //Добавление картинок
         public void PostImage(int noteId, HttpFileCollection files)
         {
             using (ModelDB db = new ModelDB())
             {
                 var notes = db.Notes.Where(p => p.Id == noteId).ToList();
-
                 for(int i = 0; i < files.Count; i++) {
                     Image image = new Image { Stream = CreateStream(files[i].InputStream, files[i].ContentLength), Notes = notes };
                     db.Images.Add(image);
@@ -68,6 +69,7 @@ namespace WebAPI.Services
             }
         }
 
+        //Удаление картинки по id
         public void DeleteImage(int id)
         {
             //Открываем соеденение с базой данных
@@ -75,13 +77,16 @@ namespace WebAPI.Services
 
             try
             {
+                //Находим картинку по id
                 var imageForRemove = db.Images.Find(id);
 
+                //Если картинки нет бросаем исключение
                 if (imageForRemove == null)
                 {
                     throw new ImageNotExistException("Картинка с таким ид не существует");
                 }
 
+                //Если есть то удаляем
                 db.Images.Remove(imageForRemove);
 
                 db.SaveChanges();
@@ -92,6 +97,7 @@ namespace WebAPI.Services
             }
         }
 
+        //Создание потока данных картинки
         private byte[] CreateStream(Stream stream, int contentLength)
         {
             byte[] imageData;
