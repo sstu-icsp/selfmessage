@@ -28,6 +28,23 @@ namespace WebAPI.Services
         }
 
 
+        public TaskTheme CreateOrFindTaskTheme(string taskThemeName)
+        {
+            var db = new ModelDB();
+            //Ищем тему задачи
+            var taskTheme = db.TaskThemes.FirstOrDefault(p => p.Name == taskThemeName);
+
+            //Если тема задачи не найдена создаем её
+            if (taskTheme == null)
+            {
+                taskTheme = new TaskTheme { Name = taskThemeName };
+            }
+
+            db.Dispose();
+
+            return taskTheme;
+        }
+
         //Метод создающий задачу с переданными аргументами
         public void CreateTask(string taskName, string about, string taskThemeName,
             int importanceId)
@@ -42,14 +59,8 @@ namespace WebAPI.Services
                 }
 
 
-                var taskTheme = db.TaskThemes.FirstOrDefault(p => p.Name== taskThemeName);
-
-                if (taskTheme == null)
-                {
-                    taskTheme = new TaskTheme { Name = taskThemeName };
-                    db.TaskThemes.Add(taskTheme);
-                    db.SaveChanges();  
-                }
+                //Ищем тему задачи
+                var taskTheme = CreateOrFindTaskTheme(taskThemeName);
 
                 var importance = db.Importances.FirstOrDefault(p => p.Id == importanceId);
                 var user = UserWorker.GetUserByName(_user.Identity.Name, db);
@@ -83,13 +94,16 @@ namespace WebAPI.Services
 
             try
             {
+                //Находим задачу
                 var taskForRemove = db.Tasks.Find(id);
 
+                //Если задача не найдена кидаем исключение
                 if (taskForRemove == null)
                 {
                     throw new TaskNotExistsException("Тема задачи с таким ид не существует");
                 }
 
+                //Удаляем задачу
                 db.Tasks.Remove(taskForRemove);
 
                 db.SaveChanges();
@@ -159,22 +173,20 @@ namespace WebAPI.Services
             var db = new ModelDB();
             try
             {
+                //Находим задачу
                 var task = db.Tasks.Find(id);
 
+
+                //Если задача не найдена кидаем исключение
                 if (task == null)
                 {
                     throw new TaskNotExistsException("Задачи с таким ид не существует");
                 }
 
-                var taskTheme = db.TaskThemes.FirstOrDefault(p => p.Name == taskThemeName);
+                //Ищем тему задачи
+                var taskTheme = CreateOrFindTaskTheme(taskThemeName);
 
-                if (taskTheme == null)
-                {
-                    taskTheme = new TaskTheme { Name = taskThemeName };
-                    db.TaskThemes.Add(taskTheme);
-                    db.SaveChanges();
-                }
-
+                //Изменяем тему задачи
                 task.TaskTheme = taskTheme;
                 db.SaveChanges();
 
@@ -182,9 +194,7 @@ namespace WebAPI.Services
             finally
             {
                 db.Dispose();
-            }
-
-            
+            }          
         }
 
         //Метод для поулчения модели задач по ИД

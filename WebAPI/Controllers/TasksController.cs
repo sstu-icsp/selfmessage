@@ -115,7 +115,7 @@ namespace WebAPI.Controllers
                 //Помечаем задачу как выполненную
                 new TaskService().TaskThemeEdit(id, taskThemeEdit.TaskTheme);
 
-                return Request.CreateResponse(HttpStatusCode.OK);
+                return Request.CreateResponse(HttpStatusCode.OK,"Тема записи изменена");
             }
             catch (TaskNotExistsException e)
             {
@@ -123,6 +123,25 @@ namespace WebAPI.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
             }
         }
+
+        //PUT: api/tasks/{id}/startdate
+        /*[HttpPut]
+        [Route("{id}/startdate")]
+        public HttpResponseMessage StartDateEdit(int id, StartDateEdit taskThemeEdit)
+        {
+            try
+            {
+                //Помечаем задачу как выполненную
+                new TaskService().TaskThemeEdit(id, taskThemeEdit.TaskTheme);
+
+                return Request.CreateResponse(HttpStatusCode.OK, "Тема записи изменена");
+            }
+            catch (TaskNotExistsException e)
+            {
+                //Если задача не найдена
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
+            }
+        }*/
 
         //DELETE: api/tasks/{id}
         [HttpDelete]

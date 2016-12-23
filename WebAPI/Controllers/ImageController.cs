@@ -48,7 +48,13 @@ namespace WebAPI.Controllers
         [Route("api/notes/{noteId}/images")]
         public HttpResponseMessage GetImages(int noteId)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _imageService.GetImages(noteId));
+            var images = _imageService.GetImages(noteId);
+
+            if(images.Count()==0)
+            {
+                return Request.CreateResponse(HttpStatusCode.NoContent);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, images);
         }
 
         //Добавление картинки к записи
