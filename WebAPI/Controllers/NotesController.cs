@@ -19,7 +19,6 @@ namespace WebAPI.Controllers
     {
         //Модель базы данных
         private readonly ModelDB _db = new ModelDB();
-        ImageService _imageService = new ImageService();
 
 
         //Вывод всех записей пользователя

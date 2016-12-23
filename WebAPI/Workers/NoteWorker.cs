@@ -70,7 +70,7 @@ namespace WebAPI.Workers
             note.Text = addNoteDto.Text;
             note.Tags = TagWorker.GetTagsFromString(addNoteDto.Tags, _db);
             note.User = UserWorker.GetUserByName(_user.Identity.Name, _db);
-            note.DataAdded = DateTime.Now;
+
 
             _db.SaveChanges();
         }
