@@ -9,11 +9,26 @@
         sendData: sendData,
         deleteNote: deleteNote,
         searchData: searchData,
-        editNote: editNote
+        editNote: editNote,
+        getNote: getNote
     };
 
     return factory;
 
+        function getNote(noteId) {
+            var defered = $q.defer();
+            $http.get(REST_SERVICE_URI + "api/notes/" + noteId)
+                .then(
+                    function(response) {
+                        $log.debug(response);
+                        defered.resolve(response.data);
+                    },
+                    function(errorResponse) {
+                        $log.debug(errorResponse);
+                        defered.reject(errorResponse);
+                    });
+            return defered.promise;
+        }
 
     //Вывод ВСЕХ записей
     function getAllData() {
@@ -109,8 +124,4 @@
                     });
         return defered.promise;
     };
-
-    
-
-        
 });
