@@ -19,7 +19,6 @@ namespace WebAPI.Controllers
     {
         //Модель базы данных
         private readonly ModelDB _db = new ModelDB();
-        ImageService _imageService = new ImageService();
 
 
         //Вывод всех записей пользователя
@@ -31,6 +30,14 @@ namespace WebAPI.Controllers
         public IEnumerable<NoteDTO> GetNotes()
         {
             return new NoteWorker(_db, User).GetAllNoteDtoOfUser();
+        }
+
+        [Route("{id}")]
+        [HttpGet]
+        public NoteDTO GetNote(int id)
+        {
+            NoteWorker noteWorker = new NoteWorker(_db, User);
+            return NoteWorker.ConvertFromNoteInNoteDto((noteWorker.getNoteById(id)));
         }
 
         //Вывод всех записей пользователя по тэгу
