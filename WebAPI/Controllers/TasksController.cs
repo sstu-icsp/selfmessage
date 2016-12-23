@@ -16,6 +16,7 @@ namespace WebAPI.Controllers
 
 
         //POST: api/tasks
+        //Метод создания задачи
         [HttpPost]
         [Route("")]
         public HttpResponseMessage CreateTask(TaskBindingModel task)
@@ -49,6 +50,7 @@ namespace WebAPI.Controllers
 
 
         //GET: api/tasks/{id}
+        //Метод получения задачи по id
         [HttpGet]
         [Route("{id}")]
         public HttpResponseMessage GetTask(int id)
@@ -68,6 +70,7 @@ namespace WebAPI.Controllers
         }
 
         //GET: api/tasks/{id}
+        //Метод получения задач пользователя
         [HttpGet]
         [Route("")]
         public HttpResponseMessage GetTaskByUser()
@@ -87,6 +90,7 @@ namespace WebAPI.Controllers
         }
 
         //PUT: api/tasks/{id}
+        //Метод для указания, что задача выполнена
         [HttpPut]
         [Route("{id}")]
         public HttpResponseMessage Validate(int id)
@@ -106,6 +110,7 @@ namespace WebAPI.Controllers
         }
 
         //PUT: api/tasks/{id}/tasktheme
+        //Метод для изменения темы задачи
         [HttpPut]
         [Route("{id}/tasktheme")]
         public HttpResponseMessage TaskThemeEdit(int id,TaskThemeEdit taskThemeEdit)
@@ -124,15 +129,17 @@ namespace WebAPI.Controllers
             }
         }
 
+
         //PUT: api/tasks/{id}/startdate
-        /*[HttpPut]
+        //Метод для указания времени начала выполнения задачи
+        [HttpPut]
         [Route("{id}/startdate")]
-        public HttpResponseMessage StartDateEdit(int id, StartDateEdit taskThemeEdit)
+        public HttpResponseMessage StartDateEdit(int id, StartDateEdit startDateEdit)
         {
             try
             {
                 //Помечаем задачу как выполненную
-                new TaskService().TaskThemeEdit(id, taskThemeEdit.TaskTheme);
+                new TaskService().StartDateEdit(id, startDateEdit.StartDate);
 
                 return Request.CreateResponse(HttpStatusCode.OK, "Тема записи изменена");
             }
@@ -141,9 +148,10 @@ namespace WebAPI.Controllers
                 //Если задача не найдена
                 return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
             }
-        }*/
+        }
 
         //DELETE: api/tasks/{id}
+        //Метод удаления задачи
         [HttpDelete]
         [Route("{id}")]
         public HttpResponseMessage DeleteTask(int id)

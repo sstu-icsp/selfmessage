@@ -167,6 +167,7 @@ namespace WebAPI.Services
             }
         }
 
+        //Метод для изменения темы задачи
         public void TaskThemeEdit(int id,string taskThemeName)
         {
             //Открываем соеденение с базой данных
@@ -195,6 +196,33 @@ namespace WebAPI.Services
             {
                 db.Dispose();
             }          
+        }
+
+        //Метод для добавления начала выполнения задачи
+        public void StartDateEdit(int id, DateTime startDate)
+        {
+            //Открываем соеденение с базой данных
+            var db = new ModelDB();
+            try
+            {
+                //Находим задачу
+                var task = db.Tasks.Find(id);
+
+
+                //Если задача не найдена кидаем исключение
+                if (task == null)
+                {
+                    throw new TaskNotExistsException("Задачи с таким ид не существует");
+                }
+                //Изменяем тему задачи
+                task.StartTime=startDate;
+                db.SaveChanges();
+
+            }
+            finally
+            {
+                db.Dispose();
+            }
         }
 
         //Метод для поулчения модели задач по ИД
