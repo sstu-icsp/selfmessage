@@ -128,7 +128,7 @@ namespace WebAPI.Workers
 
         public Note getNoteById(int id)
         {
-            var note= _db.Notes.FirstOrDefault(p => p.Id == id);
+            var note= _db.Notes.Include("Tags").FirstOrDefault(p => p.Id == id);
 
             if (note == null)
             {
