@@ -34,10 +34,16 @@ namespace WebAPI.Controllers
 
         [Route("{id}")]
         [HttpGet]
-        public NoteDTO GetNote(int id)
+        public HttpResponseMessage GetNote(int id)
         {
             NoteWorker noteWorker = new NoteWorker(_db, User);
-            return NoteWorker.ConvertFromNoteInNoteDto((noteWorker.getNoteById(id)));
+            try
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, NoteWorker.ConvertFromNoteInNoteDto((noteWorker.getNoteById(id))));
+            }catch (NoteNotExistsException e)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
+            }
         }
 
         //Вывод всех записей пользователя по тэгу
