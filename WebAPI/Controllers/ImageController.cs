@@ -52,7 +52,7 @@ namespace WebAPI.Controllers
 
             if(images.Count()==0)
             {
-                return Request.CreateResponse(HttpStatusCode.NoContent);
+                return Request.CreateResponse(HttpStatusCode.NoContent,"Картинки не найдены");
             }
             return Request.CreateResponse(HttpStatusCode.OK, images);
         }
@@ -65,13 +65,13 @@ namespace WebAPI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Поизошла ошибка");
             }
 
             var files = HttpContext.Current.Request.Files;
             _imageService.PostImage(noteId,files);
 
-            return Request.CreateResponse(HttpStatusCode.Created);
+            return Request.CreateResponse(HttpStatusCode.Created,"Картинка создана");
         }
 
 
@@ -84,7 +84,7 @@ namespace WebAPI.Controllers
 
             if (!ModelState.IsValid)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Поизошла ошибка");
             }
 
             try

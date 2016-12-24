@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
 using System.Web.Http;
 using WebAPI.Models;
 using WebAPI.Models.DTO;
@@ -15,12 +17,11 @@ namespace WebAPI.Controllers
         //Получение всех тэгов пользователя
         //api/tags
         //get
-
         [Route("")]
         [HttpGet]
-        public IEnumerable<TagDTO> GetTags()
+        public HttpResponseMessage GetTags()
         {
-            return new TagWorker(_db, User).GetAllTagDtoOfUser();
+            return Request.CreateResponse(HttpStatusCode.OK, new TagWorker(_db, User).GetAllTagDtoOfUser());
         }
 
 

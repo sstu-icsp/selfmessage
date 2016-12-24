@@ -27,9 +27,9 @@ namespace WebAPI.Controllers
 
         [Route("")]
         [HttpGet]
-        public IEnumerable<NoteDTO> GetNotes()
+        public HttpResponseMessage GetNotes()
         {
-            return new NoteWorker(_db, User).GetAllNoteDtoOfUser();
+            return Request.CreateResponse(HttpStatusCode.OK, new NoteWorker(_db, User).GetAllNoteDtoOfUser());
         }
 
         [Route("{id}")]
@@ -51,9 +51,9 @@ namespace WebAPI.Controllers
         //Вместо name вставляется имя тэга
         [Route("bytag")]
         [HttpGet]
-        public IEnumerable<NoteDTO> GetNotesByTag(string tagName)
+        public HttpResponseMessage GetNotesByTag(string tagName)
         {
-            return new NoteWorker(_db, User).GetAllNoteDtoOfUserByTag(tagName);
+            return Request.CreateResponse(HttpStatusCode.OK, new NoteWorker(_db, User).GetAllNoteDtoOfUserByTag(tagName));
         }
 
 
@@ -66,16 +66,16 @@ namespace WebAPI.Controllers
         //Tags - строка с тэгам. Тэги разделяются или пробелом или #
         [Route("")]
         [HttpPost]
-        public IHttpActionResult Add(AddNoteDTO note)
+        public HttpResponseMessage Add(AddNoteDTO note)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Произошла ошибка");
             }
 
             new NoteWorker(_db, User).AddNote(note);
 
-            return Ok();
+            return Request.CreateResponse(HttpStatusCode.Created, "Запись создана");
         }
 
         //url api/notes/{id}
@@ -130,9 +130,9 @@ namespace WebAPI.Controllers
         //name заменяется на название тэга
         [Route("byname")]
         [HttpGet]
-        public IEnumerable<NoteDTO> GetNoteByName(string noteName)
+        public HttpResponseMessage GetNoteByName(string noteName)
         {
-            return new NoteWorker(_db, User).GetNoteDtoByName(noteName);
+            return Request.CreateResponse(HttpStatusCode.OK, new NoteWorker(_db, User).GetNoteDtoByName(noteName));
         }
 
 

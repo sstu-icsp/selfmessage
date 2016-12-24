@@ -25,7 +25,7 @@ namespace WebAPI.Controllers
 
             if (!result.Any())
             {
-                return Request.CreateResponse(HttpStatusCode.NoContent);
+                return Request.CreateResponse(HttpStatusCode.NoContent,"Важности не найдены");
             }
 
             return Request.CreateResponse(HttpStatusCode.OK, result);

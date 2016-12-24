@@ -100,7 +100,7 @@ namespace WebAPI.Controllers
                 //Помечаем задачу как выполненную
                  new TaskService().Validate(id);
 
-                return Request.CreateResponse(HttpStatusCode.OK);
+                return Request.CreateResponse(HttpStatusCode.OK,"Статус записи изменен");
             }
             catch (TaskNotExistsException e)
             {
