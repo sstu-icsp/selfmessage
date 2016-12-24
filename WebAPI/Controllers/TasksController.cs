@@ -89,10 +89,10 @@ namespace WebAPI.Controllers
             }
         }
 
-        //PUT: api/tasks/{id}
+        //PUT: api/tasks/{id}/validate
         //Метод для указания, что задача выполнена
         [HttpPut]
-        [Route("{id}")]
+        [Route("{id}/validate")]
         public HttpResponseMessage Validate(int id)
         {
             try
@@ -133,15 +133,35 @@ namespace WebAPI.Controllers
         //PUT: api/tasks/{id}/startdate
         //Метод для указания времени начала выполнения задачи
         [HttpPut]
-        [Route("{id}/startdate")]
-        public HttpResponseMessage StartDateEdit(int id, StartDateEdit startDateEdit)
+        [Route("{id}/starttime")]
+        public HttpResponseMessage StartTimeEdit(int id, StartTimeEdit startDateEdit)
         {
             try
             {
                 //Помечаем задачу как выполненную
                 new TaskService().StartDateEdit(id, startDateEdit.StartDate);
 
-                return Request.CreateResponse(HttpStatusCode.OK, "Тема записи изменена");
+                return Request.CreateResponse(HttpStatusCode.OK, "Время начала задачи добавлено");
+            }
+            catch (TaskNotExistsException e)
+            {
+                //Если задача не найдена
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
+            }
+        }
+
+        //PUT: api/tasks/{id}/endtime
+        //Метод для указания времени окончания выполнения задачи
+        [HttpPut]
+        [Route("{id}/endtime")]
+        public HttpResponseMessage EndTimeEdit(int id, EndTimeEdit endTimeEdit)
+        {
+            try
+            {
+                //Помечаем задачу как выполненную
+                new TaskService().EndTimeEdit(id, endTimeEdit.EndTime);
+
+                return Request.CreateResponse(HttpStatusCode.OK, "Время окончания задачи добавлено");
             }
             catch (TaskNotExistsException e)
             {
@@ -172,6 +192,26 @@ namespace WebAPI.Controllers
             {
                 //Если задачи не существует в базе данных
                 return Request.CreateResponse(HttpStatusCode.BadRequest,"Задачи с таким ид не существует в базе данных");
+            }
+        }
+
+        //PUT: api/tasks/{id}
+        //Метод для изменения названия, описания и важности модели
+        [HttpPut]
+        [Route("{id}")]
+        public HttpResponseMessage EditTask(int id, EditModel editModel)
+        {
+            try
+            {
+                //Помечаем задачу как выполненную
+                new TaskService().EditTask(id,editModel.Name,editModel.About,editModel.ImportanceId);
+
+                return Request.CreateResponse(HttpStatusCode.OK,"Запись изменена");
+            }
+            catch (TaskNotExistsException e)
+            {
+                //Если задача не найдена
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
             }
         }
 

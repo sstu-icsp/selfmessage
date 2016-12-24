@@ -5,7 +5,7 @@ using System.Web;
 
 namespace WebAPI.Models.DTO.Task
 {
-    public class StartDateEdit
+    public class StartTimeEdit
     {
         public DateTime StartDate { get; set; }
     }

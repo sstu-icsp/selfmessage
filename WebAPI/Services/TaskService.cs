@@ -114,6 +114,40 @@ namespace WebAPI.Services
             }
         }
 
+        //Метод для удаления задач
+        public void EditTask(int id, string name, string about, int importanceId)
+        {
+            //Открываем соеденение с базой данных
+            var db = new ModelDB();
+
+            try
+            {
+                //Находим задачу
+                var taskForEdit = db.Tasks.Find(id);
+
+                //Если задача не найдена кидаем исключение
+                if (taskForEdit == null)
+                {
+                    throw new TaskNotExistsException("Тема задачи с таким ид не существует");
+                }
+
+                taskForEdit.Name = name;
+                taskForEdit.About = about;
+                taskForEdit.Importance = db.Importances.Find(importanceId);
+
+                if (taskForEdit.Importance == null)
+                {
+                    //TODO Тут что то надо придумать
+                }
+
+                db.SaveChanges();
+            }
+            finally
+            {
+                db.Dispose();
+            }
+        }
+
         //Метод для поулчения модели задач по ИД
         public TaskViewModel GetTask(int id)
         {
@@ -216,6 +250,33 @@ namespace WebAPI.Services
                 }
                 //Изменяем тему задачи
                 task.StartTime=startDate;
+                db.SaveChanges();
+
+            }
+            finally
+            {
+                db.Dispose();
+            }
+        }
+
+        //Метод для добавления начала выполнения задачи
+        public void EndTimeEdit(int id, DateTime endTime)
+        {
+            //Открываем соеденение с базой данных
+            var db = new ModelDB();
+            try
+            {
+                //Находим задачу
+                var task = db.Tasks.Find(id);
+
+
+                //Если задача не найдена кидаем исключение
+                if (task == null)
+                {
+                    throw new TaskNotExistsException("Задачи с таким ид не существует");
+                }
+                //Изменяем тему задачи
+                task.EndTime = endTime;
                 db.SaveChanges();
 
             }
