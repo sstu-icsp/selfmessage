@@ -23,10 +23,11 @@
 
     <hr />
 
-    <form>
-        <input type="file" name="thumbnail" id="thumbnail" ng-model="imageForAdd.image"><br>
-        <input class="" type="submit" name="submit" ng-click="addImage()" value="Add image" /><br>
-    </form>
+    <div>
+        <label for="fileUpload">Select File to Upload:</label>
+        <input id="fileUpload" type="file"/>
+        <input id="btnUploadFile" type="button" value="Upload File"/>
+    </div>
 
     <div class="media-bottom">
         <div class="col-xs-6">
@@ -62,3 +63,33 @@
     </div>
 
 </div>
+
+<script type="text/javascript">
+$(document).ready(function () {
+
+   $('#btnUploadFile').on('click', function () {
+
+      var data = new FormData();
+
+      var files = $("#fileUpload").get(0).files;
+
+      // Add the uploaded image content to the form data collection
+      if (files.length > 0) {
+           data.append("image", files[0]);
+      }
+
+      // Make Ajax request with the contentType = false, and procesDate = false
+      var ajaxRequest = $.ajax({
+           type: "POST",
+           url: "http://localhost:9343/api/notes/9/images",
+           contentType: false,
+           processData: false,
+           data: data
+           });
+
+      ajaxRequest.done(function (xhr, textStatus) {
+                    // Do other operation
+             });
+   });
+});
+</script>

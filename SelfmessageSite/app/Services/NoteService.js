@@ -11,33 +11,11 @@
         searchData: searchData,
         editNote: editNote,
         getNote: getNote,
-        getImagesOfNote: getImagesOfNote,
-        addImageToNote: addImageToNote
+        getImagesOfNote: getImagesOfNote
     };
 
     return factory; 
 
-    function addImageToNote(image, noteId) {
-            var defered = $q.defer();
-            $http.post(REST_SERVICE_URI + "api/notes/" + noteId + "/images",
-                    $httpParamSerializerJQLike(image),
-                    {
-                        headers: {
-                            'Content-Type': "multipart/form-data"
-                        }
-                    })
-                .then(
-                function (response) {
-                    $log.debug(response);
-                    defered.resolve(response.data);
-                },
-                function (errorResponse) {
-                    $log.error("UserService login error");
-                    $log.error(errorResponse);
-                    defered.reject(errorResponse);
-                });
-            return defered.promise;*/
-        }
 
         function getImagesOfNote(noteId) {
             var defered = $q.defer();
