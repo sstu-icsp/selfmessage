@@ -17,17 +17,17 @@
 
     <div class="clearfix"></div>
 
+    <form class="form-group">
+        <label>Выберите изображение для добавления:</label>
+        <input type="file" class="form-control" file-model="myFile"/>
+        <input type="submit" class="form-control" value="Add image" ng-click="addImageSubmit()"/>
+    </form>
+
     <div class="media-body" class="col-xs-12">
         <img ng-repeat="imageUrl in imageUrls" src="{{imageUrl}}" ng-click="setCurrentUrl(imageUrl)"  data-toggle="modal" data-target="#myModal" height="200px" alt="" />
     </div>
 
     <hr />
-
-    <div>
-        <label for="fileUpload">Select File to Upload:</label>
-        <input id="fileUpload" type="file"/>
-        <input id="btnUploadFile" type="button" value="Upload File"/>
-    </div>
 
     <div class="media-bottom">
         <div class="col-xs-6">
@@ -61,35 +61,5 @@
 
         </div>
     </div>
-
+    
 </div>
-
-<script type="text/javascript">
-$(document).ready(function () {
-
-   $('#btnUploadFile').on('click', function () {
-
-      var data = new FormData();
-
-      var files = $("#fileUpload").get(0).files;
-
-      // Add the uploaded image content to the form data collection
-      if (files.length > 0) {
-           data.append("image", files[0]);
-      }
-
-      // Make Ajax request with the contentType = false, and procesDate = false
-      var ajaxRequest = $.ajax({
-           type: "POST",
-           url: "http://localhost:9343/api/notes/9/images",
-           contentType: false,
-           processData: false,
-           data: data
-           });
-
-      ajaxRequest.done(function (xhr, textStatus) {
-                    // Do other operation
-             });
-   });
-});
-</script>
