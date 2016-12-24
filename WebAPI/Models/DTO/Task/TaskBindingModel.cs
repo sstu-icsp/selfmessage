@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace WebAPI.Models.DTO.Task
+namespace WebAPI.Models.DTO
 {
     public class TaskBindingModel
     {

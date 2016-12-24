@@ -92,7 +92,7 @@ namespace WebAPI.Controllers
                 _imageService.DeleteImage(id);
                 return Request.CreateResponse(HttpStatusCode.OK, "Картинка удалена");
             }
-            catch (ImageNotExistException ex)
+            catch (ImageNotExistException)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound, "Картинка не найдена");
             }

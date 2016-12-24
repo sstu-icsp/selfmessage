@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace WebAPI.Models.DTO.Importance
+namespace WebAPI.Models.DTO
 {
     public class ImportanceBindingModel
     {

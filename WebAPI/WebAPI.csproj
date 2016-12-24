@@ -269,7 +269,7 @@
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Services\ImageService.cs" />
     <Compile Include="Services\ImportanceService.cs" />
-    <Compile Include="Services\TaskService.cs" />
+    <Compile Include="Services\TaskServices\TaskService.cs" />
     <Compile Include="Services\TaskThemeService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Workers\TagSpliters\ITagSplit.cs" />

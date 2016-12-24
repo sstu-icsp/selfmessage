@@ -74,7 +74,7 @@ namespace WebAPI.Controllers
                 _taskThemService.CreateTaskTheme(taskTheme.Name);
                 return Request.CreateResponse(HttpStatusCode.OK, "Тема задачи успешно добавлена");
             }
-            catch (AlreadyExistsException e)
+            catch (AlreadyExistsException)
             {
                 //Если в базе данных уже существует тема задачи с таким именем
                 return Request.CreateResponse(HttpStatusCode.Conflict, "Тема задачи с таким именем уже существует");

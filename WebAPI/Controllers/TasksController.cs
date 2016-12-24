@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Web.Http;
 using WebAPI.Exceptions;
 using WebAPI.Models;
-using WebAPI.Models.DTO.Task;
+using WebAPI.Models.DTO;
 using WebAPI.Services;
 
 namespace WebAPI.Controllers
@@ -69,7 +69,7 @@ namespace WebAPI.Controllers
             }
         }
 
-        //GET: api/tasks/{id}
+        //GET: api/tasks
         //Метод получения задач пользователя
         [HttpGet]
         [Route("")]

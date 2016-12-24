@@ -6,7 +6,7 @@ using System.Security.Principal;
 using System.Web;
 using WebAPI.Exceptions;
 using WebAPI.Models;
-using WebAPI.Models.DTO.Task;
+using WebAPI.Models.DTO;
 using WebAPI.Models.Entities;
 using WebAPI.Workers;
 
@@ -138,6 +138,7 @@ namespace WebAPI.Services
                 if (taskForEdit.Importance == null)
                 {
                     //TODO Тут что то надо придумать
+
                 }
 
                 db.SaveChanges();

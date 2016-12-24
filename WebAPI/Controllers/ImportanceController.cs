@@ -5,7 +5,6 @@ using System.Web.Http;
 using WebAPI.Exceptions;
 using WebAPI.Exceptions.Importance;
 using WebAPI.Models.DTO;
-using WebAPI.Models.DTO.Importance;
 using WebAPI.Services;
 
 namespace WebAPI.Controllers
@@ -76,7 +75,7 @@ namespace WebAPI.Controllers
                 _importanceService.CreateImportance(importance.Name);
                 return Request.CreateResponse(HttpStatusCode.OK, "Важность успешно добавлена");
             }
-            catch (AlreadyExistsException e)
+            catch (AlreadyExistsException)
             {
                 //Если в базе данных уже существует тема задачи с таким именем
                 return Request.CreateResponse(HttpStatusCode.Conflict, "Важность с таким именем уже существует");

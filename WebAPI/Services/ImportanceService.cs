@@ -5,7 +5,7 @@ using System.Web;
 using WebAPI.Exceptions;
 using WebAPI.Exceptions.Importance;
 using WebAPI.Models;
-using WebAPI.Models.DTO.Importance;
+using WebAPI.Models.DTO;
 using WebAPI.Models.Entities;
 
 namespace WebAPI.Services
