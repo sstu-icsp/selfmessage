@@ -15,7 +15,9 @@
 
     $scope.currentImageUrl = "";
 
-    $scope.imageForAdd = "";
+    $scope.imageForAdd = {
+        image: ""
+    };
 
     NoteService.getNote($routeParams.noteId)
         .then(
@@ -40,10 +42,16 @@
             });
 
 
-    $scope.addImage = function() {
+    //Функция вызываемая с html страници для добавления изображения к записи
+    $scope.addImage = function () {
+        $log.debug("Вызвана функция добавления изображений в контроллере одной записи");
+        $log.debug("Ид записи к которой будет добавлено изображение: " + $routeParams.noteId);
         NoteService.addImageToNote($scope.imageForAdd, $routeParams.noteId);
     }
 
+    //Функция используемая для отображения картинки в большом размере
+    //Записывает адресс картинки(миниаютюры) на которую нажал пользователь
+    //Отображение делается на самой html странице
     $scope.setCurrentUrl = function(imageUrl) {
         $scope.currentImageUrl = imageUrl;
         $log.debug("Current url: " + imageUrl);

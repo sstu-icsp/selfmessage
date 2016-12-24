@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
+﻿
 namespace WebAPI.Models.DTO
 {
-    public class EditModel
+    public class TaskEditModel
     {
         public string Name { get; set; }
         public string About { get; set; }

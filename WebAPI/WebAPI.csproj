@@ -245,7 +245,7 @@
     <Compile Include="Models\DTO\TagDTO.cs" />
     <Compile Include="Models\DTO\TaskTheme\TaskThemeBindingModels.cs" />
     <Compile Include="Models\DTO\TaskTheme\TaskThemeViewModel.cs" />
-    <Compile Include="Models\DTO\Task\EditModel.cs" />
+    <Compile Include="Models\DTO\Task\TaskEditModel.cs" />
     <Compile Include="Models\DTO\Task\EndTimeEdit.cs" />
     <Compile Include="Models\DTO\Task\StartTimeEdit.cs" />
     <Compile Include="Models\DTO\Task\TaskBindingModel.cs" />

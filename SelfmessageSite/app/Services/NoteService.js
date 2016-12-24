@@ -18,7 +18,7 @@
     return factory; 
 
     function addImageToNote(image, noteId) {
-            /*var defered = $q.defer();
+            var defered = $q.defer();
             $http.post(REST_SERVICE_URI + "api/notes/" + noteId + "/images",
                     $httpParamSerializerJQLike(image),
                     {

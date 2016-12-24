@@ -16,6 +16,14 @@ namespace WebAPI.Controllers
 
 
         //POST: api/tasks
+        //-----------------
+        //TaskBindingModel:
+        //-----------------
+        //string Name
+        //string About
+        //string TaskTheme
+        //int importanceId
+        //-----------------
         //Метод создания задачи
         [HttpPost]
         [Route("")]
@@ -110,6 +118,11 @@ namespace WebAPI.Controllers
         }
 
         //PUT: api/tasks/{id}/tasktheme
+        //-----------------
+        //TaskThemeEdit:
+        //-----------------
+        //string Name
+        //-----------------
         //Метод для изменения темы задачи
         [HttpPut]
         [Route("{id}/tasktheme")]
@@ -131,6 +144,11 @@ namespace WebAPI.Controllers
 
 
         //PUT: api/tasks/{id}/startdate
+        //-----------------
+        //StartTimeEdit:
+        //-----------------
+        //DateTime StartDate
+        //-----------------
         //Метод для указания времени начала выполнения задачи
         [HttpPut]
         [Route("{id}/starttime")]
@@ -151,6 +169,11 @@ namespace WebAPI.Controllers
         }
 
         //PUT: api/tasks/{id}/endtime
+        //-----------------
+        //EndTimeEdit:
+        //-----------------
+        //DateTime EndTime
+        //-----------------
         //Метод для указания времени окончания выполнения задачи
         [HttpPut]
         [Route("{id}/endtime")]
@@ -196,10 +219,17 @@ namespace WebAPI.Controllers
         }
 
         //PUT: api/tasks/{id}
+        //-----------------
+        //TaskEditModel:
+        //-----------------
+        //string Name
+        //string About
+        //int importanceId
+        //-----------------
         //Метод для изменения названия, описания и важности модели
         [HttpPut]
         [Route("{id}")]
-        public HttpResponseMessage EditTask(int id, EditModel editModel)
+        public HttpResponseMessage EditTask(int id, TaskEditModel editModel)
         {
             try
             {

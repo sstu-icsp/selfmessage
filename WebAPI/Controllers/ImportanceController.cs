@@ -52,7 +52,12 @@ namespace WebAPI.Controllers
 
 
         //uri api/importance/
-        //тело: Name
+        //-----------------
+        //ImportanceBindingModel:
+        //-----------------
+        //string Name
+        //-----------------
+        //Метод для добавления важности задачи
         [HttpPost]
         [Route("")]
         public HttpResponseMessage CreateImportance(ImportanceBindingModel importance)
@@ -84,7 +89,12 @@ namespace WebAPI.Controllers
 
 
         //uri api/importance/{id}
-        //тело: Name
+        //-----------------
+        //ImportanceBindingModel:
+        //-----------------
+        //string Name
+        //-----------------
+        //Метод для  изменения важности задачи
         [HttpPut]
         [Route("{id}")]
         public HttpResponseMessage UpdateImportance(int id, ImportanceBindingModel importance)
