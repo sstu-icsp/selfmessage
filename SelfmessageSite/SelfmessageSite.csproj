@@ -99,6 +99,7 @@
     <Content Include="App\Controllers\OneNoteController.js" />
     <Content Include="App\Controllers\RegistrationController.js" />
     <Content Include="App\Controllers\TasksController.js" />
+    <Content Include="App\Services\ImageService.js" />
     <Content Include="App\Services\NoteService.js" />
     <Content Include="App\Services\UserService.js" />
     <Content Include="packages.config" />
@@ -949,9 +950,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>52427</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:23123</IISUrl>
-          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://localhost:23123/</IISAppRootUrl>
+          <IISUrl>http://localhost:23124</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -1,8 +1,12 @@
 ﻿app.controller("OneNoteController",
-    function($scope, $log, $http, NoteService, $routeParams) {
+    function($scope, $log, $http, NoteService, $routeParams, ImageService) {
         /*
         * Контроллер для страници просмотра одной записи
         */
+
+        //-----------------------------------------------------------------------------------------------
+        //Перменные
+        //-----------------------------------------------------------------------------------------------
 
         $scope.note = {
             Id: "",
@@ -19,7 +23,13 @@
         $scope.imageForAdd = {
             image: ""
         };
+        //-----------------------------------------------------------------------------------------------
+        //Функции вызываемые при загрузке контроллера
+        //-----------------------------------------------------------------------------------------------
 
+        /*
+        *Получаем запись
+        */
         NoteService.getNote($routeParams.noteId)
             .then(
                 function(response) {
@@ -32,20 +42,20 @@
                 function(errorResponse) {
                     alert("Request error" + errorResponse);
                 });
+        /*
+        *Получаем список адрессов картинок записи
+        */
+        showImages();
 
-        NoteService.getImagesOfNote($routeParams.noteId)
-            .then(
-                function(response) {
-                    $log.debug("Response in call getImagesOfNote function of noteServiec in oneNoteController");
-                    $log.debug(response);
+        //-----------------------------------------------------------------------------------------------
+        //Функции доступные с html страниц
+        //-----------------------------------------------------------------------------------------------
 
-                    $scope.imageUrls = response;
-                });
-
-
-        //Функция используемая для отображения картинки в большом размере
-        //Записывает адресс картинки(миниаютюры) на которую нажал пользователь
-        //Отображение делается на самой html странице
+        /*
+        *Функция используемая для отображения картинки в большом размере
+        *Записывает адресс картинки(миниаютюры) на которую нажал пользователь
+        *Отображение делается на самой html странице
+        */
         $scope.setCurrentUrl = function(imageUrl) {
             $scope.currentImageUrl = imageUrl;
             $log.debug("Current url: " + imageUrl);
@@ -59,7 +69,22 @@
                     });
         };
 
+        /*
+        *Функция для удаления изображений
+        *В аргументы необходимо передать url картинки для удаления
+        */
+        $scope.deleteImage = function (imageUrl) {
+            $log.debug("deleteImage oneNoteController");
+            ImageService.deleteImage(imageUrl)
+                .then(
+                function() {
+                    showImages();
+                });
+        }
 
+        /*
+        *Функция позволяющая добавить новое изображение к записи
+        */
         $scope.addImageSubmit = function() {
             $log.debug("Была вызвана функция AddImageSubmit в AddImageController");
 
@@ -75,25 +100,45 @@
                             transformRequest: angular.identity,
                             headers: { 'Content-Type': undefined }
                         })
-                    .success(function() {
-                        NoteService.getImagesOfNote($routeParams.noteId)
-                            .then(
-                                function(response) {
-                                    $log
-                                        .debug("Response in call getImagesOfNote function of noteServiec in oneNoteController");
-                                    $log.debug(response);
-
-                                    $scope.imageUrls = response;
-                                });
+                    .success(function () {
+                        /*
+                        *Если функция выполнилась нормально, то обновляем список ссылок на изображения
+                        *Изображения не перекачиваются заново
+                        */
+                        showImages();
                         $scope.myFile = undefined;
                     })
                     .error(function() {
                     });
             }
         };
+
+        //-----------------------------------------------------------------------------------------------
+        //Обычные функции
+        //-----------------------------------------------------------------------------------------------
+
+        /*
+        *Функция для вывода всех изображений на экран
+        */
+        
+        function showImages() 
+        {
+            NoteService.getImagesOfNote($routeParams.noteId)
+                        .then(
+                            function(response) {
+                                $log
+                                    .debug("Response in call getImagesOfNote function of noteServiec in oneNoteController");
+                                $log.debug(response);
+
+                                $scope.imageUrls = response;
+                            });
+        }
     });
 
-
+/*
+*Деректива необходима для загрузки изображения на сервер
+*Не знаю что тут вообще проихсодит
+*/
 app.directive('fileModel',
 [
     '$parse', function($parse) {
